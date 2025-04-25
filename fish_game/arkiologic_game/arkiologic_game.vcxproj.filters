@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\pics">
+      <UniqueIdentifier>{dbb0b99d-934c-4911-a94c-b4af7484b827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pics\loot">
+      <UniqueIdentifier>{64be2f5b-fe7a-4290-9820-170c4cb2b261}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="fish_game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Position.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Picture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="usful_funcs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rektangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextSquere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Selecters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fishing_game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SinMovingObj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="boot.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="dino.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="doll.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="fish.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="fish_skeleton.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="gamstone.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="jellyfish.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="name_text.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="scull.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="sword.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="vase.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="banana.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="boots.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="cake.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="chest.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="dude.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="fish_left1.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="fish_right1.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="gloves.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="hand.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="kirk.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="rod.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="rod_tool.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="scraps.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="shovel.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="worm.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="diver.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
