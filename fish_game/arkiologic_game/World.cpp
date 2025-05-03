@@ -69,6 +69,8 @@ void World::process() {
 
         (*get_layer("player"))[0]->sum(dir.mult(2));
 
+		camera_pos = (*get_layer("player"))[0]->get_pos();
+
 		render();
 	}
 }

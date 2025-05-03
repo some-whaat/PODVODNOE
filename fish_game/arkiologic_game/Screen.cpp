@@ -15,11 +15,11 @@ int Screen::coord_to_vec_space(int coord, char coord_name) {
     switch (coord_name)
     {
     case 'x':
-        return (coord + (cols / 2)) * 2 + camera_pos.x;
+        return (coord + (cols / 2) - camera_pos.x) * 2;
         break;
 
     case 'y':
-        return (rows / 2) - coord + camera_pos.y;
+        return (rows / 2) - (coord - camera_pos.y);
         break;
 
     default:

@@ -62,6 +62,12 @@ void Position::move_to(Position to_pos, float min_dist = 0) {
     //return *this;
 }
 
+
+Position Position::get_pos() {
+	return Position(x, y);
+}
+
+
 Position Position::coords_to_vec_space(Position coord_pos, int cols, int rows) {
     return Position(coord_pos.x + cols / 2, ((rows / 2) - coord_pos.y) * 2);
 }

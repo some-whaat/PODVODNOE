@@ -11,6 +11,8 @@ void Picture::draw(std::vector<std::string>* screen_vec, Screen& screen) {
     int i = 0;
     int y_coord = (screen.coord_to_vec_space(y, 'y') - 1);
 
+
+
     for (int iy = y_coord - (hight / 2); iy < y_coord + (hight / 2) && iy < (&screen)->rows; iy++) {
 
         int x_coord = screen.coord_to_vec_space(x, 'x');

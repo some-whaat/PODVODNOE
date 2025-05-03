@@ -64,6 +64,8 @@ public:
 
     void move_to(Position to_pos, float min_dist);
 
+    Position get_pos();
+
     Position coords_to_vec_space(Position coord_pos, int cols, int rows);
 };
 
@@ -267,6 +269,18 @@ public:
 
     MovingObj(std::ifstream& file, int in_x, int in_y, int in_fasing, float in_speed, int max_x, int max_y)
         : Picture(file, in_x, in_y),
+        speed(in_speed),
+        fasing(in_fasing)
+    {
+
+        wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
+        wave_offset = rand_int(-max_x, max_x);
+        wave_lenght = (float)rand_int(-4, 4) / 10;
+        wave_sdvig = y;
+    }
+
+    MovingObj(std::string& file_name, int in_x, int in_y, int in_fasing, float in_speed, int max_x, int max_y)
+        : Picture(file_name, in_x, in_y),
         speed(in_speed),
         fasing(in_fasing)
     {
