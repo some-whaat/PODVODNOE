@@ -69,9 +69,9 @@ void World::process() {
 
         std::shared_ptr<RendrbleObject> player = (*get_layer("player"))[0];
 
-        player->sum(dir.mult(2));
+        player->sum(dir.mult(1));
 
-        camera_pos.move_to(player->get_pos(), 9); // убрать magic number
+        camera_pos.smooth_move_to(player->get_pos(), 1, 0.9, 9); // убрать magic number
 		
 
 		render();

@@ -36,6 +36,9 @@ int rand_int(int down_bord, int up_bord);
 
 
 class Position {
+private:
+    bool is_moving = false;
+
 public:
     float x;
     float y;
@@ -63,6 +66,8 @@ public:
     void follow(const Position& to_pos, float speed, float min_dist);
 
     void move_to(Position to_pos, float min_dist);
+
+    void smooth_move_to(Position to_pos, float min_dist, float speed, float max_len);
 
     Position get_pos();
 

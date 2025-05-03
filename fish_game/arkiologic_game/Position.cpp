@@ -62,6 +62,23 @@ void Position::move_to(Position to_pos, float min_dist = 0) {
     //return *this;
 }
 
+void Position::smooth_move_to(Position to_pos, float min_dist, float speed, float max_len) {
+    
+
+    if (!(Position(x, y).dist(to_pos) <= min_dist)) {
+
+        Position between_vec = to_pos.mins(*this);
+        float len = between_vec.len();
+
+        between_vec = between_vec.normalise();
+        between_vec = between_vec.mult(speed * len / max_len);
+
+        this->sum(between_vec);
+        //return Position(x, y).sum(between_vec);
+    }
+
+}
+
 
 Position Position::get_pos() {
 	return Position(x, y);
