@@ -17,22 +17,50 @@ void Picture::draw(std::vector<std::string>* screen_vec, Screen& screen) {
 
         //(*screen_vec)[iy].replace(max(ceil(wighth / 2), x - floor(wighth / 2)), min(wighth, (&screen)->cols * 2 - x_coord - (wighth / 2)), image_vec[i]);
 
-        if (iy >= 0 && x_coord + floor(wighth / 2) < (&screen)->cols * 2 && x_coord - ceil(wighth / 2) > 0 && i < image_vec.size()) {
-            (*screen_vec)[iy].replace(x_coord - (wighth / 2), wighth, image_vec[i]);
+        
+
+        if (iy >= 0 && i < image_vec.size()) {
+            
+            int ii = 0;
+            for (int ix = x_coord - (wighth / 2); ix <= x_coord + (wighth / 2 +1) && ix < (&screen)->cols *2; ix++) {
+
+				if (ii >= image_vec[i].size()) {
+					break;
+				}
+				if (ix >= 0 and image_vec[i][ii] != 'Ú') {
+					(*screen_vec)[iy][ix] = image_vec[i][ii];
+				}
+
+                ii++;
+            }
+
             //(*screen_vec)[rows - 6].replace(cols - 6, image.size(), image);
         }
         i++;
     }
 }
 
-void Picture::add_pic(std::ifstream& file) {
+void Picture::add_pic(std::ifstream& file) {  
+   std::string str;  
+   while (std::getline(file, str)) {  
+       image_vec.push_back(str);  
+   }  
 
-    std::string str;
-    while (std::getline(file, str))
-    {
-        image_vec.push_back(str);
-    }
+   hight = image_vec.size();  
+   wighth = !image_vec.empty() ? image_vec[0].size() : 0;  
+}  
 
-    hight = image_vec.size();
-    wighth = image_vec[0].size();
+void Picture::add_pic(std::string& file_str) {  
+   std::ifstream file(file_str); // Corrected to open the file for reading  
+   if (!file.is_open()) {  
+       throw std::runtime_error("Failed to open file: " + file_str);  
+   }  
+
+   std::string str;  
+   while (std::getline(file, str)) {  
+       image_vec.push_back(str);  
+   }  
+
+   hight = image_vec.size();  
+   wighth = !image_vec.empty() ? image_vec[0].size() : 0;  
 }

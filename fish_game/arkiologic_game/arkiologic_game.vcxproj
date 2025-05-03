@@ -139,21 +139,23 @@
     <ClCompile Include="Rektangle.cpp" />
     <ClCompile Include="Selecters.cpp" />
     <ClCompile Include="Screen.cpp" />
-    <ClCompile Include="SinMovingObj.cpp" />
+    <ClCompile Include="MovingObj.cpp" />
     <ClCompile Include="TextSquere.cpp" />
     <ClCompile Include="usful_funcs.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="banana.txt" />
+    <Text Include="beach.txt" />
     <Text Include="boot.txt" />
     <Text Include="boots.txt" />
     <Text Include="cake.txt" />
     <Text Include="chest.txt" />
     <Text Include="dino.txt" />
-    <Text Include="diver.txt" />
+    <Text Include="podvodnoe.txt" />
     <Text Include="doll.txt" />
     <Text Include="dude.txt" />
     <Text Include="fish.txt" />
@@ -175,7 +177,18 @@
     <Text Include="vase.txt" />
     <Text Include="worm.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets" Condition="Exists('..\packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets'))" />
+  </Target>
 </Project>

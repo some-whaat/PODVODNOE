@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RendrbleObject">
+    <Position X="6.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Position">
+    <Position X="8.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBAAAkCAAACAgEACAAAAAAAAAAAAAAABgAQAAAAI=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rektangle">
+    <Position X="11.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAQAAAABABIAAAAABAAgBAAAAEoAAAAAgAA=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextSquere">
+    <Position X="11.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Picture">
+    <Position X="14.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAgAIAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SinMovingObj">
+    <Position X="14.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgABAAAAAAAACAAAIAAAIBQAAAAQAAAgAAAAAAAAA=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="17" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAQAAEAI=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Screen">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAABAABAAABABQBAAAYAAACIAAAAADAABIAQIAA=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Circle">
+    <Position X="6" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIQAAAAAAAAQIAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

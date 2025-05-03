@@ -16,6 +16,8 @@
 #include <conio.h>
 #include <unordered_map>
 #include <memory>
+#include <nlohmann/json.hpp>
+
 
 class Position;
 class Circle;
@@ -31,11 +33,7 @@ extern bool is_working;
 
 int rand_int(int down_bord, int up_bord);
 
-class RendrbleObject {
-public:
 
-    virtual void draw(std::vector<std::string>* screen_vec, Screen& screen) = 0;
-};
 
 class Position {
 public:
@@ -69,17 +67,26 @@ public:
     Position coords_to_vec_space(Position coord_pos, int cols, int rows);
 };
 
-class Circle : public Position, public RendrbleObject {
+class RendrbleObject : public Position {
+public:
+
+    virtual void draw(std::vector<std::string>* screen_vec, Screen& screen) = 0;
+};
+
+class Circle : public RendrbleObject {
 public:
     float rad;   
 
     std::string rend_style;
 
 
-    Circle() : Position(), rad(1) {
+    Circle() : rad(1) {
     }
 
-    Circle(float in_x, float in_y, float radius) : Position(in_x, in_y), rad(radius) {}
+    Circle(float in_x, float in_y, float radius) : rad(radius) {
+		x = in_x;
+		y = in_y;
+    }
 
     Circle(Position in_pos, float radius) : rad(radius) {
         x = in_pos.x;
@@ -93,8 +100,7 @@ public:
     void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
 };
 
-
-class Rektangle : public Position, public RendrbleObject {
+class Rektangle : public RendrbleObject {
 public:
     float hight;
     float wighth;
@@ -109,9 +115,13 @@ public:
     bool is_frame;
 
 
-    Rektangle() : Position(), hight(0), wighth(0), add_val(0), is_whith_frame(false), is_frame(false), fill(' ') {}
+    Rektangle() : hight(0), wighth(0), add_val(0), is_whith_frame(false), is_frame(false), fill(' ') {}
 
-    Rektangle(float in_x, float in_y, float in_wighth, float in_hight) : Position(in_x, in_y), hight(in_hight), wighth(in_wighth), add_val(0), is_whith_frame(false), is_frame(false), fill(' ') {}
+    Rektangle(float in_x, float in_y, float in_wighth, float in_hight)
+        : RendrbleObject(), hight(in_hight), wighth(in_wighth), add_val(0), is_whith_frame(false), is_frame(false), fill(' ') {
+        x = in_x;
+        y = in_y;
+    }
 
     bool is_in_rec(Position other_pos, float add_dist);
 
@@ -215,6 +225,13 @@ public:
         add_pic(file);
     }
 
+    Picture(std::string& file, int in_x, int in_y) {
+        x = in_x;
+        y = in_y;
+
+        add_pic(file);
+    }
+
 
     Picture(std::vector<std::string> in_image_vec, int in_x, int in_y) : image_vec(in_image_vec) {
         x = in_x;
@@ -228,9 +245,15 @@ public:
 
 protected:
     void add_pic(std::ifstream& file);
+
+    void add_pic(std::string& file);
 };
 
-class SinMovingObj : public Picture {
+class MovingObj : public Picture {
+private:
+    float wave_hight_bound = 20;
+
+
 public:
     float wave_hight;
     float wave_offset;
@@ -239,22 +262,22 @@ public:
 
     int fasing;
 
-    float speed = 0.85;
+    float speed = 1;
 
 
-    SinMovingObj(int max_x, int max_y, int in_x, int in_y, std::ifstream& file, int in_fasing, float in_speed)
+    MovingObj(std::ifstream& file, int in_x, int in_y, int in_fasing, float in_speed, int max_x, int max_y)
         : Picture(file, in_x, in_y),
         speed(in_speed),
         fasing(in_fasing)
     {
 
-        wave_hight = rand_int(-max_y + 33, max_y - 33);
+        wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
         wave_offset = rand_int(-max_x, max_x);
         wave_lenght = (float)rand_int(-4, 4) / 10;
         wave_sdvig = y;
     }
 
-    void move();
+    void move(Screen& screen);
     void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
 };
 
@@ -265,7 +288,7 @@ public:
 
 
     Player() : Picture() {
-        std::ifstream file("diver.txt");
+        std::ifstream file("podvodnoe.txt");
         add_pic(file);
     }
 
@@ -275,23 +298,35 @@ public:
 class Screen {
 
 protected:
-    using RenderLayer = std::vector<std::unique_ptr<RendrbleObject>>;
+    using RenderLayer = std::vector<std::shared_ptr<RendrbleObject>>;
 
     std::vector<std::string> screen_vec;
 
     bool something_changed = true;
-    int MBF = 77; //milliseconds between frames
 
+    /*
     std::vector<std::string> layer_order;  // Порядок рендеринга
     std::unordered_map<std::string, RenderLayer> layers;  // Слои по именам
 
-public:
+    
+    std::vector<RenderLayer*> render_order;  // Быстрый рендеринг
+    std::unordered_map<std::string, std::unique_ptr<RenderLayer>> layers;  // Хранение
+*/
+
+    std::vector<std::shared_ptr<RenderLayer>> render_order;
+    std::unordered_map<std::string, std::shared_ptr<RenderLayer>> layers;
 
     Position camera_pos = Position(0, 0);
 
     std::string rend_style = "0000000000";
 
     CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+public:
+    //float deltatime;
+    float MBF = 11; //milliseconds between frames BETTER NOT TO SET TO 0
+
+    
     int cols, rows;
 
     Screen() {
@@ -305,8 +340,15 @@ public:
         }
         */
     }
+    /* сделать конструктор для JSON'ов
+    Screen() {
+        enshure_cols_rows();
 
-    void addLayer(const std::string& name, RenderLayer&& layer, bool on_top);
+    }*/
+
+    void add_layer(std::shared_ptr<RenderLayer> layer, bool on_top = true, std::string name = "");
+
+    RenderLayer* get_layer(const std::string& name);
 
     void enshure_cols_rows();
 
@@ -317,6 +359,8 @@ public:
     //void draw_pic(std::vector<std::string>* screen_vec, Screen& screen);
 
     void render();
+
+    virtual void process() = 0;
     /*
     void text_seq_render(std::vector<TextSquere> text_seq);
 
@@ -329,6 +373,52 @@ public:
     bool yes_no_choice(std::string text);
 */
 };
+
+class World : public Screen {
+public:
+
+    World() {
+        std::shared_ptr<RenderLayer> bg_fish;
+        bg_fish = std::make_shared<RenderLayer>();
+
+        for (int i = 0; i < 4; i++) {
+
+            int fasing = rand_int(0, 1) == 0 ? -1 : 1;
+
+            std::ifstream fish_f;
+            if (fasing == 1) {
+                fish_f.open("fish_right1.txt");
+            }
+            else {
+                fish_f.open("fish_left1.txt");
+            }
+
+            bg_fish->push_back(std::make_shared<MovingObj>(
+                fish_f,
+                
+                rand_int(-(cols / 2) + 10, (cols / 2) - 10),
+                rand_int(-(rows / 2) + 10, (rows / 2) - 10),
+                
+                fasing,
+                rand_int(1, 2),
+                cols,
+                rows
+            ));
+        }
+
+        add_layer(bg_fish, true, "bg_fish");
+
+        std::shared_ptr<RenderLayer> player;
+        player = std::make_shared<RenderLayer>();
+
+        player->push_back(std::make_shared<Player>());
+
+        add_layer(player, true, "player");
+    }
+
+    void process() override;
+};
+
 
 /*class loot : public Picture {
 public:

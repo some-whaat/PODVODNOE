@@ -60,7 +60,10 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SinMovingObj.cpp">
+    <ClCompile Include="MovingObj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -148,8 +151,15 @@
     <Text Include="worm.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
-    <Text Include="diver.txt">
+    <Text Include="podvodnoe.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
+    <Text Include="beach.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

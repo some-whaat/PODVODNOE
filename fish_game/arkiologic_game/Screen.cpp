@@ -56,19 +56,33 @@ char Screen::pix_calc(int x, int y) {
     return ' ';
 }*/
 
-void Screen::addLayer(const std::string& name, RenderLayer&& layer, bool on_top = true) {
-    if (layers.find(name) == layers.end()) {
-        if (on_top) {
-            layer_order.push_back(name);
-        }
-        else {
-            layer_order.insert(layer_order.begin(), name);
-        }
+void Screen::add_layer(std::shared_ptr<RenderLayer> layer, bool on_top, std::string name) {
+    
+    if (on_top) {
+        render_order.push_back(layer);
     }
-    layers[name] = std::move(layer);
+    else {
+        render_order.insert(render_order.begin(), layer);
+    }
+
+    if (name != "") {
+        layers[name] = layer;
+    }
+}
+
+std::vector<std::shared_ptr<RendrbleObject>>* Screen::get_layer(const std::string& name) {
+    auto it = layers.find(name);
+    
+	if (it == layers.end()) {
+		std::cerr << "Layer not found: " << name << std::endl;
+		return nullptr;
+	}
+    return it->second.get();
 }
 
 void Screen::render() {
+    //std::chrono::steady_clock::time_point previous_time = std::chrono::steady_clock::now();
+
     something_changed = true;
     if (something_changed) {
         system("cls");
@@ -81,13 +95,24 @@ void Screen::render() {
         for (int i = 0; i < rows; i++) {
             screen_vec.emplace_back(cols * 2, ' ');
         }
-       
 
+        for (const auto& layer : render_order) {
+            for (const auto& obj : *layer) {
+                obj->draw(&screen_vec, *this);
+            }
+        }
+
+       /*
+        for (auto* layer : render_order) {
+            for (const auto& obj : *layer) obj->draw(&screen_vec, *this);
+        }
+
+        
         for (const std::string name : layer_order) {
             for (const auto& obj : layers[name]) {
                 obj->draw(&screen_vec, *this);
             }
-        }
+        }*/
 
         for (int i = 0; i < rows; i++) {
 
@@ -100,6 +125,8 @@ void Screen::render() {
         }
 
         Sleep(MBF);
+
+        //deltatime = (std::chrono::steady_clock::now() - previous_time).count();
     }
     something_changed = false;
 }
