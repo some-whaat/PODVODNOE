@@ -21,7 +21,89 @@ int rand_int(int down_bord, int up_bord) {
     return (down_bord + up_bord)/2;
 }
 
+std::vector<std::vector<std::string>> read_objs_from_file(const std::string& file_str) {
+    std::vector<std::vector<std::string>> objs_arr;
+    std::vector<std::string> image_vec;
+    std::string str;
+
+    std::ifstream file(file_str);
+    if (!file.is_open()) {
+        throw std::runtime_error("Failed to open file: " + file_str);
+    }
+
+
+    return read_objs_from_file(file);
+}
+
+std::vector<std::vector<std::string>> read_objs_from_file(std::ifstream& file) {
+    std::vector<std::vector<std::string>> objs_arr;
+    std::vector<std::string> image_vec;
+    std::string str;
+
+    while (std::getline(file, str)) {
+        if (str == "Þ") {
+            objs_arr.push_back(image_vec);
+            image_vec.clear();
+        }
+        else {
+            image_vec.push_back(str);
+        }
+    }
+
+    if (!image_vec.empty()) {
+        objs_arr.push_back(image_vec);
+    }
+
+    return objs_arr;
+}
+
 /*
+std::vector<std::vector<std::string>> read_objs_from_file(std::string& file_str) {
+
+    std::vector<std::vector<std::string>> objs_arr;
+
+    std::ifstream file(file_str);
+    if (!file.is_open()) {
+        throw std::runtime_error("Failed to open file: " + file_str);
+    }
+
+    
+    std::vector<std::vector<std::string>> objs_arr;
+    std::vector<std::string> image_vec;
+    std::string str;
+
+    while (std::getline(file, str)) {
+        while (str != "Þ") {
+            image_vec.push_back(str);
+        }
+
+        objs_arr.push_back(image_vec);
+    }
+
+    return objs_arr;
+}
+
+std::vector<std::vector<std::string>> read_objs_from_file(std::ifstream& file) {
+
+    std::vector<std::vector<std::string>> objs_arr;
+
+
+    std::vector<std::vector<std::string>> objs_arr;
+    std::vector<std::string> image_vec;
+    std::string str;
+
+    while (std::getline(file, str)) {
+        while (str != "Þ") {
+            image_vec.push_back(str);
+        }
+
+        objs_arr.push_back(image_vec);
+    }
+
+    return objs_arr;
+}
+
+
 void download_loot() {
     std::ifstream sword_file;
     sword_file.open("sword_grathics.txt");

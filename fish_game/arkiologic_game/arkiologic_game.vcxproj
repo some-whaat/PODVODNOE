@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatbleObj.cpp" />
     <ClCompile Include="fish_game.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="fishing_game.cpp" />

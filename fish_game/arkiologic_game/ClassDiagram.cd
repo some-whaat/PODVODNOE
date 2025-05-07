@@ -10,7 +10,7 @@
   <Class Name="Position">
     <Position X="8.75" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACBAAAkCAAACAgEACAAAAAAAAAAAAAAABgAQAAAAI=</HashCode>
+      <HashCode>AAAiDAAAkCAAACAgEACAAAAAAAAAAAAAAABgAQAAAEI=</HashCode>
       <FileName>Header.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -35,24 +35,17 @@
       <FileName>Header.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SinMovingObj">
+  <Class Name="MovingObj">
     <Position X="14.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgABAAAAAAAACAAAIAAAIBQAAAAQAAAgAAAAAAAAA=</HashCode>
-      <FileName>Header.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Player">
-    <Position X="17" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAQAAEAI=</HashCode>
+      <HashCode>AIAgABAAAAAAAACAAAIAAAIAQAAAAQAAAhQAAAAAAAA=</HashCode>
       <FileName>Header.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Screen">
     <Position X="18.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAABAABAAABABQBAAAYAAACIAAAAADAABIAQIAA=</HashCode>
+      <HashCode>AAAQAAABAQBAAABABQBAAAYgQACIgAAAACAABAAQIAA=</HashCode>
       <FileName>Header.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -60,6 +53,13 @@
     <Position X="6" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIQAAAAAAAAQIAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Header.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="17" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAIAAAAAAAAAAQAAAAAAAQAAAAA=</HashCode>
       <FileName>Header.h</FileName>
     </TypeIdentifier>
   </Class>

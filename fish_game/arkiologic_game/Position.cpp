@@ -62,7 +62,7 @@ void Position::move_to(Position to_pos, float min_dist = 0) {
     //return *this;
 }
 
-void Position::smooth_move_to(Position to_pos, float min_dist, float speed, float max_len) {
+void Position::smooth_follow(Position to_pos, float min_dist, float speed, float max_len) {
     
 
     if (!(Position(x, y).dist(to_pos) <= min_dist)) {

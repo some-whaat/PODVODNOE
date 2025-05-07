@@ -29,9 +29,10 @@ class Player;
 
 extern bool is_working;
 
-//enum mission_type {any, snake, ruins};
 
 int rand_int(int down_bord, int up_bord);
+std::vector<std::vector<std::string>> read_objs_from_file(const std::string& file_str);
+std::vector<std::vector<std::string>> read_objs_from_file(std::ifstream& file);
 
 
 
@@ -67,7 +68,7 @@ public:
 
     void move_to(Position to_pos, float min_dist);
 
-    void smooth_move_to(Position to_pos, float min_dist, float speed, float max_len);
+    void smooth_follow(Position to_pos, float min_dist, float speed, float max_len);
 
     Position get_pos();
 
@@ -219,7 +220,7 @@ public:
 
     Picture() : Rektangle(), image_vec({}) {}
 
-    Picture(std::ifstream& file) {
+    Picture(const std::string& file) {
         x, y = 0;
 
         add_pic(file);
@@ -232,7 +233,7 @@ public:
         add_pic(file);
     }
 
-    Picture(std::string& file, int in_x, int in_y) {
+    Picture(const std::string& file, int in_x, int in_y) {
         x = in_x;
         y = in_y;
 
@@ -253,12 +254,39 @@ public:
 protected:
     void add_pic(std::ifstream& file);
 
-    void add_pic(std::string& file);
+    void add_pic(std::string file);
 };
 
-class MovingObj : public Picture {
+class AnimatbleObj : public Picture {
+private:
+    float anim_speed = 1;
+    int anim_calls = 0;
+    int curr_frame_ind = 0;
+
+public:
+    std::vector<std::vector<std::string>> anim_frames;
+
+    AnimatbleObj() : anim_frames({ {} }) {}
+
+    AnimatbleObj(const std::string& file_name, float in_anim_speed, int in_x, int in_y)
+        : anim_speed(in_anim_speed) {
+        anim_frames = read_objs_from_file(file_name);
+
+        image_vec = anim_frames[0];
+        x = in_x;
+        y = in_y;
+        hight = image_vec.size();
+        wighth = image_vec[0].size();
+    }
+
+    void animation();
+    void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+};
+
+class MovingObj : public AnimatbleObj {
 private:
     float wave_hight_bound = 20;
+    Position firt_pos;
 
 
 public:
@@ -269,12 +297,24 @@ public:
 
     int fasing;
 
-    float speed = 1;
+    Position velocity;
 
+    MovingObj(std::string file_name, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1)
+        : AnimatbleObj(file_name, in_anim_speed, in_x, in_y),
+        velocity(in_velocity),
+        fasing(in_fasing) {
+        wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
+        wave_offset = rand_int(-max_x, max_x);
+        wave_lenght = static_cast<float>(rand_int(-4, 4)) / 10;
+        wave_sdvig = y;
 
-    MovingObj(std::ifstream& file, int in_x, int in_y, int in_fasing, float in_speed, int max_x, int max_y)
-        : Picture(file, in_x, in_y),
-        speed(in_speed),
+        firt_pos = Position(in_x, in_y);
+    }
+
+    /*
+    MovingObj(std::string& file_name, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1)
+        : AnimatbleObj(file_name, in_anim_speed, in_x, in_y),
+        velocity(in_velocity),
         fasing(in_fasing)
     {
 
@@ -282,37 +322,134 @@ public:
         wave_offset = rand_int(-max_x, max_x);
         wave_lenght = (float)rand_int(-4, 4) / 10;
         wave_sdvig = y;
-    }
-
-    MovingObj(std::string& file_name, int in_x, int in_y, int in_fasing, float in_speed, int max_x, int max_y)
-        : Picture(file_name, in_x, in_y),
-        speed(in_speed),
-        fasing(in_fasing)
-    {
-
-        wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
-        wave_offset = rand_int(-max_x, max_x);
-        wave_lenght = (float)rand_int(-4, 4) / 10;
-        wave_sdvig = y;
-    }
+        
+		firt_pos = Position(in_x, in_y);
+    }*/
 
     void move(Screen& screen);
     void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
 };
 
-class Player : public Picture {
+/*
+class NPC : public MovingObj {
+private:
+
+    struct LogicActions {
+        int needed_item_id;
+        std::string text;
+        int next_state;
+    };
+
+
+    bool has_textbb = false;
+    TextSquere text_bubble = TextSquere();
+
 public:
-    unsigned int money = 0;
-    int food = 0;
+    int id;
+    int state = 0;
+
+    std::unordered_map<int, LogicActions> data_base;
+
+    NPC(int in_id, std::string& file_name, std::unordered_map<int, LogicActions> data_base, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1) : MovingObj(file_name, in_x, in_y, in_fasing, in_velocity, max_x, max_y, in_anim_speed = 1), text_bubble(TextSquere()), id(in_id) {
+        
+    }
+};
+
+class NPC : public MovingObj {
+private:
+    struct LogicActions {
+        int needed_item_id;
+        std::string dialogue;
+        int next_state;
+        int reward_item_id;
+    };
+
+    bool has_textbb = false;
+    TextSquere text_bubble = TextSquere();
+
+public:
+    int id;
+    int state = 0;
+    std::unordered_map<int, LogicActions> data_base;
+
+    // Constructor to load NPC data from JSON
+    NPC(int in_id, const std::string& file_name, const std::string& json_file, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1)
+        : MovingObj(file_name, in_x, in_y, in_fasing, in_velocity, max_x, max_y, in_anim_speed), id(in_id) {
+        load_from_json(json_file);
+    }
+
+    // Load NPC data from JSON
+    void load_from_json(const std::string& json_file) {
+        std::ifstream file(json_file);
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open JSON file: " + json_file);
+        }
+
+        nlohmann::json npc_data;
+        file >> npc_data;
+
+        id = npc_data["npc_id"];
+        for (const auto& state : npc_data["states"].items()) {
+            const std::string& state_str = state.key();
+            const auto& state_data = state.value();
+            int state_id = std::stoi(state_str);
+            data_base[state_id] = {
+                state_data["needed_item_id"],
+                state_data["dialogue"],
+                state_data["next_state"],
+                state_data["reward_item_id"]
+            };
+        }
+    }
+
+    // Trigger NPC interaction
+    std::string interact(int player_item_id, int& player_reward_item) {
+        if (data_base.find(state) == data_base.end()) {
+            return "No dialogue available.";
+        }
+
+        LogicActions& current_action = data_base[state];
+        if (current_action.needed_item_id == -1 || current_action.needed_item_id == player_item_id) {
+            // Update state and provide reward
+            state = current_action.next_state;
+            player_reward_item = current_action.reward_item_id;
+            return current_action.dialogue;
+        }
+        else {
+            return "I need something else.";
+        }
+    }
+};
+*/
+
+class Player : public AnimatbleObj {
+public:
+    float speed = 1;
 
 
-    Player() : Picture() {
-        std::ifstream file("podvodnoe.txt");
-        add_pic(file);
+    Player() : AnimatbleObj("podvodnoe.txt", 22, 0, 0) {
+        //add_pic("podvodnoe.txt");
     }
 
     void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+
+    void move();
 };
+
+/*
+class DataBase {
+private:
+    using RenderLayer = std::vector<std::shared_ptr<RendrbleObject>>;
+
+public:
+	std::unordered_map<int, std::vector<std::string>> data_base;
+	DataBase() {
+		//data_base = {};
+	}
+	void add_data(std::string name, std::vector<std::string> data);
+	void add_data(std::string name, std::string data);
+	std::vector<std::string> get_data(std::string name);
+};*/
 
 class Screen {
 
@@ -343,7 +480,7 @@ protected:
 
 public:
     //float deltatime;
-    float MBF = 11; //milliseconds between frames BETTER NOT TO SET TO 0
+    float MBF = 2; //milliseconds between frames BETTER NOT TO SET TO 0
 
     
     int cols, rows;
@@ -359,6 +496,7 @@ public:
         }
         */
     }
+
     /* сделать конструктор для JSON'ов
     Screen() {
         enshure_cols_rows();
@@ -374,6 +512,10 @@ public:
     int coord_to_vec_space(int coord, char coord_name);
 
     char pix_calc(int x, int y);
+
+	Position get_camera_pos() {
+		return camera_pos;
+	}
 
     //void draw_pic(std::vector<std::string>* screen_vec, Screen& screen);
 
@@ -404,12 +546,12 @@ public:
 
             int fasing = rand_int(0, 1) == 0 ? -1 : 1;
 
-            std::ifstream fish_f;
+            std::string fish_f;
             if (fasing == 1) {
-                fish_f.open("fish_right1.txt");
+                fish_f = "fish_right1.txt";
             }
             else {
-                fish_f.open("fish_left1.txt");
+                fish_f = "fish_left1.txt";
             }
 
             bg_fish->push_back(std::make_shared<MovingObj>(
@@ -419,7 +561,7 @@ public:
                 rand_int(-(rows / 2) + 10, (rows / 2) - 10),
                 
                 fasing,
-                rand_int(1, 2),
+                Position(rand_int(1, 2), rand_int(1, 2)),
                 cols,
                 rows
             ));
