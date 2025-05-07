@@ -7,6 +7,8 @@ void Screen::enshure_cols_rows() {
 
     cols = (csbi.srWindow.Right - csbi.srWindow.Left + 1) / 2;
     rows = (csbi.srWindow.Bottom - csbi.srWindow.Top + 1);
+
+    init_buffers();
 }
 
 int Screen::coord_to_vec_space(int coord, char coord_name) {
@@ -83,8 +85,24 @@ std::vector<std::shared_ptr<RendrbleObject>>* Screen::get_layer(const std::strin
 void Screen::render() {
     //std::chrono::steady_clock::time_point previous_time = std::chrono::steady_clock::now();
 
+    enshure_cols_rows();
+
     something_changed = true;
     if (something_changed) {
+
+        std::fill(backBuffer.begin(), backBuffer.end(), CHAR_INFO{ L' ', 0x07 });
+
+        for (const auto& layer : render_order) {
+            for (const auto& obj : *layer) {
+                obj->draw(backBuffer, *this);
+            }
+        }
+
+        swap_buffers();
+        something_changed = false;
+
+
+/*
         system("cls");
 
         enshure_cols_rows();
@@ -102,7 +120,7 @@ void Screen::render() {
             }
         }
 
-       /*
+       
         for (auto* layer : render_order) {
             for (const auto& obj : *layer) obj->draw(&screen_vec, *this);
         }
@@ -112,7 +130,7 @@ void Screen::render() {
             for (const auto& obj : layers[name]) {
                 obj->draw(&screen_vec, *this);
             }
-        }*/
+        }
 
         for (int i = 0; i < rows; i++) {
 
@@ -123,13 +141,27 @@ void Screen::render() {
                 std::cout << screen_vec[i];
             }
         }
-
+*/
         Sleep(MBF);
 
         //deltatime = (std::chrono::steady_clock::now() - previous_time).count();
     }
     something_changed = false;
 }
+
+void Screen::init_buffers() {
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    backBuffer.resize(cols * rows * 2, { L' ', 0x07 });
+}
+
+void Screen::swap_buffers() {
+    COORD bufferSize = { static_cast<SHORT>(cols * 2), static_cast<SHORT>(rows) };
+    COORD bufferCoord = { 0, 0 };
+    SMALL_RECT writeRegion = { 0, 0, static_cast<SHORT>(cols * 2 - 1), static_cast<SHORT>(rows - 1)};
+
+    WriteConsoleOutput(hConsole, backBuffer.data(), bufferSize, bufferCoord, &writeRegion);
+}
+
 
 /*
 void Screen::text_seq_render(std::vector<TextSquere> text_seq) {

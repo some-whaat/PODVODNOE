@@ -1,8 +1,8 @@
 #include "Header.h"
 
 
-void Player::draw(std::vector<std::string>* screen_vec, Screen& screen) {
-	AnimatbleObj::draw(screen_vec, screen);
+void Player::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
+	AnimatbleObj::draw(buffer, screen);
 
     move();
 }

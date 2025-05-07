@@ -2,8 +2,9 @@
 
 
 
-void TextSquere::draw(std::vector<std::string>* screen_vec, Screen& screen) {
+void TextSquere::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
+	/* дндекюрэ
     draw_frame(screen_vec, screen);
 
     int i = 0;
@@ -17,5 +18,5 @@ void TextSquere::draw(std::vector<std::string>* screen_vec, Screen& screen) {
             (*screen_vec)[iy].replace(floor(x_coord - (wighth / 2)), wighth, text_vec[i]);
         }
         i++;
-    }
+    }*/
 }

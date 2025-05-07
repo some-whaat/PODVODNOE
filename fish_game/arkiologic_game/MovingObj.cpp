@@ -13,8 +13,8 @@ void MovingObj::move(Screen& screen) {
     */
 }
 
-void MovingObj::draw(std::vector<std::string>* screen_vec, Screen& screen) {
-    Picture::draw(screen_vec, screen);
+void MovingObj::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
+    Picture::draw(buffer, screen);
 
     move(screen);
 }

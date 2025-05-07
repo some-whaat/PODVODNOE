@@ -11,7 +11,7 @@ bool Rektangle::is_in_rec(int in_x, int in_y, float add_dist) {
     return in_x < x + (wighth / 2) + add_dist && in_x > x - (wighth / 2) - add_dist && in_y < y + (hight / 2) + add_dist && in_y > y - (hight / 2) - add_dist;
 }
 
-void Rektangle::draw(std::vector<std::string>* screen_vec, Screen& screen) {
+void Rektangle::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
     int y_coord = (screen.coord_to_vec_space(y, 'y') - 1);
     int x_coord = screen.coord_to_vec_space(x, 'x');
 
@@ -20,13 +20,16 @@ void Rektangle::draw(std::vector<std::string>* screen_vec, Screen& screen) {
 
     std::string line = std::string(now_wighth, fill);
 
+    /* ƒŒƒ≈À¿“‹
     for (int iy = y_coord - floor(now_hight / 2); iy < y_coord + ceil(now_hight / 2) && iy < (&screen)->rows; iy++) {
 
         if (iy >= 0 && x_coord + (now_wighth / 2) < (&screen)->cols * 2 && x_coord - (now_wighth / 2) > 0) {
             (*screen_vec)[iy].replace(x_coord - (now_wighth / 2), now_wighth, line);
+            buffer[y * screen.cols + x].Char.AsciiChar = image_vec[i][ii];
+
             //(*screen_vec)[rows - 6].replace(cols - 6, image.size(), image);
         }
-    }
+    }*/
 }
 
 void Rektangle::draw_frame(std::vector<std::string>* screen_vec, Screen& screen) {

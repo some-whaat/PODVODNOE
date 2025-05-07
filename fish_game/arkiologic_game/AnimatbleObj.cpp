@@ -14,8 +14,8 @@ void AnimatbleObj::animation() {
 	}
 }
 
-void AnimatbleObj::draw(std::vector<std::string>* screen_vec, Screen& screen) {
+void AnimatbleObj::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 	animation();
 
-	Picture::draw(screen_vec, screen);
+	Picture::draw(buffer, screen);
 }

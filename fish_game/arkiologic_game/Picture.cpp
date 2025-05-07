@@ -1,6 +1,27 @@
 #include "Header.h"
 
-void Picture::draw(std::vector<std::string>* screen_vec, Screen& screen) {
+void Picture::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
+
+/*
+    const int y_coord = screen.coord_to_vec_space(y, 'y') - 1;
+    const int start_y = max(0, y_coord - (hight / 2));
+    const int end_y = min(screen.rows - 1, y_coord + (hight / 2));
+
+    const int x_coord = screen.coord_to_vec_space(x, 'x');
+    const int start_x = max(0, x_coord - (5 / 2));
+    const int end_x = min(screen.cols * 2 - 1, x_coord + (wighth / 2 + 1));
+
+    for (int iy = start_y; iy <= end_y; iy++) {
+        const int buffer_row = iy * screen.cols * 2;
+        for (int ix = start_x; ix <= end_x; ix++) {
+            if (image_vec[iy - start_y][ix - start_x] != 'Ú') {
+                buffer[buffer_row + ix].Char.AsciiChar =
+                    image_vec[iy - start_y][ix - start_x];
+            }
+        }
+    }*/
+
+    
     int i = 0;
     int y_coord = screen.coord_to_vec_space(y, 'y') - 1;
 
@@ -14,7 +35,9 @@ void Picture::draw(std::vector<std::string>* screen_vec, Screen& screen) {
                     break;
                 }
                 if (ix >= 0 && image_vec[i][ii] != 'Ú') {
-                    (*screen_vec)[iy][ix] = image_vec[i][ii];
+                    //(*screen_vec)[iy][ix] = image_vec[i][ii];
+
+                    buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = image_vec[i][ii];
                 }
                 ii++;
             }

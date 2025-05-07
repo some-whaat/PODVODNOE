@@ -9,7 +9,7 @@ bool Circle::is_in_circle(Position other_pos, float add_rad = 0) {
     return (pow(other_pos.x - x, 2) + pow(other_pos.y - y, 2)) <= pow((rad + add_rad), 2);
 }
 
-void Circle::draw(std::vector<std::string>* screen_vec, Screen& screen) {
+void Circle::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
     int side = rad * 2 + 1;
 
@@ -19,6 +19,7 @@ void Circle::draw(std::vector<std::string>* screen_vec, Screen& screen) {
     int x_end = x + ceil(side / 2);
     int y_start = y - floor(side / 2);
 
+    /* дндекюрэ
     for (int iy = y_coord - floor(side / 2); iy < y_coord + ceil(side / 2) && iy < (&screen)->rows; iy++) {
 
         int x_coord = screen.coord_to_vec_space(x, 'x');
@@ -43,5 +44,5 @@ void Circle::draw(std::vector<std::string>* screen_vec, Screen& screen) {
         }
 
         y_start++;
-    }
+    }*/
 }

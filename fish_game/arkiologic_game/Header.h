@@ -78,7 +78,7 @@ public:
 class RendrbleObject : public Position {
 public:
 
-    virtual void draw(std::vector<std::string>* screen_vec, Screen& screen) = 0;
+    virtual void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) = 0;
 };
 
 class Circle : public RendrbleObject {
@@ -105,7 +105,7 @@ public:
 
     bool is_in_circle(Position other_pos, float add_rad);
 
-    void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 };
 
 class Rektangle : public RendrbleObject {
@@ -135,7 +135,7 @@ public:
 
     bool is_in_rec(int in_x, int in_y, float add_dist);
 
-    void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
     void draw_frame(std::vector<std::string>* screen_vec, Screen& screen);
 };
@@ -211,7 +211,7 @@ public:
         }
     }
 
-    void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 };
 
 class Picture : public Rektangle {
@@ -249,7 +249,7 @@ public:
         wighth = image_vec[0].size();
     }
 
-    void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
 protected:
     void add_pic(std::ifstream& file);
@@ -280,7 +280,7 @@ public:
     }
 
     void animation();
-    void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 };
 
 class MovingObj : public AnimatbleObj {
@@ -327,7 +327,7 @@ public:
     }*/
 
     void move(Screen& screen);
-    void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 };
 
 /*
@@ -353,7 +353,7 @@ public:
     NPC(int in_id, std::string& file_name, std::unordered_map<int, LogicActions> data_base, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1) : MovingObj(file_name, in_x, in_y, in_fasing, in_velocity, max_x, max_y, in_anim_speed = 1), text_bubble(TextSquere()), id(in_id) {
         
     }
-};
+};*/
 
 class NPC : public MovingObj {
 private:
@@ -420,7 +420,7 @@ public:
         }
     }
 };
-*/
+
 
 class Player : public AnimatbleObj {
 public:
@@ -431,7 +431,7 @@ public:
         //add_pic("podvodnoe.txt");
     }
 
-    void draw(std::vector<std::string>* screen_vec, Screen& screen) override;
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
     void move();
 };
@@ -454,20 +454,14 @@ public:
 class Screen {
 
 protected:
+    HANDLE hConsole;
+    std::vector<CHAR_INFO> backBuffer;
+
     using RenderLayer = std::vector<std::shared_ptr<RendrbleObject>>;
 
     std::vector<std::string> screen_vec;
 
     bool something_changed = true;
-
-    /*
-    std::vector<std::string> layer_order;  // Порядок рендеринга
-    std::unordered_map<std::string, RenderLayer> layers;  // Слои по именам
-
-    
-    std::vector<RenderLayer*> render_order;  // Быстрый рендеринг
-    std::unordered_map<std::string, std::unique_ptr<RenderLayer>> layers;  // Хранение
-*/
 
     std::vector<std::shared_ptr<RenderLayer>> render_order;
     std::unordered_map<std::string, std::shared_ptr<RenderLayer>> layers;
@@ -488,8 +482,10 @@ public:
     Screen() {
 
         //_ren_objs = {};
-
         enshure_cols_rows();
+
+        std::fill(backBuffer.begin(), backBuffer.end(), CHAR_INFO{ L' ', 0x07 });
+
         /*
         for (int i = 0; i < cols; i++) {
             screen_vec.push_back(std::string(rows, ' '));
@@ -520,6 +516,10 @@ public:
     //void draw_pic(std::vector<std::string>* screen_vec, Screen& screen);
 
     void render();
+
+    void init_buffers();
+
+    void swap_buffers();
 
     virtual void process() = 0;
     /*
