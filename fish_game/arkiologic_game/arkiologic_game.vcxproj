@@ -134,6 +134,7 @@
     <ClCompile Include="fishing_game.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Picture.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <Text Include="banana.txt" />
     <Text Include="beach.txt" />
+    <Text Include="big_fish.txt" />
     <Text Include="boot.txt" />
     <Text Include="boots.txt" />
     <Text Include="cake.txt" />
@@ -173,6 +175,7 @@
     <Text Include="rod_tool.txt" />
     <Text Include="scraps.txt" />
     <Text Include="scull.txt" />
+    <Text Include="seaweed.txt" />
     <Text Include="shovel.txt" />
     <Text Include="sword.txt" />
     <Text Include="vase.txt" />

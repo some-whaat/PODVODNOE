@@ -3,6 +3,7 @@
 
 void World::process() {
     std::vector<std::shared_ptr<RendrbleObject>>* bg_fish = get_layer("bg_fish");
+    std::vector<std::shared_ptr<RendrbleObject>>* npcs = get_layer("npcs");
     std::shared_ptr<RendrbleObject> player = (*get_layer("player"))[0];
 
 
@@ -32,7 +33,8 @@ void World::process() {
                 fasing,
                 Position(rand_int(-2, 2), rand_int(-2, 2)),
                 cols,
-                rows
+                rows,
+                -0.6f
             ));
         }
 
@@ -46,6 +48,11 @@ void World::process() {
 
 		//something_changed = true;
 
+        for (std::shared_ptr<RendrbleObject> npc : *npcs) {
+            if (player->is_inside(*npc, 6)) {  // MAGIC NUMBER
+                //npc->collision(player);
+            }
+        }
 
         
 

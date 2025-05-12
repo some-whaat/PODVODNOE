@@ -69,6 +69,9 @@
     <ClCompile Include="AnimatbleObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Source Files\pics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">
@@ -158,6 +161,12 @@
       <Filter>Source Files\pics</Filter>
     </Text>
     <Text Include="beach.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="big_fish.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="seaweed.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
   </ItemGroup>

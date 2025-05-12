@@ -14,7 +14,7 @@ void MovingObj::move(Screen& screen) {
 }
 
 void MovingObj::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
-    Picture::draw(buffer, screen);
+    AnimatbleObj::draw(buffer, screen);
 
     move(screen);
 }

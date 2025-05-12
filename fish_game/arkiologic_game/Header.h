@@ -33,7 +33,9 @@ extern bool is_working;
 int rand_int(int down_bord, int up_bord);
 std::vector<std::vector<std::string>> read_objs_from_file(const std::string& file_str);
 std::vector<std::vector<std::string>> read_objs_from_file(std::ifstream& file);
-
+template <typename T> int sgn(T val) {
+	return (T(0) < val) - (val < T(0));
+}
 
 
 class Position {
@@ -47,6 +49,11 @@ public:
     //float velosity;
 
     Position() : x(0), y(0) {}
+
+    Position(std::vector<float> vec) {
+        x = vec[0];
+        y = vec[y];
+    }
 
     Position(float in_x, float in_y) : x(in_x), y(in_y) {}
 
@@ -79,6 +86,10 @@ class RendrbleObject : public Position {
 public:
 
     virtual void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) = 0;
+
+    virtual bool is_inside(Position pos, float add_dist) = 0;
+
+    //virtual void collision(std::shared_ptr<RendrbleObject> other_pos) = 0;
 };
 
 class Circle : public RendrbleObject {
@@ -106,6 +117,8 @@ public:
     bool is_in_circle(Position other_pos, float add_rad);
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+
+    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
 };
 
 class Rektangle : public RendrbleObject {
@@ -131,51 +144,33 @@ public:
         y = in_y;
     }
 
-    bool is_in_rec(Position other_pos, float add_dist);
+    bool is_inside(Position pos, float add_dist) override final;
 
     bool is_in_rec(int in_x, int in_y, float add_dist);
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
-    void draw_frame(std::vector<std::string>* screen_vec, Screen& screen);
+    void draw_frame(std::vector<CHAR_INFO>& buffer, Screen& screen);
+
+    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
 };
 
 class TextSquere : public Rektangle{
-public:
+protected:
     std::vector<std::string> text_vec;
+
+public:
+    bool follow = false;
+    Position* follow_pos = nullptr;
+    int follow_wighth = 0;
+    int follow_hight = 0;
 
     TextSquere() : text_vec({}) {}
 
     TextSquere(std::string in_text, int in_wighth) {
         x, y = 0;
 
-        if (in_wighth == 0) {
-            wighth = in_text.size();
-            text_vec.push_back(in_text);
-            hight = 1;
-        }
-        else {
-            wighth = in_wighth;
-
-            //std::string add_line = std::string(' ', in_text.size() % (int)wighth);
-            //in_text += add_line;
-
-            for (int i = 0; i < std::ceil(in_text.size() / wighth) * wighth; i += wighth) {
-                std::string new_line = in_text.substr(i, wighth);
-
-                if (new_line.size() < wighth) {
-                    int coun = wighth - new_line.size();
-                    for (int i = 0; i < coun; i++) {
-                        new_line += ' ';
-                    }
-                }
-
-
-                text_vec.push_back(new_line);
-            }
-
-            hight = text_vec.size();
-        }
+		set_text(in_text, in_wighth);
     }
 
     TextSquere(int in_x, int in_y, std::string in_text, float in_wighth) {
@@ -211,12 +206,20 @@ public:
         }
     }
 
+    void text_follow(int facing);
+
+    void set_text(std::string in_text, int in_wighth);
+
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+
+    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
 };
 
 class Picture : public Rektangle {
 public:
     std::vector<std::string> image_vec;
+
+	float add_paralax = 0;
 
     Picture() : Rektangle(), image_vec({}) {}
 
@@ -233,7 +236,7 @@ public:
         add_pic(file);
     }
 
-    Picture(const std::string& file, int in_x, int in_y) {
+    Picture(const std::string& file, int in_x, int in_y, float in_add_paralax = 0) : add_paralax(in_add_paralax) {
         x = in_x;
         y = in_y;
 
@@ -250,6 +253,7 @@ public:
     }
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
 
 protected:
     void add_pic(std::ifstream& file);
@@ -258,7 +262,7 @@ protected:
 };
 
 class AnimatbleObj : public Picture {
-private:
+protected:
     float anim_speed = 1;
     int anim_calls = 0;
     int curr_frame_ind = 0;
@@ -270,17 +274,17 @@ public:
 
     AnimatbleObj(const std::string& file_name, float in_anim_speed, int in_x, int in_y)
         : anim_speed(in_anim_speed) {
-        anim_frames = read_objs_from_file(file_name);
 
-        image_vec = anim_frames[0];
         x = in_x;
         y = in_y;
-        hight = image_vec.size();
-        wighth = image_vec[0].size();
+
+        read_anim_frames(file_name);
     }
 
+    void read_anim_frames(const std::string& file_str);
     void animation();
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
 };
 
 class MovingObj : public AnimatbleObj {
@@ -299,10 +303,14 @@ public:
 
     Position velocity;
 
-    MovingObj(std::string file_name, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1)
+    MovingObj() {}
+
+    MovingObj(std::string file_name, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1, float in_add_paralax = 0)
         : AnimatbleObj(file_name, in_anim_speed, in_x, in_y),
         velocity(in_velocity),
         fasing(in_fasing) {
+
+		add_paralax = in_add_paralax;
         wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
         wave_offset = rand_int(-max_x, max_x);
         wave_lenght = static_cast<float>(rand_int(-4, 4)) / 10;
@@ -328,6 +336,7 @@ public:
 
     void move(Screen& screen);
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+    //svoid collision(std::shared_ptr<RendrbleObject> other_pos) override;
 };
 
 /*
@@ -372,13 +381,48 @@ public:
     int state = 0;
     std::unordered_map<int, LogicActions> data_base;
 
-    // Constructor to load NPC data from JSON
-    NPC(int in_id, const std::string& file_name, const std::string& json_file, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1)
-        : MovingObj(file_name, in_x, in_y, in_fasing, in_velocity, max_x, max_y, in_anim_speed), id(in_id) {
-        load_from_json(json_file);
+
+    NPC(std::string json_file) {
+
+        std::ifstream file(json_file);
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open JSON file: " + json_file);
+        }
+
+        nlohmann::json npc_data;
+        file >> npc_data;
+
+        id = npc_data["id"];
+        read_anim_frames(npc_data["sprite_filepame"]);
+        x = npc_data["x"];
+        y = npc_data["y"];
+        velocity = Position(npc_data["velocity"]);
+        anim_speed = npc_data["anim_speed"];
+
+        text_bubble.fill = '%';
+        text_bubble.add_val = 2;
+        text_bubble.follow = true;
+        text_bubble.follow_pos = this;
+		text_bubble.follow_wighth = wighth;
+        text_bubble.follow_hight = hight;
+        
+        for (const auto& state : npc_data["states"].items()) {
+            const std::string& state_str = state.key();
+            const auto& state_data = state.value();
+            int state_id = std::stoi(state_str);
+            data_base[state_id] = {
+                state_data["needed_item_id"],
+                state_data["dialogue"],
+                state_data["next_state"],
+                state_data["reward_item_id"]
+            };
+        }
+        has_textbb = true;
+		text_bubble.set_text(data_base[state].dialogue, 20);
+
     }
 
-    // Load NPC data from JSON
+
     void load_from_json(const std::string& json_file) {
         std::ifstream file(json_file);
         if (!file.is_open()) {
@@ -402,7 +446,7 @@ public:
         }
     }
 
-    // Trigger NPC interaction
+
     std::string interact(int player_item_id, int& player_reward_item) {
         if (data_base.find(state) == data_base.end()) {
             return "No dialogue available.";
@@ -419,6 +463,10 @@ public:
             return "I need something else.";
         }
     }
+
+    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
+
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 };
 
 
@@ -466,13 +514,16 @@ protected:
     std::vector<std::shared_ptr<RenderLayer>> render_order;
     std::unordered_map<std::string, std::shared_ptr<RenderLayer>> layers;
 
-    Position camera_pos = Position(0, 0);
+    
 
     std::string rend_style = "0000000000";
 
     CONSOLE_SCREEN_BUFFER_INFO csbi;
 
 public:
+
+    Position camera_pos = Position(0, 0);
+
     //float deltatime;
     float MBF = 2; //milliseconds between frames BETTER NOT TO SET TO 0
 
@@ -563,7 +614,8 @@ public:
                 fasing,
                 Position(rand_int(1, 2), rand_int(1, 2)),
                 cols,
-                rows
+                rows,
+				-0.4f
             ));
         }
 

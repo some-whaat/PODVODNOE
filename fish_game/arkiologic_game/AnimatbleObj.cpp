@@ -19,3 +19,11 @@ void AnimatbleObj::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
 	Picture::draw(buffer, screen);
 }
+
+void AnimatbleObj::read_anim_frames(const std::string& file_name) {
+	anim_frames = read_objs_from_file(file_name);
+
+	image_vec = anim_frames[0];
+	hight = image_vec.size();
+	wighth = image_vec[0].size();
+}

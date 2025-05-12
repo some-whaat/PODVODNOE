@@ -23,10 +23,11 @@ void Picture::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
     
     int i = 0;
-    int y_coord = screen.coord_to_vec_space(y, 'y') - 1;
+    int y_coord = screen.coord_to_vec_space(y, 'y') - 1 - screen.camera_pos.y * add_paralax;
+    int x_coord = screen.coord_to_vec_space(x, 'x') + screen.camera_pos.x * add_paralax;
 
     for (int iy = y_coord - (hight / 2); iy < y_coord + (hight / 2) && iy < screen.rows; iy++) {
-        int x_coord = screen.coord_to_vec_space(x, 'x');
+        
 
         if (iy >= 0 && i < image_vec.size()) {
             int ii = 0;
