@@ -89,7 +89,7 @@ public:
 
     virtual bool is_inside(Position pos, float add_dist) = 0;
 
-    //virtual void collision(std::shared_ptr<RendrbleObject> other_pos) = 0;
+    virtual void action(std::shared_ptr<Player> player) = 0;
 };
 
 class Circle : public RendrbleObject {
@@ -118,7 +118,7 @@ public:
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
-    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
+    void action(std::shared_ptr<Player> player) override {}
 };
 
 class Rektangle : public RendrbleObject {
@@ -152,7 +152,7 @@ public:
 
     void draw_frame(std::vector<CHAR_INFO>& buffer, Screen& screen);
 
-    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
+    void action(std::shared_ptr<Player> player) override {}
 };
 
 class TextSquere : public Rektangle{
@@ -212,7 +212,7 @@ public:
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
-    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
+    void action(std::shared_ptr<Player> player) override {}
 };
 
 class Picture : public Rektangle {
@@ -253,7 +253,7 @@ public:
     }
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
-    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
+    void action(std::shared_ptr<Player> player) override {}
 
 protected:
     void add_pic(std::ifstream& file);
@@ -284,7 +284,7 @@ public:
     void read_anim_frames(const std::string& file_str);
     void animation();
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
-    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
+    void action(std::shared_ptr<Player> player) override {}
 };
 
 class MovingObj : public AnimatbleObj {
@@ -336,7 +336,7 @@ public:
 
     void move(Screen& screen);
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
-    //svoid collision(std::shared_ptr<RendrbleObject> other_pos) override;
+    void action(std::shared_ptr<Player> player) override {}
 };
 
 /*
@@ -376,6 +376,8 @@ private:
     bool has_textbb = false;
     TextSquere text_bubble = TextSquere();
 
+    int text_wight = 20;
+
 public:
     int id;
     int state = 0;
@@ -399,7 +401,7 @@ public:
         velocity = Position(npc_data["velocity"]);
         anim_speed = npc_data["anim_speed"];
 
-        text_bubble.fill = '%';
+        //text_bubble.fill = '%';
         text_bubble.add_val = 2;
         text_bubble.follow = true;
         text_bubble.follow_pos = this;
@@ -418,8 +420,7 @@ public:
             };
         }
         has_textbb = true;
-		text_bubble.set_text(data_base[state].dialogue, 20);
-
+        set_text();
     }
 
 
@@ -447,24 +448,11 @@ public:
     }
 
 
-    std::string interact(int player_item_id, int& player_reward_item) {
-        if (data_base.find(state) == data_base.end()) {
-            return "No dialogue available.";
-        }
+    //std::string npc_action(int player_item_id, int& player_reward_item);
 
-        LogicActions& current_action = data_base[state];
-        if (current_action.needed_item_id == -1 || current_action.needed_item_id == player_item_id) {
-            // Update state and provide reward
-            state = current_action.next_state;
-            player_reward_item = current_action.reward_item_id;
-            return current_action.dialogue;
-        }
-        else {
-            return "I need something else.";
-        }
-    }
+    void set_text();
 
-    //void collision(std::shared_ptr<RendrbleObject> other_pos) override;
+    void action(std::shared_ptr<Player> player) override;
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 };
@@ -587,6 +575,10 @@ public:
 };
 
 class World : public Screen {
+private:
+    std::shared_ptr<Player> player;
+
+
 public:
 
     World() {
@@ -621,12 +613,14 @@ public:
 
         add_layer(bg_fish, true, "bg_fish");
 
-        std::shared_ptr<RenderLayer> player;
-        player = std::make_shared<RenderLayer>();
+        player = std::make_shared<Player>();
 
-        player->push_back(std::make_shared<Player>());
+        std::shared_ptr<RenderLayer> player_l;
+        player_l = std::make_shared<RenderLayer>();
 
-        add_layer(player, true, "player");
+        player_l->push_back(player);
+
+        add_layer(player_l, true, "player");
     }
 
     void process() override;

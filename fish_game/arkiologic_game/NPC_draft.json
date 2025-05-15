@@ -1,23 +1,26 @@
 {
+  "class_name": "NPC",
   "id": 1,
   "sprite_filepame": "big_fish.txt",
-  "x": 20,
+  "x": -20,
   "y": -10,
   "velocity": [ 0, 0 ],
-  "anim_speed": 55,
+  "anim_speed": 66,
 
   "states": {
     "0": {
       "dialogue": "Hello, traveler! Can you bring me a golden fish?",
-      "needed_item_id": 101,
+      "needed_item_id": -1,
       "next_state": 1,
-      "reward_item_id": 201
+      "reward_item_id": -1
     },
     "1": {
       "dialogue": "Thank you for the golden fish! Here is your reward.",
-      "needed_item_id": -1,
+      "needed_item_id": 787,
       "next_state": -1,
-      "reward_item_id": -1
+      "reward_item_id": 666,
+      "id_minigame": -1,
+      "ubgate": 1
     }
   }
 }

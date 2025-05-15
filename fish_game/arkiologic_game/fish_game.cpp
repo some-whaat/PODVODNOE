@@ -60,8 +60,8 @@ int main() {
 //    std::vector<std::unique_ptr<RendrbleObject>> layer;
 //    layer.push_back(std::make_unique<SinMovingObj>(66, 66, 0, 0, file, 1, 1));
 
-    // Move the entire layer into addLayer
-    scr.add_layer(bg, false);
+
+    //scr.add_layer(bg, false);
     scr.add_layer(npc, true, "npcs");
 
     scr.process();

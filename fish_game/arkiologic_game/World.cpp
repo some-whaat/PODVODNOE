@@ -4,7 +4,7 @@
 void World::process() {
     std::vector<std::shared_ptr<RendrbleObject>>* bg_fish = get_layer("bg_fish");
     std::vector<std::shared_ptr<RendrbleObject>>* npcs = get_layer("npcs");
-    std::shared_ptr<RendrbleObject> player = (*get_layer("player"))[0];
+    //std::shared_ptr<RendrbleObject> player = (*get_layer("player"))[0];
 
 
 	while (true) {
@@ -50,7 +50,7 @@ void World::process() {
 
         for (std::shared_ptr<RendrbleObject> npc : *npcs) {
             if (player->is_inside(*npc, 6)) {  // MAGIC NUMBER
-                //npc->collision(player);
+                npc->action(player);
             }
         }
 

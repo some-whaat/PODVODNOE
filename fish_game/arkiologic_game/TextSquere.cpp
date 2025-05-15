@@ -33,7 +33,7 @@ void TextSquere::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
     Rektangle::draw_frame(buffer, screen);
 
 
-    for (int iy = y_coord - (hight / 2); iy < y_coord + (hight / 2) && iy < screen.rows; iy++) {
+    for (int iy = y_coord - std::ceil(hight / 2) - int(int(hight) % 2 == 0); iy < y_coord + std::ceil(hight / 2) && iy < screen.rows; iy++) {
 
         if (iy >= 0 && i < text_vec.size()) {
             int ii = 0;
@@ -64,10 +64,17 @@ void TextSquere::text_follow(int facing) {
 
 void TextSquere::set_text(std::string in_text, int in_wighth) {
 
+    text_vec.clear();
+
     if (in_wighth == 0) {
         wighth = in_text.size();
         text_vec.push_back(in_text);
         hight = 1;
+    }
+    else if (in_text.size() < in_wighth) {
+        wighth = in_text.size();
+        hight = 1;
+        text_vec.push_back(in_text);
     }
     else {
         wighth = in_wighth;
