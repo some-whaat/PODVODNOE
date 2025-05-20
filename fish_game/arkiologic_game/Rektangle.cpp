@@ -12,26 +12,37 @@ bool Rektangle::is_in_rec(int in_x, int in_y, float add_dist) {
 }
 
 void Rektangle::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
-    int y_coord = (screen.coord_to_vec_space(y, 'y') - 1);
-    int x_coord = screen.coord_to_vec_space(x, 'x');
 
-    float now_hight = add_val + hight;
-    float now_wighth = add_val + wighth;
+    if (is_render == true) {
 
-    //std::string line = std::string(now_wighth, fill);
+        int y_coord = (screen.coord_to_vec_space(y, 'y') - 1);
+        int x_coord = screen.coord_to_vec_space(x, 'x');
 
-    for (int iy = y_coord - floor(now_hight / 2); iy < y_coord + ceil(now_hight / 2) && iy < screen.rows; iy++) {
+        if (is_steak_to_screen) {
+            x_coord += screen.get_camera_pos().x * 2;
+            y_coord -= screen.get_camera_pos().y;
+        }
 
-        if (iy >= 0) {
+        float now_hight = add_val + hight;
+        float now_wighth = add_val + wighth;
 
-            for (int ix = x_coord - (now_wighth / 2); ix <= x_coord + (now_wighth / 2 + 1) && ix < screen.cols * 2; ix++) {
+        //std::string line = std::string(now_wighth, fill);
 
-                if (ix >= 0) {
-                    buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = fill;
+        for (int iy = y_coord - floor(now_hight / 2); iy < y_coord + ceil(now_hight / 2) && iy < screen.rows; iy++) {
+
+            if (iy >= 0) {
+
+                for (int ix = x_coord - (now_wighth / 2); ix <= x_coord + (now_wighth / 2 + 1) && ix < screen.cols * 2; ix++) {
+
+                    if (ix >= 0) {
+                        buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = fill;
+                    }
                 }
             }
         }
     }
+
+    
 /*
     for (int iy = y_coord - floor(now_hight / 2); iy < y_coord + ceil(now_hight / 2) && iy < screen.rows; iy++) {
         if (iy >= 0 && x_coord - (now_wighth / 2) >= 0 && x_coord + (now_wighth / 2) < screen.cols) {
@@ -49,6 +60,11 @@ void Rektangle::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 void Rektangle::draw_frame(std::vector<CHAR_INFO>& buffer, Screen& screen) {
     int y_coord = (screen.coord_to_vec_space(y, 'y') - 1);
     int x_coord = screen.coord_to_vec_space(x, 'x');
+
+    if (is_steak_to_screen) {
+        x_coord += screen.get_camera_pos().x * 2;
+        y_coord -= screen.get_camera_pos().y;
+    }
 
     float now_hight = add_val + hight;
     float now_wighth = add_val + wighth;

@@ -85,6 +85,11 @@ public:
 class RendrbleObject : public Position {
 public:
 
+    int id = 0;
+
+    bool is_steak_to_screen = false;
+    bool is_render = true;
+
     virtual void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) = 0;
 
     virtual bool is_inside(Position pos, float add_dist) = 0;
@@ -209,6 +214,28 @@ public:
     void text_follow(int facing);
 
     void set_text(std::string in_text, int in_wighth);
+
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+
+    void action(std::shared_ptr<Player> player) override {}
+};
+
+class UI : public TextSquere {
+private:
+    int poses_arr[4][2] = {
+{0, -1}, // 0 down
+{0, 1},  // 1 up 
+{1, 1},  // 2 riht up
+{-1, 1}  // 3 left up
+    };
+
+    int screen_pos;
+
+public:
+    UI(std::string in_text, float in_wighth, int screen_pos_) : TextSquere(in_text, in_wighth), screen_pos(screen_pos_) {
+        is_steak_to_screen = true;
+        add_val = 2;
+    }
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
@@ -373,13 +400,11 @@ private:
         int reward_item_id;
     };
 
-    bool has_textbb = false;
     TextSquere text_bubble = TextSquere();
 
     int text_wight = 20;
 
 public:
-    int id;
     int state = 0;
     std::unordered_map<int, LogicActions> data_base;
 
@@ -419,7 +444,7 @@ public:
                 state_data["reward_item_id"]
             };
         }
-        has_textbb = true;
+        text_bubble.is_render = true;
         set_text();
     }
 
@@ -459,8 +484,11 @@ public:
 
 
 class Player : public AnimatbleObj {
+private:
+    int move_count = 0;
+
 public:
-    float speed = 1;
+    float speed = 0.5;
 
 
     Player() : AnimatbleObj("podvodnoe.txt", 22, 0, 0) {
@@ -508,9 +536,9 @@ protected:
 
     CONSOLE_SCREEN_BUFFER_INFO csbi;
 
-public:
-
     Position camera_pos = Position(0, 0);
+
+public:
 
     //float deltatime;
     float MBF = 2; //milliseconds between frames BETTER NOT TO SET TO 0
@@ -546,10 +574,11 @@ public:
 
     int coord_to_vec_space(int coord, char coord_name);
 
-    char pix_calc(int x, int y);
+    //char pix_calc(int x, int y);
 
 	Position get_camera_pos() {
-		return camera_pos;
+        return camera_pos;
+        //return Position(round(camera_pos.x), round(camera_pos.y));
 	}
 
     //void draw_pic(std::vector<std::string>* screen_vec, Screen& screen);
@@ -621,6 +650,17 @@ public:
         player_l->push_back(player);
 
         add_layer(player_l, true, "player");
+
+
+        std::shared_ptr<UI> ui_down = std::make_shared<UI>("press space to interact", 0, 0);
+        ui_down->is_render = false;
+        ui_down->set_text("press space to interact", 0);
+
+        std::shared_ptr<RenderLayer> ui_layer = std::make_shared<RenderLayer>();
+
+        ui_layer->push_back(ui_down);
+
+        add_layer(ui_layer, true, "ui_layer");
     }
 
     void process() override;

@@ -4,6 +4,7 @@
 void World::process() {
     std::vector<std::shared_ptr<RendrbleObject>>* bg_fish = get_layer("bg_fish");
     std::vector<std::shared_ptr<RendrbleObject>>* npcs = get_layer("npcs");
+    std::shared_ptr<RendrbleObject> ui_down = (*get_layer("ui_layer"))[0];
     //std::shared_ptr<RendrbleObject> player = (*get_layer("player"))[0];
 
 
@@ -48,17 +49,20 @@ void World::process() {
 
 		//something_changed = true;
 
+        bool is_ui_down = false;
         for (std::shared_ptr<RendrbleObject> npc : *npcs) {
             if (player->is_inside(*npc, 6)) {  // MAGIC NUMBER
                 npc->action(player);
+                is_ui_down = true;
             }
         }
-
+        ui_down->is_render = is_ui_down;
+        
         
 
-
-        camera_pos.smooth_follow(player->get_pos(), 1, 0.9, 9); // убрать magic numbers
-		
+        // БАГ :(((((((((((((((((
+        //camera_pos.smooth_follow(player->get_pos(), 1, 0.5, 9); // убрать magic numbers
+        camera_pos.move_to(player->get_pos(), 1);
 
 		render();
 	}

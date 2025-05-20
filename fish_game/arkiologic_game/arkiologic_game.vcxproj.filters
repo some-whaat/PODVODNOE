@@ -72,6 +72,9 @@
     <ClCompile Include="NPC.cpp">
       <Filter>Source Files\pics</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">

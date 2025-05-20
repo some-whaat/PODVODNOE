@@ -23,35 +23,45 @@ void TextSquere::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
 void TextSquere::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
-    int i = 0;
-    int y_coord = screen.coord_to_vec_space(y, 'y');
-    int x_coord = screen.coord_to_vec_space(x, 'x');
+    if (is_render == true) {
+        int i = 0;
 
-	int facing = sgn(screen.coord_to_vec_space(follow_pos->x, 'x') - screen.cols);
+        int y_coord = screen.coord_to_vec_space(y, 'y');
+        int x_coord = screen.coord_to_vec_space(x, 'x');
 
-    text_follow(facing);
-    Rektangle::draw_frame(buffer, screen);
-
-
-    for (int iy = y_coord - std::ceil(hight / 2) - int(int(hight) % 2 == 0); iy < y_coord + std::ceil(hight / 2) && iy < screen.rows; iy++) {
-
-        if (iy >= 0 && i < text_vec.size()) {
-            int ii = 0;
-            for (int ix = x_coord - (wighth / 2); ix <= x_coord + (wighth / 2 + 1) && ix < screen.cols * 2; ix++) {
-                if (ii >= text_vec[i].size()) {
-                    break;
-                }
-                if (ix >= 0) {
-                    buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = text_vec[i][ii];
-                }
-
-                ii++;
-            }
+        if (is_steak_to_screen) {
+            x_coord += screen.get_camera_pos().x * 2;
+            y_coord -= screen.get_camera_pos().y;
         }
-        i++;
+
+
+        if (follow_pos != nullptr) {
+            int facing = sgn(screen.coord_to_vec_space(follow_pos->x, 'x') - screen.cols);
+
+            text_follow(facing);
+        }
+        
+        Rektangle::draw_frame(buffer, screen);
+
+
+        for (int iy = y_coord - std::ceil(hight / 2) - int(int(hight) % 2 == 0); iy < y_coord + std::ceil(hight / 2) && iy < screen.rows; iy++) { // костыль
+
+            if (iy >= 0 && i < text_vec.size()) {
+                int ii = 0;
+                for (int ix = x_coord - (wighth / 2); ix <= x_coord + (wighth / 2 + 1) && ix < screen.cols * 2; ix++) {
+                    if (ii >= text_vec[i].size()) {
+                        break;
+                    }
+                    if (ix >= 0) {
+                        buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = text_vec[i][ii];
+                    }
+
+                    ii++;
+                }
+            }
+            i++;
+        }
     }
-
-
 
 }
 

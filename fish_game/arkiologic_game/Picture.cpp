@@ -21,30 +21,34 @@ void Picture::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
         }
     }*/
 
-    
-    int i = 0;
-    int y_coord = screen.coord_to_vec_space(y, 'y') - 1 - screen.camera_pos.y * add_paralax;
-    int x_coord = screen.coord_to_vec_space(x, 'x') + screen.camera_pos.x * add_paralax;
+    if (is_render == true) {
 
-    for (int iy = y_coord - (hight / 2); iy < y_coord + (hight / 2) && iy < screen.rows; iy++) {
-        
+        int i = 0;
+        Position camera_pos = screen.get_camera_pos();
+        int y_coord = screen.coord_to_vec_space(y, 'y') - 1 - camera_pos.y * add_paralax;
+        int x_coord = screen.coord_to_vec_space(x, 'x') + camera_pos.x * add_paralax;
 
-        if (iy >= 0 && i < image_vec.size()) {
-            int ii = 0;
-            for (int ix = x_coord - (wighth / 2); ix <= x_coord + (wighth / 2 + 1) && ix < screen.cols * 2; ix++) {
-                if (ii >= image_vec[i].size()) {
-                    break;
+        for (int iy = y_coord - (hight / 2); iy < y_coord + (hight / 2) && iy < screen.rows; iy++) {
+
+
+            if (iy >= 0 && i < image_vec.size()) {
+                int ii = 0;
+                for (int ix = x_coord - (wighth / 2); ix <= x_coord + (wighth / 2 + 1) && ix < screen.cols * 2; ix++) {
+                    if (ii >= image_vec[i].size()) {
+                        break;
+                    }
+                    if (ix >= 0 && image_vec[i][ii] != 'Ú') {
+                        //(*screen_vec)[iy][ix] = image_vec[i][ii];
+
+                        buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = image_vec[i][ii];
+                    }
+                    ii++;
                 }
-                if (ix >= 0 && image_vec[i][ii] != 'Ú') {
-                    //(*screen_vec)[iy][ix] = image_vec[i][ii];
-
-                    buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = image_vec[i][ii];
-                }
-                ii++;
             }
+            i++;
         }
-        i++;
     }
+    
 }
 
 void Picture::add_pic(std::ifstream& file) {

@@ -143,6 +143,7 @@
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="MovingObj.cpp" />
     <ClCompile Include="TextSquere.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="usful_funcs.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>

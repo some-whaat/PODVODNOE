@@ -62,7 +62,7 @@ int main() {
 
 
     //scr.add_layer(bg, false);
-    scr.add_layer(npc, true, "npcs");
+    scr.add_layer(npc, false, "npcs");
 
     scr.process();
 }
