@@ -85,7 +85,9 @@ public:
 class RendrbleObject : public Position {
 public:
 
-    int id = 0;
+    //int id;
+
+
 
     bool is_steak_to_screen = false;
     bool is_render = true;
@@ -250,6 +252,22 @@ public:
 
     Picture() : Rektangle(), image_vec({}) {}
 
+    Picture(std::string json_file) {
+
+
+
+        std::ifstream file(json_file);
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open JSON file: " + json_file);
+        }
+
+        nlohmann::json data;
+        file >> data;
+
+        //id = data["id"];
+        add_pic(data["sprite_filepame"]);
+    }
+
     Picture(const std::string& file) {
         x, y = 0;
 
@@ -299,6 +317,20 @@ public:
 
     AnimatbleObj() : anim_frames({ {} }) {}
 
+    AnimatbleObj(std::string json_file) {
+
+        std::ifstream file(json_file);
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open JSON file: " + json_file);
+        }
+
+        nlohmann::json data;
+        file >> data;
+
+        //id = data["id"];
+        read_anim_frames(data["sprite_filepame"]);
+    }
+
     AnimatbleObj(const std::string& file_name, float in_anim_speed, int in_x, int in_y)
         : anim_speed(in_anim_speed) {
 
@@ -331,6 +363,22 @@ public:
     Position velocity;
 
     MovingObj() {}
+
+    /*
+    MovingObj(std::string json_file) {
+
+        std::ifstream file(json_file);
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open JSON file: " + json_file);
+        }
+
+        nlohmann::json data;
+        file >> data;
+
+        id = data["id"];
+        read_anim_frames(data["sprite_filepame"]);
+    }
+*/
 
     MovingObj(std::string file_name, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1, float in_add_paralax = 0)
         : AnimatbleObj(file_name, in_anim_speed, in_x, in_y),
@@ -404,6 +452,8 @@ private:
 
     int text_wight = 20;
 
+    bool is_actioning = false;
+
 public:
     int state = 0;
     std::unordered_map<int, LogicActions> data_base;
@@ -419,7 +469,7 @@ public:
         nlohmann::json npc_data;
         file >> npc_data;
 
-        id = npc_data["id"];
+        //id = npc_data["id"];
         read_anim_frames(npc_data["sprite_filepame"]);
         x = npc_data["x"];
         y = npc_data["y"];
@@ -458,7 +508,7 @@ public:
         nlohmann::json npc_data;
         file >> npc_data;
 
-        id = npc_data["npc_id"];
+        //id = npc_data["npc_id"];
         for (const auto& state : npc_data["states"].items()) {
             const std::string& state_str = state.key();
             const auto& state_data = state.value();
@@ -475,6 +525,17 @@ public:
 
     //std::string npc_action(int player_item_id, int& player_reward_item);
 
+    void change_state(int new_state) {
+        state = new_state;
+
+		if (data_base.find(state) != data_base.end()) {
+			text_bubble.set_text(data_base[state].dialogue, text_wight);
+		}
+		else {
+			text_bubble.set_text("No dialogue available.", text_wight);
+		}
+    }
+
     void set_text();
 
     void action(std::shared_ptr<Player> player) override;
@@ -487,13 +548,42 @@ class Player : public AnimatbleObj {
 private:
     int move_count = 0;
 
+	std::vector<AnimatbleObj> inventory;
+    std::vector<int> inventory_ids;
+	std::unordered_map<int, std::string> inventory_data_base; // id : json filename
+
+
 public:
+
     float speed = 0.5;
 
 
-    Player() : AnimatbleObj("podvodnoe.txt", 22, 0, 0) {
-        //add_pic("podvodnoe.txt");
+    Player(std::string json_file) {
+
+        std::ifstream file(json_file);
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open JSON file: " + json_file);
+        }
+
+        nlohmann::json data;
+        file >> data;
+
+        //id = data["id"];
+        read_anim_frames(data["sprite_filepame"]);
+        x = data["x"];
+        y = data["y"];
+        anim_speed = data["anim_speed"];
+
+        for (const auto& item : data["items"].items()) {
+            const auto& item_data = item.value();
+            int item_id = std::stoi(item.key());
+			inventory_data_base[item_id] = item_data["sprite_filepame"];
+        }
     }
+
+    void add_item_to_inventory(int item_id);
+
+    bool does_has_item(int item_id);
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
@@ -642,7 +732,9 @@ public:
 
         add_layer(bg_fish, true, "bg_fish");
 
-        player = std::make_shared<Player>();
+        player = std::make_shared<Player>("Player_draft.json");
+        player->add_item_to_inventory(101);
+
 
         std::shared_ptr<RenderLayer> player_l;
         player_l = std::make_shared<RenderLayer>();
@@ -654,7 +746,6 @@ public:
 
         std::shared_ptr<UI> ui_down = std::make_shared<UI>("press space to interact", 0, 0);
         ui_down->is_render = false;
-        ui_down->set_text("press space to interact", 0);
 
         std::shared_ptr<RenderLayer> ui_layer = std::make_shared<RenderLayer>();
 

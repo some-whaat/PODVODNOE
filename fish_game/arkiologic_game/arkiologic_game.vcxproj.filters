@@ -19,6 +19,9 @@
     <Filter Include="Source Files\pics\loot">
       <UniqueIdentifier>{64be2f5b-fe7a-4290-9820-170c4cb2b261}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\JSONs">
+      <UniqueIdentifier>{765b0608-03de-4c01-ac65-43ab74c275d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fish_game.cpp">
@@ -69,10 +72,10 @@
     <ClCompile Include="AnimatbleObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NPC.cpp">
-      <Filter>Source Files\pics</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,5 +179,8 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
+    <None Include="Player_draft.json">
+      <Filter>Source Files\JSONs</Filter>
+    </None>
   </ItemGroup>
 </Project>
