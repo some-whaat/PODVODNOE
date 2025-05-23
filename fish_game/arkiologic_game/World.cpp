@@ -61,7 +61,7 @@ void World::process() {
         
 
         // БАГ :(((((((((((((((((
-        //camera_pos.smooth_follow(player->get_pos(), 1, 0.5, 9); // убрать magic numbers
+        camera_pos.smooth_follow(player->get_pos(), 1, 0.5, 9); // убрать magic numbers
         camera_pos.move_to(player->get_pos(), 1);
 
 		render();

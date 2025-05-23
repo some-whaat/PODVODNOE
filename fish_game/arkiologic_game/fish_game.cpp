@@ -53,7 +53,7 @@ int main() {
     npc = std::make_shared<RenderLayer>();
 
  
-    bg->push_back(std::make_shared<Picture>("beach.txt", 0, 0, 0.5));
+    bg->push_back(std::make_shared<Picture>("Picture_draft.json", 1));
     bg->push_back(std::make_shared<Picture>("seaweed.txt", 0, -10, -0.5));
     npc->push_back(std::make_shared<NPC>("NPC_draft.json"));
 
@@ -61,7 +61,7 @@ int main() {
 //    layer.push_back(std::make_unique<SinMovingObj>(66, 66, 0, 0, file, 1, 1));
 
 
-    //scr.add_layer(bg, false);
+    scr.add_layer(bg, false);
     scr.add_layer(npc, false, "npcs");
 
     scr.process();

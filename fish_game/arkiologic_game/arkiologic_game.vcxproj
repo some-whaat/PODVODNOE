@@ -178,6 +178,7 @@
     <Text Include="scull.txt" />
     <Text Include="seaweed.txt" />
     <Text Include="shovel.txt" />
+    <Text Include="star.txt" />
     <Text Include="sword.txt" />
     <Text Include="vase.txt" />
     <Text Include="worm.txt" />
@@ -185,6 +186,7 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
+    <None Include="Picture_draft.json" />
     <None Include="Player_draft.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

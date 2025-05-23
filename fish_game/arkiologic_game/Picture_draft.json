@@ -1,0 +1,21 @@
+{
+  "Position": {
+    "x": 0,
+    "y": 0
+  },
+
+  "RendrbleObject": {
+    "color": [ 1, 1, 0 ],
+    "is_render": true,
+    "add_paralax": 0.5
+  },
+
+  "Picture": {
+    "sprite_filepame": "beach.txt"
+  },
+
+  "AnimatbleObj": {
+    "animated_sprite_filepame": "big_fish.txt",
+    "anim_speed": 44
+  }
+}
