@@ -1,0 +1,207 @@
+{
+
+
+  "layers": {
+
+    "bacground": {
+      "layer_ind": 0,
+
+      "Picture": {
+
+        "beach": {
+
+          "RendrbleObject": {
+            "color": [ 1, 1, 0 ],
+            "is_render": true,
+            "add_paralax": 0.5
+          },
+
+          "Picture": {
+            "sprite_filepame": "beach.txt"
+          }
+        },
+
+        "beach2": {
+
+          "Position": {
+            "x": 22,
+            "y": 22
+          },
+
+          "RendrbleObject": {
+            "color": [ 1, 0, 1 ],
+            "is_render": true,
+            "add_paralax": 0.5
+          },
+
+          "Picture": {
+            "sprite_filepame": "beach.txt"
+          }
+        }
+
+
+      }
+
+    },
+
+    "NPCs": {
+      "layer_ind": 1,
+
+      "NPC": {
+
+        "frederic": {
+          "Position": {
+            "x": 30,
+            "y": 20
+          },
+
+          "RendrbleObject": {
+            "color": [ 0, 0, 1 ],
+            "is_render": true,
+            "add_paralax": 0
+          },
+
+          "AnimatbleObj": {
+            "animated_sprite_filepame": "big_fish.txt",
+            "anim_speed": 333
+          },
+
+          "MovingObj": {
+            "velocity": [ 5, 3 ],
+
+            "moving_type": "none",
+
+            "wave": {
+              "wave_hight": 20,
+              "wave_offset": 10,
+              "wave_lenght": 55,
+              "wave_sdvig": 10
+            },
+
+            "random_wave": {
+              "max_x": 60,
+              "max_y": 30
+            }
+          },
+
+          "NPC": {
+
+            "does_has_dialogue_on": false,
+
+            "states": {
+
+              "-1": {
+                "dialogue": "ehm, hey?",
+                "needed_item_id": -1,
+                "remove_item_id": -1,
+                "next_state": -1,
+                "reward_item_id": -1,
+                "remove_text_bbl": true
+              },
+
+              "0": {
+                "dialogue": "Hello, traveler! Can you bring me a golden fish?",
+                "needed_item_id": 101,
+                "remove_item_id": -1,
+                "next_state": 1,
+                "reward_item_id": -1,
+                "remove_text_bbl": false,
+                "sould_answer": true
+              },
+              "1": {
+                "dialogue": "Thank you for the golden fish! Here is your reward.",
+                "needed_item_id": 101,
+                "remove_item_id": 101,
+                "next_state": -1,
+                "reward_item_id": 666,
+                "id_minigame": -1,
+                "ubgate": 1,
+                "remove_text_bbl": true
+              },
+              "2": {
+                "dialogue": "sdbvnmzdjfvn ,dj",
+                "needed_item_id": 101,
+                "remove_item_id": -1,
+                "next_state": 1,
+                "reward_item_id": -1,
+                "remove_text_bbl": true
+              }
+            }
+          }
+
+        }
+
+      }
+
+    },
+
+    "Player": {
+      "layer_ind": 2,
+
+      "Position": {
+        "x": 0,
+        "y": 0
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "podvodnoe.txt",
+        "anim_speed": 22
+      },
+
+      "Player": {
+
+        "speed": 1,
+
+        "items": {
+          "100": {
+            "sprite_filepame": "doll.txt",
+            "anim_speed": 0
+          },
+          "101": {
+            "sprite_filepame": "scull.txt",
+            "anim_speed": 0
+          },
+          "102": {
+            "sprite_filepame": "star.txt",
+            "anim_speed": 0
+          }
+        },
+
+        "inventory": [ 100, 102, 101 ]
+      }
+    },
+
+    "foreground": {
+      "layer_ind": 3,
+
+      "AnimatbleObj": {
+
+        "seaweed": {
+          "Position": {
+            "x": 0,
+            "y": -10
+          },
+
+          "RendrbleObject": {
+            "color": [ 0, 1, 0 ],
+            "is_render": true,
+            "add_paralax": -0.5
+          },
+
+          "AnimatbleObj": {
+            "animated_sprite_filepame": "seaweed.txt",
+            "anim_speed": 88
+          }
+        }
+
+      }
+
+    }
+  }
+}

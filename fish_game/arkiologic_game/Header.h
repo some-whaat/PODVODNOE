@@ -33,8 +33,19 @@ extern bool is_working;
 int rand_int(int down_bord, int up_bord);
 std::vector<std::vector<std::string>> read_objs_from_file(const std::string& file_str);
 std::vector<std::vector<std::string>> read_objs_from_file(std::ifstream& file);
+
 template <typename T> int sgn(T val) {
 	return (T(0) < val) - (val < T(0));
+}
+
+static nlohmann::json load_json(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Failed to open JSON file: " + filename);
+    }
+    nlohmann::json data;
+    file >> data;
+    return data;
 }
 
 
@@ -57,7 +68,7 @@ public:
 
     Position(float in_x, float in_y) : x(in_x), y(in_y) {}
 
-    Position(nlohmann::json data) {
+    explicit Position(nlohmann::json data) {
         if (data.contains("Position")) {
 			x = data["Position"]["x"];
 			y = data["Position"]["y"];
@@ -99,7 +110,7 @@ protected:
 
     RendrbleObject() : Position(), is_steak_to_screen(false), is_render(true), add_paralax(0) {}
 
-    RendrbleObject(nlohmann::json data) : Position(data) {
+    explicit RendrbleObject(nlohmann::json data) : Position(data) {
 
         if (data.contains("RendrbleObject")) {
             if (data["RendrbleObject"].contains("is_steak_to_screen")) {
@@ -136,16 +147,6 @@ public:
     virtual bool is_inside(Position pos, float add_dist) = 0;
 
     virtual void action(std::shared_ptr<Player> player) = 0;
-
-    static nlohmann::json load_json(const std::string& filename) {
-        std::ifstream file(filename);
-        if (!file.is_open()) {
-            throw std::runtime_error("Failed to open JSON file: " + filename);
-        }
-        nlohmann::json data;
-        file >> data;
-        return data;
-    }
 
 };
 
@@ -201,7 +202,7 @@ public:
         y = in_y;
     }
 
-    Rektangle(nlohmann::json data) : RendrbleObject(data) {
+    explicit Rektangle(nlohmann::json data) : RendrbleObject(data) {
 
 		if (data.contains("Rektangle")) {
 			hight = data["Rektangle"]["hight"];
@@ -319,9 +320,9 @@ public:
 
     Picture() : Rektangle(), image_vec({}) {}
 
-    Picture(std::string json_file, int a) : Picture(load_json(json_file)) {}
+    explicit Picture(std::string json_file) : Picture(load_json(json_file)) {}
 
-    Picture(nlohmann::json jsonData) : Rektangle(jsonData) {
+    explicit Picture(nlohmann::json jsonData) : Rektangle(jsonData) {
         if (jsonData.contains("Picture")) {
 
             if (jsonData["Picture"].contains("sprite_filepame")) {
@@ -379,21 +380,9 @@ public:
 
     AnimatbleObj() : anim_frames({ {} }) {}
 
-    AnimatbleObj(std::string json_file) : AnimatbleObj(load_json(json_file)) {
+    explicit AnimatbleObj(std::string json_file) : AnimatbleObj(load_json(json_file)) {}
 
-        std::ifstream file(json_file);
-        if (!file.is_open()) {
-            throw std::runtime_error("Failed to open JSON file: " + json_file);
-        }
-
-        nlohmann::json data;
-        file >> data;
-
-        //id = data["id"];
-        read_anim_frames(data["sprite_filepame"]);
-    }
-
-    AnimatbleObj(nlohmann::json data) : Picture(data) {
+    explicit AnimatbleObj(nlohmann::json data) : Picture(data) {
 
 		if (data.contains("AnimatbleObj")) {
 			anim_speed = data["AnimatbleObj"]["anim_speed"];
@@ -402,6 +391,7 @@ public:
 		}
 		else {
 			anim_speed = 1;
+            anim_frames = {};
 		}
     }
 
@@ -425,34 +415,91 @@ private:
     float wave_hight_bound = 20;
     Position firt_pos;
 
+	enum class MovingType {
+		none,
+		wave,
+		random_wave,
+		straight, // not implemented
+		circle, // not implemented
+		random // not implemented
+	};
 
-public:
+    MovingType moving_type = MovingType::wave;
+
+
     float wave_hight;
     float wave_offset;
     float wave_lenght;
     float wave_sdvig;
 
-    int fasing;
+public:
+
+
+    int fasing; // немного не нужна€ переменна
 
     Position velocity;
 
     MovingObj() {}
 
-    /*
-    MovingObj(std::string json_file) {
 
-        std::ifstream file(json_file);
-        if (!file.is_open()) {
-            throw std::runtime_error("Failed to open JSON file: " + json_file);
+    explicit MovingObj(std::string json_file) : MovingObj(load_json(json_file)) {}
+
+    explicit MovingObj(nlohmann::json data) : AnimatbleObj(data) {
+
+        if (data.contains("MovingObj")) {
+            velocity = Position(data["MovingObj"]["velocity"][0], data["MovingObj"]["velocity"][1]);
+            fasing = velocity.x == 0 ? 1 : sgn(velocity.x);
+
+			std::map<std::string, MovingType> moving_type_data = {
+                {"none", MovingType::none},
+                {"wave", MovingType::wave},
+                {"random_wave", MovingType::random_wave},
+				{"straight", MovingType::straight}, // не сделано
+				{"circle", MovingType::circle}, // не сделано
+				{"random", MovingType::random} // не сделано
+			};
+
+            moving_type = moving_type_data[data["MovingObj"]["moving_type"]];
+
+            switch (moving_type)
+            {
+			case MovingType::none:
+				velocity = Position(0, 0);
+				fasing = 1;
+				wave_hight = 0;
+				wave_offset = 0;
+				wave_lenght = 0;
+				wave_sdvig = 0;
+				break;
+            case MovingType::wave:
+				wave_hight = data["MovingObj"]["wave_hight"];
+				wave_offset = data["MovingObj"]["wave_offset"];
+				wave_lenght = data["MovingObj"]["wave_lenght"];
+				wave_sdvig = data["MovingObj"]["wave_sdvig"];
+				break;
+
+            case MovingType::random_wave:
+				int max_x = data["MovingObj"]["max_x"];
+				int max_y = data["MovingObj"]["max_y"];
+
+                wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
+                wave_offset = rand_int(-max_x, max_x);
+                wave_lenght = static_cast<float>(rand_int(-4, 4)) / 10;
+                wave_sdvig = y;
+				break;
+
+		 // надо конечн доделать движений
+            }
+
+            moving_type = moving_type == MovingType::random_wave ? MovingType::wave : moving_type;
+        }
+        else {
+            velocity = Position(0, 0);
+            fasing = 1;
         }
 
-        nlohmann::json data;
-        file >> data;
-
-        id = data["id"];
-        read_anim_frames(data["sprite_filepame"]);
+        firt_pos = Position(x, y);
     }
-*/
 
     MovingObj(std::string file_name, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1, float in_add_paralax = 0)
         : AnimatbleObj(file_name, in_anim_speed, in_x, in_y),
@@ -468,50 +515,11 @@ public:
         firt_pos = Position(in_x, in_y);
     }
 
-    /*
-    MovingObj(std::string& file_name, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1)
-        : AnimatbleObj(file_name, in_anim_speed, in_x, in_y),
-        velocity(in_velocity),
-        fasing(in_fasing)
-    {
-
-        wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
-        wave_offset = rand_int(-max_x, max_x);
-        wave_lenght = (float)rand_int(-4, 4) / 10;
-        wave_sdvig = y;
-        
-		firt_pos = Position(in_x, in_y);
-    }*/
-
     void move(Screen& screen);
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
     void action(std::shared_ptr<Player> player) override {}
 };
 
-/*
-class NPC : public MovingObj {
-private:
-
-    struct LogicActions {
-        int needed_item_id;
-        std::string text;
-        int next_state;
-    };
-
-
-    bool has_textbb = false;
-    TextSquere text_bubble = TextSquere();
-
-public:
-    int id;
-    int state = 0;
-
-    std::unordered_map<int, LogicActions> data_base;
-
-    NPC(int in_id, std::string& file_name, std::unordered_map<int, LogicActions> data_base, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1) : MovingObj(file_name, in_x, in_y, in_fasing, in_velocity, max_x, max_y, in_anim_speed = 1), text_bubble(TextSquere()), id(in_id) {
-        
-    }
-};*/
 
 class NPC : public MovingObj {
 private:
@@ -531,51 +539,55 @@ private:
 
     bool is_actioning = false; // —Ћ”∆≈ЅЌјя
 
-public:
     int state = 0;
     std::unordered_map<int, LogicActions> data_base;
 
+public:
 
-    NPC(std::string json_file) {
+	NPC() : MovingObj() {
+		text_bubble.add_val = 2;
+		text_bubble.follow = true;
+		text_bubble.follow_pos = this;
+		text_bubble.follow_wighth = wighth;
+		text_bubble.follow_hight = hight;
+	}
 
-        std::ifstream file(json_file);
-        if (!file.is_open()) {
-            throw std::runtime_error("Failed to open JSON file: " + json_file);
-        }
+    explicit NPC(std::string json_file) : NPC(load_json(json_file)) {}
 
-        nlohmann::json npc_data;
-        file >> npc_data;
+    explicit NPC(nlohmann::json data) : MovingObj(data) {
 
-        //id = npc_data["id"];
-        read_anim_frames(npc_data["sprite_filepame"]);
-        x = npc_data["x"];
-        y = npc_data["y"];
-        velocity = Position(npc_data["velocity"]);
-        anim_speed = npc_data["anim_speed"];
-        text_bubble.is_render = npc_data["does_has_dialogue_on"];
-
-        //text_bubble.fill = '%';
         text_bubble.add_val = 2;
         text_bubble.follow = true;
         text_bubble.follow_pos = this;
-		text_bubble.follow_wighth = wighth;
+        text_bubble.follow_wighth = wighth;
         text_bubble.follow_hight = hight;
-        
-        for (const auto& state : npc_data["states"].items()) {
-            const std::string& state_str = state.key();
-            const auto& state_data = state.value();
-            int state_id = std::stoi(state_str);
-            data_base[state_id] = {
-                state_data["needed_item_id"],
-                state_data["remove_item_id"],
-                state_data["dialogue"],
-                state_data["next_state"],
-                state_data["reward_item_id"],
-                state_data["remove_text_bbl"]
-            };
+
+        if (data.contains("NPC")) {
+
+            nlohmann::json npc_data = data["NPC"];
+
+
+            text_bubble.is_render = npc_data["does_has_dialogue_on"];
+
+            for (const auto& state : npc_data["states"].items()) {
+                const std::string& state_str = state.key();
+                const auto& state_data = state.value();
+                int state_id = std::stoi(state_str);
+                data_base[state_id] = {
+                    state_data["needed_item_id"],
+                    state_data["remove_item_id"],
+                    state_data["dialogue"],
+                    state_data["next_state"],
+                    state_data["reward_item_id"],
+                    state_data["remove_text_bbl"]
+                };
+            }
+
+            set_text();
+		}
+        else {
+            throw std::runtime_error("NPC can't find itself (no definition for the NPC in a JSON)");
         }
-        
-        set_text();
     }
 
 
@@ -608,31 +620,26 @@ public:
     float speed = 1;
 
 
-    Player(std::string json_file) {
+    explicit Player(std::string json_file) : Player(load_json(json_file)) {}
 
-        std::ifstream file(json_file);
-        if (!file.is_open()) {
-            throw std::runtime_error("Failed to open JSON file: " + json_file);
-        }
+    explicit Player(nlohmann::json data) : AnimatbleObj(data) {
 
-        nlohmann::json data;
-        file >> data;
+		if (data.contains("Player")) {
+			speed = data["Player"]["speed"];
 
-        //id = data["id"];
-        read_anim_frames(data["sprite_filepame"]);
-        x = data["x"];
-        y = data["y"];
-        anim_speed = data["anim_speed"];
+            for (const auto& item : data["Player"]["items"].items()) {
+                const auto& item_data = item.value();
+                int item_id = std::stoi(item.key());
+                inventory_data_base[item_id] = item_data["sprite_filepame"];
+            }
 
-        for (const auto& item : data["items"].items()) {
-            const auto& item_data = item.value();
-            int item_id = std::stoi(item.key());
-			inventory_data_base[item_id] = item_data["sprite_filepame"];
-        }
-
-        for (int item_id : data["inventory"]) {
-            add_item_to_inventory(item_id);
-        }
+            for (int item_id : data["Player"]["inventory"]) {
+                add_item_to_inventory(item_id);
+            }
+		}
+		else {
+            throw std::runtime_error("no definition for the Player in a JSON");
+		}
     }
 
     void add_item_to_inventory(int item_id);
@@ -645,6 +652,7 @@ public:
 
     void move();
 };
+
 
 /*
 class DataBase {
@@ -712,7 +720,19 @@ public:
 
     }*/
 
-    void add_layer(std::shared_ptr<RenderLayer> layer, bool on_top = true, std::string name = "");
+    void add_layer(std::shared_ptr<RenderLayer> layer, int position_to_incert_to, std::string name);
+
+	void replace_layer(std::shared_ptr<RenderLayer> layer, int ind, const std::string& name = "") {
+		if (ind < 0 || ind >= render_order.size()) {
+            throw std::runtime_error("Index out of bounds: " + ind);
+			return;
+		}
+        render_order[ind] = layer;
+
+        if (name != "") {
+            layers[name] = layer;
+        }
+	}
 
     RenderLayer* get_layer(const std::string& name);
 
@@ -748,6 +768,8 @@ public:
     bool yes_no_choice(std::string text);
 */
 };
+
+std::unique_ptr<RendrbleObject> create_object(const std::string& classNameStr, nlohmann::json data);
 
 class World : public Screen {
 private:
@@ -788,7 +810,7 @@ public:
 
         add_layer(bg_fish, true, "bg_fish");
 
-        player = std::make_shared<Player>("Player_draft.json");
+        player = std::make_shared<Player>(std::string("Player_draft.json"));
 
         std::shared_ptr<RenderLayer> player_l;
         player_l = std::make_shared<RenderLayer>();
@@ -807,6 +829,114 @@ public:
 
         add_layer(ui_layer, true, "ui_layer");
     }
+
+    explicit World(std::string world_json_filename) {
+
+        enshure_cols_rows();
+
+        
+		nlohmann::json world_json = load_json(world_json_filename);
+
+
+        auto& layers_data = world_json["layers"];
+        render_order.resize(layers_data.size() + render_order.size());
+
+		// перебираем слои
+        for (auto& layer : layers_data.items()) {
+            std::string layer_name = layer.key();
+            nlohmann::json layer_content = layer.value();
+
+			int layer_ind = layer_content.contains("layer_ind") ? int(layer_content["layer_ind"]) : -1;
+
+            // handle Player layer separately
+            if (layer_name == "Player") {
+                player = std::make_shared<Player>(layer_content);
+
+                auto player_layer = std::make_shared<RenderLayer>();
+                player_layer->push_back(player);
+                replace_layer(player_layer, layer_ind, "player");
+
+                continue;
+            }
+
+            // Create render layer for this group
+            auto render_layer = std::make_shared<RenderLayer>();
+
+			// перебираем типы объектов в слое
+            for (auto& obj_type : layer_content.items()) {
+
+                std::string type_name = obj_type.key();
+                nlohmann::json objects = obj_type.value();
+
+                if (type_name != "layer_ind") {
+
+					// перебираем объекты данного типа
+                    for (auto& obj : objects.items()) {
+                        //std::string obj_name = obj.key();
+                        nlohmann::json obj_data = obj.value();
+
+                        std::shared_ptr<RendrbleObject> render_obj;
+
+                        render_obj = create_object(type_name, obj_data);
+
+                        if (render_obj) {
+                            render_layer->push_back(render_obj);
+                        }
+                        else {
+                            throw std::runtime_error("unknown object type: " + type_name);
+                        }
+
+                        render_layer->push_back(render_obj);
+                    }
+
+                    replace_layer(render_layer, layer_ind, layer_name);
+                }
+            }
+
+        }
+
+        // временно, надо потом убрать
+        std::shared_ptr<RenderLayer> bg_fish;
+        bg_fish = std::make_shared<RenderLayer>();
+
+        for (int i = 0; i < 4; i++) {
+
+            int fasing = rand_int(0, 1) == 0 ? -1 : 1;
+
+            std::string fish_f;
+            if (fasing == 1) {
+                fish_f = "fish_right1.txt";
+            }
+            else {
+                fish_f = "fish_left1.txt";
+            }
+
+            bg_fish->push_back(std::make_shared<MovingObj>(
+                fish_f,
+
+                rand_int(-(cols / 2) + 10, (cols / 2) - 10),
+                rand_int(-(rows / 2) + 10, (rows / 2) - 10),
+
+                fasing,
+                Position(2, 2),
+                cols,
+                rows,
+                -0.4f
+            ));
+        }
+
+        add_layer(bg_fish, 3, "bg_fish"); // из головы номер
+
+
+        // тоже временно?? наверно нет
+        std::shared_ptr<UI> ui_down = std::make_shared<UI>("press space to interact", 0, 0);
+        ui_down->is_render = false;
+
+        std::shared_ptr<RenderLayer> ui_layer = std::make_shared<RenderLayer>();
+        ui_layer->push_back(ui_down);
+        add_layer(ui_layer, -1, "ui_layer");
+    }
+
 
     void process() override;
 };

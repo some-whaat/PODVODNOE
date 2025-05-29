@@ -44,8 +44,10 @@ int main() {
 
     using RenderLayer = std::vector<std::shared_ptr<RendrbleObject>>;
     
-    World scr;
+    World scr = World("World.json");
 
+
+/*
     std::shared_ptr<RenderLayer> bg;
     std::shared_ptr<RenderLayer> npc;
 
@@ -53,9 +55,9 @@ int main() {
     npc = std::make_shared<RenderLayer>();
 
  
-    bg->push_back(std::make_shared<Picture>("Picture_draft.json", 1));
+    bg->push_back(std::make_shared<Picture>(std::string("Picture_draft.json")));
     bg->push_back(std::make_shared<Picture>("seaweed.txt", 0, -10, -0.5));
-    npc->push_back(std::make_shared<NPC>("NPC_draft.json"));
+    npc->push_back(std::make_shared<NPC>(std::string("NPC_draft.json")));
 
 //    std::vector<std::unique_ptr<RendrbleObject>> layer;
 //    layer.push_back(std::make_unique<SinMovingObj>(66, 66, 0, 0, file, 1, 1));
@@ -64,5 +66,7 @@ int main() {
     scr.add_layer(bg, false);
     scr.add_layer(npc, false, "npcs");
 
+
+*/
     scr.process();
 }

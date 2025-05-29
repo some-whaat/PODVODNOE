@@ -17,5 +17,23 @@
   "AnimatbleObj": {
     "animated_sprite_filepame": "big_fish.txt",
     "anim_speed": 44
+  },
+
+  "MovingObj": {
+    "velocity": [ 5, 3 ],
+
+    "moving_type": "wave",
+
+    "wave": {
+      "wave_hight": 20,
+      "wave_offset": 10,
+      "wave_lenght": 55,
+      "wave_sdvig": 10
+    },
+
+    "random_wave": {
+      "max_x": 60,
+      "max_y": 30
+    }
   }
 }

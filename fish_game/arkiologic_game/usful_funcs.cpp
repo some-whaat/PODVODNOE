@@ -57,6 +57,20 @@ std::vector<std::vector<std::string>> read_objs_from_file(std::ifstream& file) {
     return objs_arr;
 }
 
+#define CREATE_OBJECT(className, data) \
+    if (classNameStr == #className) return std::make_unique<className>(data);
+
+std::unique_ptr<RendrbleObject> create_object(const std::string& classNameStr, nlohmann::json data) {
+
+    CREATE_OBJECT(Rektangle, data)
+        CREATE_OBJECT(Picture, data)
+        CREATE_OBJECT(AnimatbleObj, data)
+        CREATE_OBJECT(MovingObj, data)
+        CREATE_OBJECT(NPC, data)
+
+        return nullptr;
+}
+
 /*
 std::vector<std::vector<std::string>> read_objs_from_file(std::string& file_str) {
 

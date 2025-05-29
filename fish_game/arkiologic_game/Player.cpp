@@ -82,6 +82,8 @@ void Player::add_item_to_inventory(int item_id) {
 
 void Player::remove_item_from_inventory(int item_id) {
 	inventory.erase(item_id);
+
+
 }
 
 bool Player::does_has_item(int item_id) {

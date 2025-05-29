@@ -188,5 +188,8 @@
     <None Include="Picture_draft.json">
       <Filter>Source Files\JSONs</Filter>
     </None>
+    <None Include="World.json">
+      <Filter>Source Files\JSONs</Filter>
+    </None>
   </ItemGroup>
 </Project>

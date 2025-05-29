@@ -36,6 +36,7 @@ void Rektangle::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
                     if (ix >= 0) {
                         buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = fill;
+                        buffer[iy * screen.cols * 2 + ix].Attributes = color_attr;
                     }
                 }
             }
@@ -94,6 +95,7 @@ void Rektangle::draw_frame(std::vector<CHAR_INFO>& buffer, Screen& screen) {
                 
                 if (ix >= 0) {
                     buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = mid_lines[ii];
+                    buffer[iy * screen.cols * 2 + ix].Attributes = color_attr;
                 }
 
                 ii++;
@@ -114,6 +116,7 @@ void Rektangle::draw_frame(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
             if (ix >= 0) {
                 buffer[up_y * screen.cols * 2 + ix].Char.AsciiChar = bord_lines[ii];
+                buffer[up_y * screen.cols * 2 + ix].Attributes = color_attr;
             }
 
             ii++;
@@ -129,6 +132,7 @@ void Rektangle::draw_frame(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
             if (ix >= 0) {
                 buffer[down_y * screen.cols * 2 + ix].Char.AsciiChar = bord_lines[ii];
+                buffer[down_y * screen.cols * 2 + ix].Attributes = color_attr;
             }
 
             ii++;

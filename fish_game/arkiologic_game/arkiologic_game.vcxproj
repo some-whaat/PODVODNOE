@@ -188,6 +188,7 @@
     <None Include="packages.config" />
     <None Include="Picture_draft.json" />
     <None Include="Player_draft.json" />
+    <None Include="World.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

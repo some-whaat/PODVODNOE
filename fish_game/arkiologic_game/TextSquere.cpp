@@ -54,6 +54,7 @@ void TextSquere::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
                     }
                     if (ix >= 0) {
                         buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = text_vec[i][ii];
+                        buffer[iy * screen.cols * 2 + ix].Attributes = color_attr;
                     }
 
                     ii++;

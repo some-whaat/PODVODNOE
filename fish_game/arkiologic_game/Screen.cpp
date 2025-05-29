@@ -58,13 +58,13 @@ char Screen::pix_calc(int x, int y) {
     return ' ';
 }*/
 
-void Screen::add_layer(std::shared_ptr<RenderLayer> layer, bool on_top, std::string name) {
+void Screen::add_layer(std::shared_ptr<RenderLayer> layer, int position_to_incert_to, std::string name) { // position_to_incert_to = -1 to insert to the end, 0 to insert to the beginning
     
-    if (on_top) {
+    if (position_to_incert_to == -1 || position_to_incert_to >= render_order.size()) {
         render_order.push_back(layer);
     }
     else {
-        render_order.insert(render_order.begin(), layer);
+        render_order.insert(render_order.begin() + position_to_incert_to, layer);
     }
 
     if (name != "") {

@@ -1,25 +1,39 @@
 {
-  "class_name": "Player",
-  "id": -1,
-  "sprite_filepame": "podvodnoe.txt",
-  "x": 0,
-  "y": 0,
-  "anim_speed": 22,
-
-  "items": {
-    "100": {
-      "sprite_filepame": "doll.txt",
-      "anim_speed": 0
-    },
-    "101": {
-      "sprite_filepame": "scull.txt",
-      "anim_speed": 0
-    },
-    "102": {
-      "sprite_filepame": "star.txt",
-      "anim_speed": 0
-    }
+  "Position": {
+    "x": 0,
+    "y": 0
   },
 
-  "inventory" : [ 101 ]
+  "RendrbleObject": {
+    "color": [ 0, 1, 1 ],
+    "is_render": true,
+    "add_paralax": 0
+  },
+
+  "AnimatbleObj": {
+    "animated_sprite_filepame": "podvodnoe.txt",
+    "anim_speed": 22
+  },
+
+  "Player": {
+
+    "speed" : 1,
+
+    "items": {
+      "100": {
+        "sprite_filepame": "doll.txt",
+        "anim_speed": 0
+      },
+      "101": {
+        "sprite_filepame": "scull.txt",
+        "anim_speed": 0
+      },
+      "102": {
+        "sprite_filepame": "star.txt",
+        "anim_speed": 0
+      }
+    },
+
+    "inventory": [ 100, 102, 101 ]
+  }
 }

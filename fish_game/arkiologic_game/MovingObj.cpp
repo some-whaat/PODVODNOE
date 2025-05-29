@@ -2,9 +2,23 @@
 
 
 void MovingObj::move(Screen& screen) {
-    float result_x = x + (velocity.len() * float(fasing)) * screen.MBF / 25;
-    x = result_x;
-    y = wave_hight * (std::sin(wave_lenght * result_x + wave_offset)) + firt_pos.y;
+
+    switch (moving_type)
+    {
+    case MovingType::none:
+
+        break;
+
+    case MovingType::wave:
+        float result_x = x + (velocity.len() * float(fasing)) * screen.MBF / 25;
+        x = result_x;
+        y = wave_hight * (std::sin(wave_lenght * result_x + wave_offset)) + firt_pos.y;
+
+        break;
+
+    }
+
+
 
     /*
     float result_x = x + (velocity.len() * float(fasing) / 5) * screen.MBF / 5;

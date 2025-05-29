@@ -1,50 +1,82 @@
 {
-  "class_name": "NPC",
-  "id": 1,
-  "sprite_filepame": "big_fish.txt",
-  "x": -40,
-  "y": -30,
-  "velocity": [ 0, 0 ],
-  "anim_speed": 66,
-  "does_has_dialogue_on" :  false,
+  "Position": {
+    "x": 30,
+    "y": 20
+  },
 
-  "states": {
+  "RendrbleObject": {
+    "color": [ 0, 0, 1 ],
+    "is_render": true,
+    "add_paralax": 0
+  },
 
-    "-1": {
-      "dialogue": "ehm, hey?",
-      "needed_item_id": -1,
-      "remove_item_id": -1,
-      "next_state": -1,
-      "reward_item_id": -1,
-      "remove_text_bbl": true
+  "AnimatbleObj": {
+    "animated_sprite_filepame": "big_fish.txt",
+    "anim_speed": 44
+  },
+
+  "MovingObj": {
+    "velocity": [ 5, 3 ],
+
+    "moving_type": "none",
+
+    "wave": {
+      "wave_hight": 20,
+      "wave_offset": 10,
+      "wave_lenght": 55,
+      "wave_sdvig": 10
     },
 
-    "0": {
-      "dialogue": "Hello, traveler! Can you bring me a golden fish?",
-      "needed_item_id": 101,
-      "remove_item_id": -1,
-      "next_state": 1,
-      "reward_item_id": -1,
-      "remove_text_bbl": false,
-      "sould_answer": true
-    },
-    "1": {
-      "dialogue": "Thank you for the golden fish! Here is your reward.",
-      "needed_item_id": 101,
-      "remove_item_id": 101,
-      "next_state": 2,
-      "reward_item_id": 666,
-      "id_minigame": -1,
-      "ubgate": 1,
-      "remove_text_bbl": true
-    },
-    "2": {
-      "dialogue": "sdbvnmzdjfvn ,dj",
-      "needed_item_id": 101,
-      "remove_item_id": -1,
-      "next_state": 1,
-      "reward_item_id": -1,
-      "remove_text_bbl": true
+    "random_wave": {
+      "max_x": 60,
+      "max_y": 30
+    }
+  },
+
+
+  "NPC": {
+
+    "does_has_dialogue_on": false,
+
+    "states": {
+
+      "-1": {
+        "dialogue": "ehm, hey?",
+        "needed_item_id": -1,
+        "remove_item_id": -1,
+        "next_state": -1,
+        "reward_item_id": -1,
+        "remove_text_bbl": true
+      },
+
+      "0": {
+        "dialogue": "Hello, traveler! Can you bring me a golden fish?",
+        "needed_item_id": 101,
+        "remove_item_id": -1,
+        "next_state": 1,
+        "reward_item_id": -1,
+        "remove_text_bbl": false,
+        "sould_answer": true
+      },
+      "1": {
+        "dialogue": "Thank you for the golden fish! Here is your reward.",
+        "needed_item_id": 101,
+        "remove_item_id": 101,
+        "next_state": -1,
+        "reward_item_id": 666,
+        "id_minigame": -1,
+        "ubgate": 1,
+        "remove_text_bbl": true
+      },
+      "2": {
+        "dialogue": "sdbvnmzdjfvn ,dj",
+        "needed_item_id": 101,
+        "remove_item_id": -1,
+        "next_state": 1,
+        "reward_item_id": -1,
+        "remove_text_bbl": true
+      }
     }
   }
+
 }
