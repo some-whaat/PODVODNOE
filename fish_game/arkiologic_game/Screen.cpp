@@ -206,7 +206,7 @@ void Screen::ParticleSystem::draw(std::vector<CHAR_INFO>& buffer, Screen& screen
 
 
     float f = particles.size();
-    for (int i = 0; f + i < 5; i++) {
+    for (int i = 0; f + i < on_screen_particles_count; i++) {
 
         add_particle();
     }

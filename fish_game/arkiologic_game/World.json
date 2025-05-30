@@ -8,24 +8,6 @@
 
       "Picture": {
 
-        "beach": {
-
-          "Position": {
-            "x": -30,
-            "y": 20
-          },
-
-          "RendrbleObject": {
-            "color": [ 1, 0, 1 ],
-            "is_render": true,
-            "add_paralax": 0.3
-          },
-
-          "Picture": {
-            "sprite_filepame": "beach.txt"
-          }
-        },
-
         "beach1": {
 
           "RendrbleObject": {
@@ -40,11 +22,10 @@
         }
 
       }
-
     },
 
     "NPCs": {
-      "layer_ind": 1,
+      "layer_ind": 4,
 
       "NPC": {
 
@@ -136,14 +117,12 @@
 
     },
 
-
-
     "Player": {
       "layer_ind": 2,
 
       "Position": {
-        "x": 100,
-        "y": 100
+        "x": 0,
+        "y": 0
       },
 
       "RendrbleObject": {
@@ -173,7 +152,13 @@
           "102": {
             "sprite_filepame": "star.txt",
             "anim_speed": 0
+          },
+
+          "103": {
+            "sprite_filepame": "worm.txt",
+            "anim_speed": 0
           }
+
         },
 
         "inventory": [ 100 ]
@@ -209,14 +194,14 @@
 
     "fish_bg": {
 
-      "layer_ind": 4,
+      "layer_ind": 1,
 
       "ParticleSystem": {
 
         "bg_fish": {
 
           "particles_spawn_type": "left_right",
-          "on_screen_particles_count": 6,
+          "on_screen_particles_count": 5,
 
 
           "particles_constructors": {
@@ -225,13 +210,13 @@
             "-1": {
 
               "RendrbleObject": {
-                "color": [ 0, 1, 1 ],
+                "color": [ 1, 0, 1 ],
                 "is_render": true,
                 "add_paralax": 0
               },
 
               "AnimatbleObj": {
-                "animated_sprite_filepame": "scull.txt",
+                "animated_sprite_filepame": "eye.txt",
                 "anim_speed": 0
               },
 

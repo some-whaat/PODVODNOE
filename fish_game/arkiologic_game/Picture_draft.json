@@ -27,8 +27,7 @@
     "wave": {
       "wave_hight": 20,
       "wave_offset": 10,
-      "wave_lenght": 55,
-      "wave_sdvig": 10
+      "wave_lenght": 55
     },
 
     "random_wave": {

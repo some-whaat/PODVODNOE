@@ -178,6 +178,9 @@
     <Text Include="star.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
+    <Text Include="eye.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

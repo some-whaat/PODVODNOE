@@ -475,7 +475,7 @@ public:
 				wave_hight = data["MovingObj"]["wave"]["wave_hight"];
 				wave_offset = data["MovingObj"]["wave"]["wave_offset"];
 				wave_lenght = data["MovingObj"]["wave"]["wave_lenght"];
-				wave_sdvig = data["MovingObj"]["wave"]["wave_sdvig"];
+                wave_sdvig = y;
 				break;
 
             case MovingType::random_wave:
