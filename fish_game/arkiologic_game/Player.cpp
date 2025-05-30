@@ -41,7 +41,7 @@ void  Player::move() {
 
         }
 
-        dir = dir.normalise();
+        //dir = dir.normalise();
 
 
         //sum(dir.mult(speed));

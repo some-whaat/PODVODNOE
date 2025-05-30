@@ -415,17 +415,6 @@ private:
     float wave_hight_bound = 20;
     Position firt_pos;
 
-	enum class MovingType {
-		none,
-		wave,
-		random_wave,
-		straight, // not implemented
-		circle, // not implemented
-		random // not implemented
-	};
-
-    MovingType moving_type = MovingType::wave;
-
 
     float wave_hight;
     float wave_offset;
@@ -434,6 +423,16 @@ private:
 
 public:
 
+    enum class MovingType {
+        none,
+        wave,
+        random_wave,
+        straight, // not implemented
+        circle, // not implemented
+        random // not implemented
+    };
+
+    MovingType moving_type = MovingType::wave;
 
     int fasing; // немного не нужная переменна
 
@@ -471,16 +470,17 @@ public:
 				wave_lenght = 0;
 				wave_sdvig = 0;
 				break;
+
             case MovingType::wave:
-				wave_hight = data["MovingObj"]["wave_hight"];
-				wave_offset = data["MovingObj"]["wave_offset"];
-				wave_lenght = data["MovingObj"]["wave_lenght"];
-				wave_sdvig = data["MovingObj"]["wave_sdvig"];
+				wave_hight = data["MovingObj"]["wave"]["wave_hight"];
+				wave_offset = data["MovingObj"]["wave"]["wave_offset"];
+				wave_lenght = data["MovingObj"]["wave"]["wave_lenght"];
+				wave_sdvig = data["MovingObj"]["wave"]["wave_sdvig"];
 				break;
 
             case MovingType::random_wave:
-				int max_x = data["MovingObj"]["max_x"];
-				int max_y = data["MovingObj"]["max_y"];
+				int max_x = data["MovingObj"]["random_wave"]["max_x"];
+				int max_y = data["MovingObj"]["random_wave"]["max_y"];
 
                 wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
                 wave_offset = rand_int(-max_x, max_x);
@@ -514,6 +514,13 @@ public:
 
         firt_pos = Position(in_x, in_y);
     }
+
+	void change_pos(int x_, int y_) {
+		x = x_;
+		y = y_;
+
+        firt_pos = get_pos();
+	}
 
     void move(Screen& screen);
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
@@ -692,6 +699,7 @@ protected:
 
     Position camera_pos = Position(0, 0);
 
+
 public:
 
     //float deltatime;
@@ -714,11 +722,6 @@ public:
         */
     }
 
-    /* сделать конструктор для JSON'ов
-    Screen() {
-        enshure_cols_rows();
-
-    }*/
 
     void add_layer(std::shared_ptr<RenderLayer> layer, int position_to_incert_to, std::string name);
 
@@ -734,7 +737,7 @@ public:
         }
 	}
 
-    RenderLayer* get_layer(const std::string& name);
+    std::vector<std::shared_ptr<RendrbleObject>>* get_layer(const std::string& name);
 
     void enshure_cols_rows();
 
@@ -767,6 +770,91 @@ public:
 
     bool yes_no_choice(std::string text);
 */
+
+
+
+    class ParticleSystem : public RendrbleObject {
+        //using image_vec = std::vector<std::string>;
+
+		RenderLayer particles;
+
+		enum class ParticlesSpawnType {
+			left_right,
+			up_down // not finished yet
+		};
+
+        ParticlesSpawnType particles_spawn_type;
+        //std::map<int, std::vector<nlohmann::json>> particles_constructors; // direction : set of MovingObj JSONs for this direction
+        std::map<int, nlohmann::json> particles_constructors; // direction :  MovingObj JSON for this direction
+
+
+        int on_screen_particles_count;
+
+		Screen& screen_ptr; // возможно нужно поменять на std::shared_ptr<Screen> или std::weak_ptr<Screen>
+
+    public:
+
+
+        ParticleSystem(nlohmann::json data, Screen& in_screen_ptr) : RendrbleObject(data), screen_ptr(in_screen_ptr) {
+
+			on_screen_particles_count = int(data["on_screen_particles_count"]);
+			//std::cout << "on_screen_particles_count: " << on_screen_particles_count << std::endl;
+
+			std::map<std::string, ParticlesSpawnType> moving_type_data = {
+				{"left_right", ParticlesSpawnType::left_right},
+				{"up_down", ParticlesSpawnType::up_down}
+			};
+			particles_spawn_type = moving_type_data[data["particles_spawn_type"]];
+			//std::cout << "particles_spawn_type: " << static_cast<int>(particles_spawn_type) << std::endl;
+
+            for (const auto& particle_data : data["particles_constructors"].items()) {
+                const std::string& direction = particle_data.key();
+                const nlohmann::json& particle_json = particle_data.value();
+
+				particles_constructors[std::stoi(direction)] = particle_json; // assuming direction is an integer in string format
+            }
+
+
+
+            for (int i = 0; i < on_screen_particles_count; i++) {
+
+                int fasing = rand_int(0, 1) == 0 ? -1 : 1;
+
+
+                std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[fasing]);
+
+                switch (particles_spawn_type)
+                {
+                case Screen::ParticleSystem::ParticlesSpawnType::left_right:
+
+                    particle->change_pos(
+                        rand_int(-(screen_ptr.cols / 2) + 10, (screen_ptr.cols / 2) - 10) + screen_ptr.camera_pos.x,
+                        rand_int(-(screen_ptr.rows / 2) + 10, (screen_ptr.rows / 2) - 10) + screen_ptr.camera_pos.y
+                    );
+
+                    break;
+                case Screen::ParticleSystem::ParticlesSpawnType::up_down: // not finished yet
+                    break;
+                default:
+                    break;
+                }
+
+                particles.push_back(particle);
+            }
+        }
+
+        void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+
+        void add_particle();
+
+		void action(std::shared_ptr<Player> player) override {};
+
+        bool is_inside(Position pos, float add_dist) override {
+            return false;
+        };
+
+    };
+
 };
 
 std::unique_ptr<RendrbleObject> create_object(const std::string& classNameStr, nlohmann::json data);
@@ -868,6 +956,23 @@ public:
                 std::string type_name = obj_type.key();
                 nlohmann::json objects = obj_type.value();
 
+				if (type_name == "ParticleSystem") {
+
+                    for (auto& obj : objects.items()) {
+
+						std::cout << obj.key() << std::endl;
+
+                        auto particle_system_shared = std::make_shared<Screen::ParticleSystem>(obj.value(), *this);
+                        render_layer->push_back(particle_system_shared);
+
+						std::cout << "ParticleSystem added" << std::endl;
+                    }
+
+                    replace_layer(render_layer, layer_ind, layer_name);
+
+                    continue;
+				}
+
                 if (type_name != "layer_ind") {
 
 					// перебираем объекты данного типа
@@ -894,38 +999,6 @@ public:
             }
 
         }
-
-        // временно, надо потом убрать
-        std::shared_ptr<RenderLayer> bg_fish;
-        bg_fish = std::make_shared<RenderLayer>();
-
-        for (int i = 0; i < 4; i++) {
-
-            int fasing = rand_int(0, 1) == 0 ? -1 : 1;
-
-            std::string fish_f;
-            if (fasing == 1) {
-                fish_f = "fish_right1.txt";
-            }
-            else {
-                fish_f = "fish_left1.txt";
-            }
-
-            bg_fish->push_back(std::make_shared<MovingObj>(
-                fish_f,
-
-                rand_int(-(cols / 2) + 10, (cols / 2) - 10),
-                rand_int(-(rows / 2) + 10, (rows / 2) - 10),
-
-                fasing,
-                Position(2, 2),
-                cols,
-                rows,
-                -0.4f
-            ));
-        }
-
-        add_layer(bg_fish, 3, "bg_fish"); // из головы номер
 
 
         // тоже временно?? наверно нет

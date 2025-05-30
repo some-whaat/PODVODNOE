@@ -92,8 +92,16 @@ void Screen::render() {
 
         std::fill(backBuffer.begin(), backBuffer.end(), CHAR_INFO{ L' ', 0x07 });
 
-        for (const auto& layer : render_order) {
-            for (const auto& obj : *layer) {
+
+        int i = 0; // for debug
+        for (const std::shared_ptr<RenderLayer>& layer : render_order) {
+			i++;
+            if (!layer) {
+				//throw std::runtime_error("Render layer is null!" + i);
+				continue;
+            }
+
+            for (const std::shared_ptr<RendrbleObject>& obj : *layer) {
                 obj->draw(backBuffer, *this);
             }
         }
@@ -142,6 +150,7 @@ void Screen::render() {
             }
         }
 */
+
         Sleep(MBF);
 
         //deltatime = (std::chrono::steady_clock::now() - previous_time).count();
@@ -162,6 +171,58 @@ void Screen::swap_buffers() {
     WriteConsoleOutput(hConsole, backBuffer.data(), bufferSize, bufferCoord, &writeRegion);
 }
 
+
+void Screen::ParticleSystem::add_particle() {
+    int fasing = rand_int(0, 1) == 0 ? -1 : 1;
+
+
+    std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[fasing]);
+
+    switch (particles_spawn_type)
+    {
+    case Screen::ParticleSystem::ParticlesSpawnType::left_right:
+
+		particle->change_pos(
+            fasing * -((screen_ptr.cols / 2) + 5) + screen_ptr.camera_pos.x, // MAGIC NUMBER
+            rand_int(-(screen_ptr.rows / 2), (screen_ptr.rows / 2)) + screen_ptr.camera_pos.y
+        );
+
+        break;
+
+    case Screen::ParticleSystem::ParticlesSpawnType::up_down: // not finished yet
+        break;
+
+    default:
+        break;
+    }
+
+    particles.push_back(particle);
+};
+
+void Screen::ParticleSystem::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
+    for (const std::shared_ptr<RendrbleObject> particle : particles) {
+        particle->draw(buffer, screen);
+    }
+
+
+    float f = particles.size();
+    for (int i = 0; f + i < 5; i++) {
+
+        add_particle();
+    }
+
+    // убиваем лишних
+    for (int i = 0; i < particles.size(); i++) {
+        if (this->particles[i]->x < -screen_ptr.cols / 2 - 8 + screen_ptr.camera_pos.x ||
+            this->particles[i]->x > screen_ptr.cols / 2 + 8 + screen_ptr.camera_pos.x ||
+            this->particles[i]->y < -screen_ptr.rows / 2 - 8 + screen_ptr.camera_pos.y ||
+            this->particles[i]->y > screen_ptr.rows / 2 + 8 + screen_ptr.camera_pos.y) {
+
+            particles.erase(particles.begin() + i);
+        }
+    }
+
+};
 
 /*
 void Screen::text_seq_render(std::vector<TextSquere> text_seq) {

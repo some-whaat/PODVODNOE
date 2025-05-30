@@ -2,7 +2,6 @@
 
 
 void World::process() {
-    std::vector<std::shared_ptr<RendrbleObject>>* bg_fish = get_layer("bg_fish");
     std::vector<std::shared_ptr<RendrbleObject>>* npcs = get_layer("NPCs");
     std::shared_ptr<RendrbleObject> ui_down = (*get_layer("ui_layer"))[0];
     //std::shared_ptr<RendrbleObject> player = (*get_layer("player"))[0];
@@ -10,7 +9,7 @@ void World::process() {
 
 	while (true) {
 
-
+        /*
         //fishy_stuff
         float f = bg_fish->size();
         for (int i = 0; f + i < 5; i++) {
@@ -44,7 +43,7 @@ void World::process() {
             if ((*bg_fish)[i]->x < -cols / 2 - 8 + camera_pos.x || (*bg_fish)[i]->x > cols / 2 + 8 + camera_pos.x || (*bg_fish)[i]->y < -rows / 2 - 8 + camera_pos.y || (*bg_fish)[i]->y > rows / 2 + 8 + camera_pos.y) {
                 bg_fish->erase(bg_fish->begin() + i);
             }
-        }
+        }*/
 
 
 		//something_changed = true;

@@ -10,6 +10,24 @@
 
         "beach": {
 
+          "Position": {
+            "x": -30,
+            "y": 20
+          },
+
+          "RendrbleObject": {
+            "color": [ 1, 0, 1 ],
+            "is_render": true,
+            "add_paralax": 0.3
+          },
+
+          "Picture": {
+            "sprite_filepame": "beach.txt"
+          }
+        },
+
+        "beach1": {
+
           "RendrbleObject": {
             "color": [ 1, 1, 0 ],
             "is_render": true,
@@ -19,26 +37,7 @@
           "Picture": {
             "sprite_filepame": "beach.txt"
           }
-        },
-
-        "beach2": {
-
-          "Position": {
-            "x": 22,
-            "y": 22
-          },
-
-          "RendrbleObject": {
-            "color": [ 1, 0, 1 ],
-            "is_render": true,
-            "add_paralax": 0.5
-          },
-
-          "Picture": {
-            "sprite_filepame": "beach.txt"
-          }
         }
-
 
       }
 
@@ -50,6 +49,8 @@
       "NPC": {
 
         "frederic": {
+
+
           "Position": {
             "x": 30,
             "y": 20
@@ -63,7 +64,7 @@
 
           "AnimatbleObj": {
             "animated_sprite_filepame": "big_fish.txt",
-            "anim_speed": 333
+            "anim_speed": 77
           },
 
           "MovingObj": {
@@ -135,23 +136,25 @@
 
     },
 
+
+
     "Player": {
       "layer_ind": 2,
 
       "Position": {
-        "x": 0,
-        "y": 0
+        "x": 100,
+        "y": 100
       },
 
       "RendrbleObject": {
-        "color": [ 0, 1, 1 ],
+        "color": [ 1, 0, 0 ],
         "is_render": true,
         "add_paralax": 0
       },
 
       "AnimatbleObj": {
         "animated_sprite_filepame": "podvodnoe.txt",
-        "anim_speed": 22
+        "anim_speed": 44
       },
 
       "Player": {
@@ -173,7 +176,7 @@
           }
         },
 
-        "inventory": [ 100, 102, 101 ]
+        "inventory": [ 100 ]
       }
     },
 
@@ -202,6 +205,79 @@
 
       }
 
+    },
+
+    "fish_bg": {
+
+      "layer_ind": 4,
+
+      "ParticleSystem": {
+
+        "bg_fish": {
+
+          "particles_spawn_type": "left_right",
+          "on_screen_particles_count": 6,
+
+
+          "particles_constructors": {
+
+
+            "-1": {
+
+              "RendrbleObject": {
+                "color": [ 0, 1, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "scull.txt",
+                "anim_speed": 0
+              },
+
+              "MovingObj": {
+                "velocity": [ -2, 0 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 60,
+                  "max_y": 30
+                }
+              }
+            },
+
+            "1": {
+
+              "RendrbleObject": {
+                "color": [ 1, 1, 0 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "fish_right1.txt",
+                "anim_speed": 0
+              },
+
+              "MovingObj": {
+                "velocity": [ 2, 0 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 60,
+                  "max_y": 30
+                }
+              }
+            }
+          }
+
+
+        }
+      }
     }
+
+
   }
 }
