@@ -181,6 +181,9 @@
     <Text Include="eye.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
+    <Text Include="fishka2.txt">
+      <Filter>Source Files\pics\loot</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -11,21 +11,15 @@ void Screen::enshure_cols_rows() {
     init_buffers();
 }
 
-int Screen::coord_to_vec_space(int coord, char coord_name) {
-    //this->enshure_cols_rows();
+int Screen::coord_to_vec_space(float coord, char coord_name) {
 
-    switch (coord_name)
-    {
+    switch (coord_name) {
     case 'x':
-        return (coord + (cols / 2) - camera_pos.x) * 2;
-        break;
-
+        return static_cast<int>(std::round((coord + (cols / 2.0f) - std::round(camera_pos.x)) * 2.0f));
     case 'y':
-        return (rows / 2) - (coord - camera_pos.y);
-        break;
-
+        return static_cast<int>(std::round((rows / 2.0f) - (coord - std::round(camera_pos.y))));
     default:
-        break;
+        return 0;
     }
 }
 

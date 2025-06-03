@@ -9,43 +9,27 @@ void Player::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
     AnimatbleObj::draw(buffer, screen);
 
-    move();
+    move(screen.deltaTime);
 }
 
-void  Player::move() {
+void  Player::move(float deltaTime) {
 
-    if (++move_count >= 1/speed) {
+    if (true){//++move_count >= 1/speed) {
         Position dir;
 
-        if (GetAsyncKeyState(VK_LEFT))
-        {
-            dir.x += -1;
 
+        if (GetAsyncKeyState(VK_LEFT)) dir.x -= 1;
+        if (GetAsyncKeyState(VK_RIGHT)) dir.x += 1;
+        if (GetAsyncKeyState(VK_UP)) dir.y += 1;
+        if (GetAsyncKeyState(VK_DOWN)) dir.y -= 1;
+
+        if (dir.x != 0 || dir.y != 0) {
+            dir = dir.normalise();
         }
 
-        if (GetAsyncKeyState(VK_RIGHT))
-        {
-            dir.x += 1;
-
-        }
-
-        if (GetAsyncKeyState(VK_UP))
-        {
-            dir.y += 1;
-
-        }
-
-        if (GetAsyncKeyState(VK_DOWN))
-        {
-            dir.y += -1;
-
-        }
-
-        //dir = dir.normalise();
-
-
-        //sum(dir.mult(speed));
+        dir = dir.mult(speed * deltaTime);
         sum(dir);
+
 
         if (!inventory_vec.empty()) {
             if (inventory_vec[0] == nullptr) { //  Œ—“€€€€€€À‹

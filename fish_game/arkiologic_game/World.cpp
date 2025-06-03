@@ -6,8 +6,16 @@ void World::process() {
     std::shared_ptr<RendrbleObject> ui_down = (*get_layer("ui_layer"))[0];
     //std::shared_ptr<RendrbleObject> player = (*get_layer("player"))[0];
 
+    auto previousTime = std::chrono::high_resolution_clock::now();
 
 	while (true) {
+
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        deltaTime = std::chrono::duration<float>(currentTime - previousTime).count();
+        previousTime = currentTime;
+
+        // Cap delta time to avoid spiral of death
+        deltaTime = min(deltaTime, 0.2f);
 
         /*
         //fishy_stuff
@@ -50,7 +58,7 @@ void World::process() {
 
         bool is_ui_down = false;
         for (std::shared_ptr<RendrbleObject> npc : *npcs) {
-            if (player->is_inside(*npc, 6)) {  // MAGIC NUMBER
+            if (player->is_inside(*npc, collision_add_val_to_NPC)) {
                 npc->action(player);
                 is_ui_down = true;
             }
@@ -60,8 +68,11 @@ void World::process() {
         
 
         // БАГ :(((((((((((((((((
-        camera_pos.smooth_follow(player->get_pos(), 1, 0.5, 9); // убрать magic numbers
+        camera_pos.smooth_follow(player->get_pos(), 1, camera_speed, 9, deltaTime); // убрать magic numbers
+        //camera_pos.round();
         //camera_pos.move_to(player->get_pos(), 1);
+
+        //camera_pos = player->get_pos();
 
 		render();
 	}

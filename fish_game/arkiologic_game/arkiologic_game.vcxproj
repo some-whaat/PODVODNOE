@@ -160,6 +160,7 @@
     <Text Include="chest.txt" />
     <Text Include="dino.txt" />
     <Text Include="eye.txt" />
+    <Text Include="fishka2.txt" />
     <Text Include="podvodnoe.txt" />
     <Text Include="doll.txt" />
     <Text Include="dude.txt" />

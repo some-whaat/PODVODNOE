@@ -5,17 +5,26 @@ void Picture::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
     if (is_render == true) {
 
+
         int i = 0;
+        int renderX = static_cast<int>(std::round(x)); // Player's x position (float)
+        int renderY = static_cast<int>(std::round(y)); // Player's y position (float)
+
         Position camera_pos = screen.get_camera_pos();
-        int y_coord = screen.coord_to_vec_space(y, 'y') - 1 - camera_pos.y * add_paralax;
-        int x_coord = screen.coord_to_vec_space(x, 'x') + camera_pos.x * add_paralax;
+        // Round camera offsets after parallax calculation
+        int camOffsetX = static_cast<int>(std::round(camera_pos.x) * add_paralax);
+        int camOffsetY = static_cast<int>(std::round(camera_pos.y) * add_paralax);
+
+        // Use rounded positions for screen coordinates
+        int y_coord = screen.coord_to_vec_space(renderY, 'y') - camOffsetY;
+        int x_coord = screen.coord_to_vec_space(renderX, 'x') + camOffsetX;
 
         for (int iy = y_coord - (hight / 2); iy < y_coord + (hight / 2) && iy < screen.rows; iy++) {
 
 
             if (iy >= 0 && i < image_vec.size()) {
                 int ii = 0;
-                for (int ix = x_coord - (wighth / 2); ix <= x_coord + (wighth / 2 + 1) && ix < screen.cols * 2; ix++) {
+                for (int ix = x_coord - (wighth / 2); ix <= x_coord + (wighth / 2) && ix < screen.cols * 2; ix++) {
                     if (ii >= image_vec[i].size()) {
                         break;
                     }

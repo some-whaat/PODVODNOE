@@ -97,11 +97,13 @@ public:
 
     void move_to(Position to_pos, float min_dist);
 
-    void smooth_follow(Position to_pos, float min_dist, float speed, float max_len);
+    void smooth_follow(Position to_pos, float min_dist, float speed, float max_len, float deltaTime = 1);
 
     Position get_pos();
 
     Position coords_to_vec_space(Position coord_pos, int cols, int rows);
+
+    void round();
 };
 
 class RendrbleObject : public Position {
@@ -315,9 +317,13 @@ public:
 };
 
 class Picture : public Rektangle {
-public:
+protected:
+
     std::vector<std::string> image_vec;
 
+    Position resigual_movement = Position(); // рабочая
+
+public:
     Picture() : Rektangle(), image_vec({}) {}
 
     explicit Picture(std::string json_file) : Picture(load_json(json_file)) {}
@@ -657,7 +663,7 @@ public:
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
-    void move();
+    void move(float deltaTime);
 };
 
 
@@ -698,12 +704,15 @@ protected:
     CONSOLE_SCREEN_BUFFER_INFO csbi;
 
     Position camera_pos = Position(0, 0);
+    float camera_speed = 1;
 
+    float MBF = 2; //milliseconds between frames BETTER NOT TO SET TO 0
 
 public:
+    float deltaTime;
 
     //float deltatime;
-    float MBF = 2; //milliseconds between frames BETTER NOT TO SET TO 0
+
 
     
     int cols, rows;
@@ -741,7 +750,7 @@ public:
 
     void enshure_cols_rows();
 
-    int coord_to_vec_space(int coord, char coord_name);
+    int coord_to_vec_space(float coord, char coord_name);
 
     //char pix_calc(int x, int y);
 
@@ -862,7 +871,7 @@ std::unique_ptr<RendrbleObject> create_object(const std::string& classNameStr, n
 class World : public Screen {
 private:
     std::shared_ptr<Player> player;
-
+    float collision_add_val_to_NPC = 0;
 
 public:
 
@@ -925,6 +934,8 @@ public:
         
 		nlohmann::json world_json = load_json(world_json_filename);
 
+        camera_speed = world_json["camera_speed"];
+        collision_add_val_to_NPC = world_json["collision_add_val_to_NPC"];
 
         auto& layers_data = world_json["layers"];
         render_order.resize(layers_data.size() + render_order.size());
@@ -1001,7 +1012,7 @@ public:
         }
 
 
-        // тоже временно?? наверно нет
+        // временно?? наверно нет
         std::shared_ptr<UI> ui_down = std::make_shared<UI>("press space to interact", 0, 0);
         ui_down->is_render = false;
 

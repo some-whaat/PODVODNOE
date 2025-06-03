@@ -10,7 +10,7 @@ void MovingObj::move(Screen& screen) {
         break;
 
     case MovingType::wave:
-        float result_x = x + (velocity.len() * float(fasing)) * screen.MBF / 25;
+        float result_x = float(x) + (velocity.len() * float(fasing)) * screen.deltaTime;
         x = result_x;
         y = wave_hight * (std::sin(wave_lenght * result_x + wave_offset)) + firt_pos.y;
 

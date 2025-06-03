@@ -62,21 +62,18 @@ void Position::move_to(Position to_pos, float min_dist = 0) {
     //return *this;
 }
 
-void Position::smooth_follow(Position to_pos, float min_dist, float speed, float max_len) {
-    
+void Position::smooth_follow(Position to_pos, float min_dist, float speed, float max_len, float deltaTime) {
+    Position current(x, y);
+    float distance = current.dist(to_pos);
 
-    if (!(Position(x, y).dist(to_pos) <= min_dist)) {
-
-        Position between_vec = to_pos.mins(*this);
-        float len = between_vec.len();
-
+    if (distance > min_dist) {
+        Position between_vec = to_pos.mins(current);
         between_vec = between_vec.normalise();
-        between_vec = between_vec.mult(speed * len / max_len);
 
-        this->sum(between_vec);
-        //return Position(x, y).sum(between_vec);
+        // Add deltaTime to make frame-rate independent
+        float step = min(speed * distance / max_len * deltaTime, distance);
+        this->sum(between_vec.mult(step));
     }
-
 }
 
 
@@ -87,4 +84,9 @@ Position Position::get_pos() {
 
 Position Position::coords_to_vec_space(Position coord_pos, int cols, int rows) {
     return Position(coord_pos.x + cols / 2, ((rows / 2) - coord_pos.y) * 2);
+}
+
+void Position::round() {
+	x = std::round(x);
+	y = std::round(y);
 }

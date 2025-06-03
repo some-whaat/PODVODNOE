@@ -1,5 +1,10 @@
 {
+  "camera_speed": 44,
+  "camera_settings": {
+    "moving_type": "smooth_follow"
+  },
 
+  "collision_add_val_to_NPC": 6,
 
   "layers": {
 
@@ -138,7 +143,7 @@
 
       "Player": {
 
-        "speed": 1,
+        "speed": 66,
 
         "items": {
           "100": {
@@ -161,7 +166,7 @@
 
         },
 
-        "inventory": [ 100 ]
+        "inventory": [ 101 ]
       }
     },
 
@@ -216,12 +221,12 @@
               },
 
               "AnimatbleObj": {
-                "animated_sprite_filepame": "eye.txt",
-                "anim_speed": 0
+                "animated_sprite_filepame": "fishka2.txt",
+                "anim_speed": 88
               },
 
               "MovingObj": {
-                "velocity": [ -2, 0 ],
+                "velocity": [ -22, 0 ],
 
                 "moving_type": "random_wave",
 
@@ -235,7 +240,7 @@
             "1": {
 
               "RendrbleObject": {
-                "color": [ 1, 1, 0 ],
+                "color": [ 0, 1, 1 ],
                 "is_render": true,
                 "add_paralax": 0
               },
@@ -246,7 +251,7 @@
               },
 
               "MovingObj": {
-                "velocity": [ 2, 0 ],
+                "velocity": [ 22, 0 ],
 
                 "moving_type": "random_wave",
 
