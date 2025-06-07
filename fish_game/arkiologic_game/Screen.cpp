@@ -15,9 +15,9 @@ int Screen::coord_to_vec_space(float coord, char coord_name) {
 
     switch (coord_name) {
     case 'x':
-        return static_cast<int>(std::round((coord + (cols / 2.0f) - std::round(camera_pos.x)) * 2.0f));
+        return static_cast<int>(std::round((coord + (cols / 2.0f) - camera_pos.x) * 2.0f));
     case 'y':
-        return static_cast<int>(std::round((rows / 2.0f) - (coord - std::round(camera_pos.y))));
+        return static_cast<int>(std::round((rows / 2.0f) - (coord - camera_pos.y)));
     default:
         return 0;
     }
@@ -170,7 +170,7 @@ void Screen::ParticleSystem::add_particle() {
     int fasing = rand_int(0, 1) == 0 ? -1 : 1;
 
 
-    std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[fasing]);
+    std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[fasing][rand_int(0, constructors_amount[fasing] - 1)]);
 
     switch (particles_spawn_type)
     {

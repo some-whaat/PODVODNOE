@@ -618,7 +618,7 @@ public:
 
 class Player : public AnimatbleObj {
 private:
-    int move_count = 0;
+    float move_count = 0;
 
 	//std::vector<AnimatbleObj> inventory;
     //std::vector<int> inventory_ids;
@@ -794,8 +794,8 @@ public:
 
         ParticlesSpawnType particles_spawn_type;
         //std::map<int, std::vector<nlohmann::json>> particles_constructors; // direction : set of MovingObj JSONs for this direction
-        std::map<int, nlohmann::json> particles_constructors; // direction :  MovingObj JSON for this direction
-
+        std::map<int, std::vector<nlohmann::json>> particles_constructors; // direction :  MovingObj JSON for this direction
+        std::map<int, int> constructors_amount; // amount of constructors (to not check it every time)
 
         int on_screen_particles_count;
 
@@ -807,48 +807,50 @@ public:
         ParticleSystem(nlohmann::json data, Screen& in_screen_ptr) : RendrbleObject(data), screen_ptr(in_screen_ptr) {
 
 			on_screen_particles_count = int(data["on_screen_particles_count"]);
-			//std::cout << "on_screen_particles_count: " << on_screen_particles_count << std::endl;
+            bool first_spawn_particles_randomly = data["first_spawn_particles_randomly"];
 
 			std::map<std::string, ParticlesSpawnType> moving_type_data = {
 				{"left_right", ParticlesSpawnType::left_right},
 				{"up_down", ParticlesSpawnType::up_down}
 			};
 			particles_spawn_type = moving_type_data[data["particles_spawn_type"]];
-			//std::cout << "particles_spawn_type: " << static_cast<int>(particles_spawn_type) << std::endl;
+			
+            for (const auto& particles_list_json : data["particles_constructors"].items()) {
 
-            for (const auto& particle_data : data["particles_constructors"].items()) {
-                const std::string& direction = particle_data.key();
-                const nlohmann::json& particle_json = particle_data.value();
+                const int direction = std::stoi(particles_list_json.key());
+                particles_constructors[direction] = {};
 
-				particles_constructors[std::stoi(direction)] = particle_json; // assuming direction is an integer in string format
+                const nlohmann::json& particles_list = particles_list_json.value();
+
+                for (const auto& particle_data : particles_list.items()) {
+
+                    const nlohmann::json& particle_json = particle_data.value();
+
+                    particles_constructors[direction].push_back(particle_json);
+                }
             }
 
+            constructors_amount[-1] = particles_constructors[-1].size();
+            constructors_amount[1] = particles_constructors[1].size();
 
 
             for (int i = 0; i < on_screen_particles_count; i++) {
 
-                int fasing = rand_int(0, 1) == 0 ? -1 : 1;
+                if (first_spawn_particles_randomly) {
 
-
-                std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[fasing]);
-
-                switch (particles_spawn_type)
-                {
-                case Screen::ParticleSystem::ParticlesSpawnType::left_right:
+                    int fasing = rand_int(0, 1) == 0 ? -1 : 1;
+                    std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[fasing][rand_int(0, constructors_amount[fasing] - 1)]);
 
                     particle->change_pos(
                         rand_int(-(screen_ptr.cols / 2) + 10, (screen_ptr.cols / 2) - 10) + screen_ptr.camera_pos.x,
                         rand_int(-(screen_ptr.rows / 2) + 10, (screen_ptr.rows / 2) - 10) + screen_ptr.camera_pos.y
                     );
 
-                    break;
-                case Screen::ParticleSystem::ParticlesSpawnType::up_down: // not finished yet
-                    break;
-                default:
-                    break;
+                    particles.push_back(particle);
                 }
-
-                particles.push_back(particle);
+                else {
+                    add_particle();
+                }                               
             }
         }
 
