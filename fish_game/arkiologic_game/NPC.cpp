@@ -19,15 +19,15 @@ void NPC::action(std::shared_ptr<Player> player) {
             text_bubble.set_text("No dialogue available.", text_wight);
         }
         else {
-            LogicActions& current_action = data_base[state];
+            nlohmann::json& current_action = data_base[state];
 
-            if (player->does_has_item(current_action.needed_item_id)) {
+            if (player->does_has_item(current_action["needed_item_id"])) {
 
-				if (current_action.remove_item_id != -1) {
-					player->remove_item_from_inventory(current_action.remove_item_id);
+                if (current_action["remove_item_id"] != -1) {
+                    player->remove_item_from_inventory(current_action["remove_item_id"]);
 				}
 
-                emply_state(current_action.next_state);
+                emply_state(current_action["next_state"]);
             }
             else {
                 text_bubble.set_text("I need something else.", text_wight);
@@ -40,15 +40,15 @@ void NPC::action(std::shared_ptr<Player> player) {
 }
 
 void NPC::set_text() {
-    text_bubble.set_text(data_base[state].dialogue, text_wight);
+    text_bubble.set_text(data_base[state]["dialogue"], text_wight);
 }
 
 void NPC::emply_state(int new_state) {
     state = new_state;
 
     if (data_base.find(state) != data_base.end()) {
-        text_bubble.is_render = data_base[state].remove_text_bbl;
-        text_bubble.set_text(data_base[state].dialogue, text_wight);
+        text_bubble.is_render = data_base[state]["remove_text_bbl"];
+        text_bubble.set_text(data_base[state]["dialogue"], text_wight);
 
     }
     else {

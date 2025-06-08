@@ -78,6 +78,7 @@
             "states": {
 
               "-1": {
+                "meet_before" : false
                 "dialogue": "ehm, hey?",
                 "needed_item_id": -1,
                 "remove_item_id": -1,
@@ -101,7 +102,7 @@
                 "dialogue": "Hello, traveler! Can you bring me a golden fish?",
                 "needed_item_id": 101,
                 "remove_item_id": -1,
-                "next_state": 1,
+                "next_state": 3,
                 "reward_item_id": -1,
                 "remove_text_bbl": false,
                 "sould_answer": true
@@ -118,6 +119,15 @@
               },
               "2": {
                 "dialogue": "sdbvnmzdjfvn ,dj",
+                "needed_item_id": 101,
+                "remove_item_id": -1,
+                "next_state": 1,
+                "reward_item_id": -1,
+                "remove_text_bbl": true
+              },
+
+              "3": {
+                "dialogue": "Well..looks like I forget it somewhere...",
                 "needed_item_id": 101,
                 "remove_item_id": -1,
                 "next_state": 1,
@@ -166,7 +176,7 @@
             "anim_speed": 0
           },
           "102": {
-            "sprite_filepame": "star.txt",
+            "spr++ite_filepame": "star.txt",
             "anim_speed": 0
           },
 
