@@ -74,3 +74,7 @@ bool Player::does_has_item(int item_id) {
     
     return item_id == -1 || (inventory.find(item_id) != inventory.end());
 }
+
+void Player::add_mission(int mission_id) {
+    mission_vec.push_back(mission_id);
+}

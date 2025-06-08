@@ -542,8 +542,10 @@ private:
         std::string dialogue;
         int next_state;
         int reward_item_id;
-
+        bool met_before;
         bool remove_text_bbl;
+        bool met_before;
+
     };
 
     TextSquere text_bubble = TextSquere();
