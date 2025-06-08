@@ -235,7 +235,7 @@
               },
 
               "MovingObj": {
-                "rand_velocity": [ -11, -5, -5, 5 ],
+                "rand_velocity": [ -8, -8, -8, 8 ],
 
                 "moving_type": "random_wave",
 
@@ -259,7 +259,7 @@
               },
 
               "MovingObj": {
-                "rand_velocity": [ 0, 0, -22, 22 ],
+                "rand_velocity": [ -5, 5, -5, 5 ],
 
                 "moving_type": "random_wave",
 
@@ -295,9 +295,7 @@
             }
           }
         }
-
-
-        }
+      }
       }
     }
 

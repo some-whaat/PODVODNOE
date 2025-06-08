@@ -166,8 +166,32 @@ void Screen::swap_buffers() {
 }
 
 
+
+
+Position vectorToRectanglePoint(const Position& direction, float rectWidth, float rectHeight) {
+    float halfWidth = rectWidth / 2.0f;
+    float halfHeight = rectHeight / 2.0f;
+
+    // Handle zero vector case
+    if (direction.x == 0.0f && direction.y == 0.0f) {
+        return Position(0.0f, 0.0f);
+    }
+
+    // Compute scaling factors to reach rectangle boundaries
+    float tx = (direction.x != 0.0f) ? (halfWidth / std::abs(direction.x)) : INFINITY;
+    float ty = (direction.y != 0.0f) ? (halfHeight / std::abs(direction.y)) : INFINITY;
+
+    // Find the smallest scaling factor (closest intersection)
+    float t = min(tx, ty);
+
+    // Compute the intersection point
+    return Position(direction.x * t, direction.y * t);
+}
+
+
 void Screen::ParticleSystem::add_particle() {
-    float radius = sqrt(pow(screen_ptr.cols, 2) + pow(screen_ptr.rows, 2)) / 2;
+
+    //float radius = sqrt(pow(screen_ptr.cols, 2) + pow(screen_ptr.rows, 2)) / 2;
 
 
     std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[rand_int(0, particles_constructors.size() - 1)]);
@@ -176,7 +200,10 @@ void Screen::ParticleSystem::add_particle() {
     ang = particle->velocity.x > 0 ? ang + M_PIl : ang;
     ang = abs(particle->velocity.y) > abs(particle->velocity.x) ? ang + M_PIl : ang;
 
-    particle->change_pos(cos(ang) * radius + screen_ptr.camera_pos.x, sin(ang) * radius + screen_ptr.camera_pos.y);
+    int add_val = 7; // MAGIC NUMBER
+    Position spawn_pos = vectorToRectanglePoint(particle->velocity.mult(-1), screen_ptr.cols + add_val, screen_ptr.rows + add_val);
+
+    particle->change_pos(spawn_pos.x + screen_ptr.camera_pos.x, spawn_pos.y + screen_ptr.camera_pos.y);
     /*
     switch (particles_spawn_type)
     {
