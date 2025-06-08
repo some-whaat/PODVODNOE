@@ -167,11 +167,17 @@ void Screen::swap_buffers() {
 
 
 void Screen::ParticleSystem::add_particle() {
-    int fasing = rand_int(0, 1) == 0 ? -1 : 1;
+    float radius = sqrt(pow(screen_ptr.cols, 2) + pow(screen_ptr.rows, 2)) / 2;
 
 
-    std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[fasing][rand_int(0, constructors_amount[fasing] - 1)]);
+    std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[rand_int(0, particles_constructors.size() - 1)]);
 
+    float ang = std::atanf(particle->velocity.y/particle->velocity.x);
+    ang = particle->velocity.x > 0 ? ang + M_PIl : ang;
+    ang = abs(particle->velocity.y) > abs(particle->velocity.x) ? ang + M_PIl : ang;
+
+    particle->change_pos(cos(ang) * radius + screen_ptr.camera_pos.x, sin(ang) * radius + screen_ptr.camera_pos.y);
+    /*
     switch (particles_spawn_type)
     {
     case Screen::ParticleSystem::ParticlesSpawnType::left_right:
@@ -189,7 +195,7 @@ void Screen::ParticleSystem::add_particle() {
     default:
         break;
     }
-
+*/
     particles.push_back(particle);
 };
 
@@ -205,12 +211,12 @@ void Screen::ParticleSystem::draw(std::vector<CHAR_INFO>& buffer, Screen& screen
         add_particle();
     }
 
-    // убиваем лишних
+    // kill ones that are behind the screen
     for (int i = 0; i < particles.size(); i++) {
-        if (this->particles[i]->x < -screen_ptr.cols / 2 - 8 + screen_ptr.camera_pos.x ||
-            this->particles[i]->x > screen_ptr.cols / 2 + 8 + screen_ptr.camera_pos.x ||
-            this->particles[i]->y < -screen_ptr.rows / 2 - 8 + screen_ptr.camera_pos.y ||
-            this->particles[i]->y > screen_ptr.rows / 2 + 8 + screen_ptr.camera_pos.y) {
+        if (this->particles[i]->x < -screen_ptr.cols / 2 - 15 + screen_ptr.camera_pos.x ||
+            this->particles[i]->x > screen_ptr.cols / 2 + 15 + screen_ptr.camera_pos.x ||
+            this->particles[i]->y < -screen_ptr.rows / 2 - 11 + screen_ptr.camera_pos.y ||
+            this->particles[i]->y > screen_ptr.rows / 2 + 11 + screen_ptr.camera_pos.y) {
 
             particles.erase(particles.begin() + i);
         }

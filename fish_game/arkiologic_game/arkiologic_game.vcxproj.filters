@@ -16,9 +16,6 @@
     <Filter Include="Source Files\pics">
       <UniqueIdentifier>{dbb0b99d-934c-4911-a94c-b4af7484b827}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\pics\loot">
-      <UniqueIdentifier>{64be2f5b-fe7a-4290-9820-170c4cb2b261}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\JSONs">
       <UniqueIdentifier>{765b0608-03de-4c01-ac65-43ab74c275d4}</UniqueIdentifier>
     </Filter>
@@ -182,7 +179,7 @@
       <Filter>Source Files\pics</Filter>
     </Text>
     <Text Include="fishka2.txt">
-      <Filter>Source Files\pics\loot</Filter>
+      <Filter>Source Files\pics</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

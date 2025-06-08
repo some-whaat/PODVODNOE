@@ -17,6 +17,8 @@
 #include <unordered_map>
 #include <memory>
 #include <nlohmann/json.hpp>
+#include <cmath>
+# define M_PIl          3.141592653589793238462643383279502884L
 
 
 class Position;
@@ -67,6 +69,8 @@ public:
     }
 
     Position(float in_x, float in_y) : x(in_x), y(in_y) {}
+
+    Position(int x_up, int x_down, int y_up, int y_down) : x(rand_int(x_up, x_down)), y(rand_int(y_up, y_down)) {}
 
     explicit Position(nlohmann::json data) {
         if (data.contains("Position")) {
@@ -427,6 +431,8 @@ private:
     float wave_lenght;
     float wave_sdvig;
 
+    float ang_coef;
+
 public:
 
     enum class MovingType {
@@ -452,7 +458,26 @@ public:
     explicit MovingObj(nlohmann::json data) : AnimatbleObj(data) {
 
         if (data.contains("MovingObj")) {
-            velocity = Position(data["MovingObj"]["velocity"][0], data["MovingObj"]["velocity"][1]);
+
+            if (data["MovingObj"].contains("velocity")) {
+                velocity = Position(data["MovingObj"]["velocity"][0], data["MovingObj"]["velocity"][1]);
+            }
+            else {
+                if (data["MovingObj"].contains("rand_velocity")) {
+
+                    velocity = Position(
+                        data["MovingObj"]["rand_velocity"][0],
+                        data["MovingObj"]["rand_velocity"][1],
+                        data["MovingObj"]["rand_velocity"][2],
+                        data["MovingObj"]["rand_velocity"][3]);
+                }
+                else {
+                    velocity = Position();
+                }
+            }
+            //ang_coef = tan(std::atan2(velocity.x, velocity.y));
+            ang_coef = velocity.x == 0 ? 0 : velocity.y / velocity.x;
+
             fasing = velocity.x == 0 ? 1 : sgn(velocity.x);
 
 			std::map<std::string, MovingType> moving_type_data = {
@@ -792,10 +817,10 @@ public:
 			up_down // not finished yet
 		};
 
-        ParticlesSpawnType particles_spawn_type;
+        // ParticlesSpawnType particles_spawn_type;
         //std::map<int, std::vector<nlohmann::json>> particles_constructors; // direction : set of MovingObj JSONs for this direction
-        std::map<int, std::vector<nlohmann::json>> particles_constructors; // direction :  MovingObj JSON for this direction
-        std::map<int, int> constructors_amount; // amount of constructors (to not check it every time)
+        std::vector<nlohmann::json> particles_constructors; // direction :  MovingObj JSON for this direction
+        int constructors_amount; // amount of constructors (to not check it every time)
 
         int on_screen_particles_count;
 
@@ -809,29 +834,15 @@ public:
 			on_screen_particles_count = int(data["on_screen_particles_count"]);
             bool first_spawn_particles_randomly = data["first_spawn_particles_randomly"];
 
-			std::map<std::string, ParticlesSpawnType> moving_type_data = {
-				{"left_right", ParticlesSpawnType::left_right},
-				{"up_down", ParticlesSpawnType::up_down}
-			};
-			particles_spawn_type = moving_type_data[data["particles_spawn_type"]];
+
+			//particles_spawn_type = moving_type_data[data["particles_spawn_type"]];
 			
-            for (const auto& particles_list_json : data["particles_constructors"].items()) {
+            for (const auto& particle_data : data["particles_constructors"].items()) {
 
-                const int direction = std::stoi(particles_list_json.key());
-                particles_constructors[direction] = {};
+                const nlohmann::json& particle_json = particle_data.value();
 
-                const nlohmann::json& particles_list = particles_list_json.value();
-
-                for (const auto& particle_data : particles_list.items()) {
-
-                    const nlohmann::json& particle_json = particle_data.value();
-
-                    particles_constructors[direction].push_back(particle_json);
-                }
+                particles_constructors.push_back(particle_json);
             }
-
-            constructors_amount[-1] = particles_constructors[-1].size();
-            constructors_amount[1] = particles_constructors[1].size();
 
 
             for (int i = 0; i < on_screen_particles_count; i++) {
@@ -839,7 +850,7 @@ public:
                 if (first_spawn_particles_randomly) {
 
                     int fasing = rand_int(0, 1) == 0 ? -1 : 1;
-                    std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[fasing][rand_int(0, constructors_amount[fasing] - 1)]);
+                    std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[rand_int(0, particles_constructors.size() - 1)]);
 
                     particle->change_pos(
                         rand_int(-(screen_ptr.cols / 2) + 10, (screen_ptr.cols / 2) - 10) + screen_ptr.camera_pos.x,

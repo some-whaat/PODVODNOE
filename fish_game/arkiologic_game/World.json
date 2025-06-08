@@ -217,92 +217,84 @@
         "bg_fish": {
 
           "particles_spawn_type": "left_right",
-          "on_screen_particles_count": 5,
+          "on_screen_particles_count": 7,
           "first_spawn_particles_randomly": true,
 
           "particles_constructors": {
 
-
-            "-1": {
-
-              "fishka": {
-                "RendrbleObject": {
-                  "color": [ 1, 0, 1 ],
-                  "is_render": true,
-                  "add_paralax": 0
-                },
-
-                "AnimatbleObj": {
-                  "animated_sprite_filepame": "fishka2.txt",
-                  "anim_speed": 88
-                },
-
-                "MovingObj": {
-                  "velocity": [ -22, 0 ],
-
-                  "moving_type": "random_wave",
-
-                  "random_wave": {
-                    "max_x": 60,
-                    "max_y": 30
-                  }
-                }
+            "fishka": {
+              "RendrbleObject": {
+                "color": [ 1, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
               },
 
-              "scull": {
-                "RendrbleObject": {
-                  "color": [ 0, 0, 1 ],
-                  "is_render": true,
-                  "add_paralax": 0
-                },
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "fishka2.txt",
+                "anim_speed": 88
+              },
 
-                "AnimatbleObj": {
-                  "animated_sprite_filepame": "scull.txt",
-                  "anim_speed": 88
-                },
+              "MovingObj": {
+                "rand_velocity": [ -11, -5, -5, 5 ],
 
-                "MovingObj": {
-                  "velocity": [ -22, 0 ],
+                "moving_type": "random_wave",
 
-                  "moving_type": "random_wave",
-
-                  "random_wave": {
-                    "max_x": 60,
-                    "max_y": 30
-                  }
+                "random_wave": {
+                  "max_x": 60,
+                  "max_y": 30
                 }
               }
-
             },
 
-            "1": {
+            "scull": {
+              "RendrbleObject": {
+                "color": [ 0, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
 
-              "fish_right1": {
-                "RendrbleObject": {
-                  "color": [ 0, 1, 1 ],
-                  "is_render": true,
-                  "add_paralax": 0
-                },
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "scull.txt",
+                "anim_speed": 88
+              },
 
-                "AnimatbleObj": {
-                  "animated_sprite_filepame": "fish_right1.txt",
-                  "anim_speed": 0
-                },
+              "MovingObj": {
+                "rand_velocity": [ 0, 0, -22, 22 ],
 
-                "MovingObj": {
-                  "velocity": [ 22, 0 ],
+                "moving_type": "random_wave",
 
-                  "moving_type": "random_wave",
-
-                  "random_wave": {
-                    "max_x": 60,
-                    "max_y": 30
-                  }
+                "random_wave": {
+                  "max_x": 60,
+                  "max_y": 30
                 }
               }
+            },
 
+            "fish_right1": {
+              "RendrbleObject": {
+                "color": [ 0, 1, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "fish_right1.txt",
+                "anim_speed": 0
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ 5, 12, -5, 5 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 60,
+                  "max_y": 30
+                }
+              }
             }
           }
+        }
 
 
         }
