@@ -52,9 +52,6 @@ static nlohmann::json load_json(const std::string& filename) {
 
 
 class Position {
-private:
-    bool is_moving = false;
-
 public:
     float x;
     float y;
@@ -83,7 +80,7 @@ public:
         }
     }
 
-    void sum(Position pos);
+    Position sum(Position pos);
 
     Position mins(Position pos);
 
@@ -104,6 +101,8 @@ public:
     void smooth_follow(Position to_pos, float min_dist, float speed, float max_len, float deltaTime = 1);
 
     Position get_pos();
+
+    void change_pos(Position pos);
 
     Position coords_to_vec_space(Position coord_pos, int cols, int rows);
 
@@ -688,7 +687,7 @@ public:
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
-    void move(float deltaTime);
+    void move(float deltaTime, Screen& screen);
 };
 
 
@@ -710,6 +709,7 @@ public:
 class Screen {
 
 protected:
+
     HANDLE hConsole;
     std::vector<CHAR_INFO> backBuffer;
 
@@ -722,7 +722,6 @@ protected:
     std::vector<std::shared_ptr<RenderLayer>> render_order;
     std::unordered_map<std::string, std::shared_ptr<RenderLayer>> layers;
 
-    
 
     std::string rend_style = "0000000000";
 
@@ -733,7 +732,21 @@ protected:
 
     float MBF = 2; //milliseconds between frames BETTER NOT TO SET TO 0
 
+    /*
+    int border_poses[4][2] = {
+    {-60, 40}, // 0 left up
+    {60, 40},  // 1 right up
+    {60, -40},  // 2 right down
+    { -60, -40 },  // 3 left down 
+    };*/
+
+    int border_poses[2][2] = {
+    {-60, 60}, // 0 по иксу
+    {-40, 40},  // 1 по игрику
+    };
+
 public:
+
     float deltaTime;
 
     //float deltatime;
@@ -776,6 +789,23 @@ public:
     void enshure_cols_rows();
 
     int coord_to_vec_space(float coord, char coord_name);
+
+    bool is_inside_screen(Position pos, float add_val = 0) {
+        return (pos.x < -cols / 2 - add_val + camera_pos.x ||
+            pos.x > cols / 2 + add_val + camera_pos.x ||
+            pos.y < -rows / 2 - add_val + camera_pos.y ||
+            pos.y > rows / 2 + add_val + camera_pos.y);
+    }
+
+    bool is_inside_borders(Position pos, float add_val = 0) {
+
+        return (
+            pos.x > border_poses[0][0] &&
+            pos.x < border_poses[0][1] &&
+            pos.y > border_poses[1][0] &&
+            pos.y < border_poses[1][1]
+            );
+    }
 
     //char pix_calc(int x, int y);
 
@@ -827,7 +857,6 @@ public:
 		Screen& screen_ptr; // возможно нужно поменять на std::shared_ptr<Screen> или std::weak_ptr<Screen>
 
     public:
-
 
         ParticleSystem(nlohmann::json data, Screen& in_screen_ptr) : RendrbleObject(data), screen_ptr(in_screen_ptr) {
 
@@ -1033,7 +1062,6 @@ public:
         ui_layer->push_back(ui_down);
         add_layer(ui_layer, -1, "ui_layer");
     }
-
 
     void process() override;
 };

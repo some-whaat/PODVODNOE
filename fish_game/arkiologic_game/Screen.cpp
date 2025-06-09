@@ -226,30 +226,23 @@ void Screen::ParticleSystem::add_particle() {
     particles.push_back(particle);
 };
 
-void Screen::ParticleSystem::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
-    for (const std::shared_ptr<RendrbleObject> particle : particles) {
-        particle->draw(buffer, screen);
-    }
+void Screen::ParticleSystem::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {  
+   for (const std::shared_ptr<RendrbleObject> particle : particles) {  
+       particle->draw(buffer, screen);  
+   }  
 
+   float f = particles.size();  
+   for (int i = 0; f + i < on_screen_particles_count; i++) {  
+       add_particle();  
+   }  
 
-    float f = particles.size();
-    for (int i = 0; f + i < on_screen_particles_count; i++) {
+   for (int i = 0; i < particles.size(); i++) {  
+       if (screen_ptr.is_inside_screen(*particles[i], 11)) {  
 
-        add_particle();
-    }
-
-    // kill ones that are behind the screen
-    for (int i = 0; i < particles.size(); i++) {
-        if (this->particles[i]->x < -screen_ptr.cols / 2 - 15 + screen_ptr.camera_pos.x ||
-            this->particles[i]->x > screen_ptr.cols / 2 + 15 + screen_ptr.camera_pos.x ||
-            this->particles[i]->y < -screen_ptr.rows / 2 - 11 + screen_ptr.camera_pos.y ||
-            this->particles[i]->y > screen_ptr.rows / 2 + 11 + screen_ptr.camera_pos.y) {
-
-            particles.erase(particles.begin() + i);
-        }
-    }
-
-};
+           particles.erase(particles.begin() + i);  
+       }  
+   }  
+}
 
 /*
 void Screen::text_seq_render(std::vector<TextSquere> text_seq) {

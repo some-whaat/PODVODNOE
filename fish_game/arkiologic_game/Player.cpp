@@ -9,12 +9,14 @@ void Player::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
     AnimatbleObj::draw(buffer, screen);
 
-    move(screen.deltaTime);
+    move(screen.deltaTime, screen);
 }
 
-void  Player::move(float deltaTime) {
+void Player::move(float deltaTime, Screen& screen) {
 
-    if (true){//++move_count >= 1/speed) {
+    //move_count += deltaTime * speed;
+
+    if (true) {//(move_count >= 1) {
         Position dir;
 
 
@@ -27,8 +29,12 @@ void  Player::move(float deltaTime) {
             dir = dir.normalise();
         }
 
-        dir = dir.mult(speed * deltaTime);
-        sum(dir);
+        dir = dir.mult(speed);//* deltaTime);
+        Position new_pos = this->sum(dir);
+
+        if (screen.is_inside_borders(new_pos)) {
+            change_pos(new_pos);
+        }
 
 
         if (!inventory_vec.empty()) {
@@ -66,7 +72,6 @@ void Player::add_item_to_inventory(int item_id) {
 
 void Player::remove_item_from_inventory(int item_id) {
 	inventory.erase(item_id);
-
 
 }
 
