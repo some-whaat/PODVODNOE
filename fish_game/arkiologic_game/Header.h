@@ -649,7 +649,8 @@ private:
     std::unordered_map<int, std::shared_ptr<AnimatbleObj>> inventory;
 	std::vector<std::shared_ptr<AnimatbleObj>> inventory_vec; // костыль, чтобы можно было отрисовать инвентарь в линеечку
 
-	std::unordered_map<int, std::string> inventory_data_base; // id : json filename
+
+	std::unordered_map<int, nlohmann::json> inventory_data_base; // id : json filename
 
 
 public:
@@ -667,7 +668,7 @@ public:
             for (const auto& item : data["Player"]["items"].items()) {
                 const auto& item_data = item.value();
                 int item_id = std::stoi(item.key());
-                inventory_data_base[item_id] = item_data["sprite_filepame"];
+                inventory_data_base[item_id] = item_data;
             }
 
             for (int item_id : data["Player"]["inventory"]) {
@@ -741,8 +742,8 @@ protected:
     };*/
 
     int border_poses[2][2] = {
-    {-60, 60}, // 0 по иксу
-    {-40, 40},  // 1 по игрику
+    {-60, 60}, // 0 по иксу от-до
+    {-40, 40},  // 1 по игрику от-до
     };
 
 public:
@@ -978,6 +979,9 @@ public:
 
         camera_speed = world_json["camera_speed"];
         collision_add_val_to_NPC = world_json["collision_add_val_to_NPC"];
+        border_poses[1][0] = world_json["border_poses"][1][0];
+        border_poses[1][1] = world_json["border_poses"][1][1];
+
 
         auto& layers_data = world_json["layers"];
         render_order.resize(layers_data.size() + render_order.size());

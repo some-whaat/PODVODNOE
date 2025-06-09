@@ -1,8 +1,10 @@
 {
   "camera_speed": 0.7,
-  "camera_settings": {
-    "moving_type": "smooth_follow"
-  },
+
+  "border_poses": [
+    [-111, 111],
+    [-99, 99]
+  ],
 
   "collision_add_val_to_NPC": 6,
 
@@ -94,7 +96,7 @@
 
                 "does_have_world_func": true,
                 "world_func": "camera_change",
-                "camera_change" : [33, 88]
+                "camera_change": [ 33, 88 ]
               },
 
               "0": {
@@ -158,26 +160,59 @@
 
         "items": {
           "100": {
-            "sprite_filepame": "doll.txt",
-            "anim_speed": 0
+
+            "RendrbleObject": {
+              "color": [ 1, 0, 1 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "doll.txt",
+              "anim_speed": 88
+            }
           },
           "101": {
-            "sprite_filepame": "scull.txt",
-            "anim_speed": 0
+            "RendrbleObject": {
+              "color": [ 1, 1, 1 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "scull.txt",
+              "anim_speed": 88
+            }
           },
           "102": {
-            "sprite_filepame": "star.txt",
-            "anim_speed": 0
+            "RendrbleObject": {
+              "color": [ 1, 1, 0 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "fishka2.txt",
+              "anim_speed": 88
+            }
           },
 
           "103": {
-            "sprite_filepame": "worm.txt",
-            "anim_speed": 0
+            "RendrbleObject": {
+              "color": [ 0, 1, 0 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "worm.txt",
+              "anim_speed": 88
+            }
           }
 
         },
 
-        "inventory": [ 101 ]
+        "inventory": [ 101, 102, 103 ]
       }
     },
 
@@ -296,9 +331,9 @@
           }
         }
       }
-      }
     }
-
-
   }
+
+
+}
 }

@@ -66,7 +66,7 @@ void Player::move(float deltaTime, Screen& screen) {
 }
 
 void Player::add_item_to_inventory(int item_id) {
-	inventory[item_id] = std::make_unique<AnimatbleObj>(inventory_data_base[item_id], 0, x, y);
+	inventory[item_id] = std::make_unique<AnimatbleObj>(inventory_data_base[item_id]);
 	inventory_vec.push_back(inventory[item_id]);
 }
 
