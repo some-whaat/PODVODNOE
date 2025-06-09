@@ -78,3 +78,7 @@ bool Player::does_has_item(int item_id) {
 void Player::add_mission(int mission_id) {
     mission_vec.push_back(mission_id);
 }
+
+bool Player::does_mission_complete(int mission_id) {
+    return std::find(mission_vec.begin(), mission_vec.end(), mission_id) != mission_vec.end();
+}
