@@ -201,7 +201,7 @@ void Screen::ParticleSystem::add_particle() {
     ang = abs(particle->velocity.y) > abs(particle->velocity.x) ? ang + M_PIl : ang;
 
     int add_val = 7; // MAGIC NUMBER
-    Position spawn_pos = vectorToRectanglePoint(particle->velocity.mult(-1), screen_ptr.cols + add_val, screen_ptr.rows + add_val);
+	Position spawn_pos = vectorToRectanglePoint(particle->velocity.mult(-1).sum(Position(rand_int(-3, 3), rand_int(-3, 3))), screen_ptr.cols + add_val, screen_ptr.rows + add_val); // MAGIC NUMBER (для разброса)
 
     particle->change_pos(spawn_pos.x + screen_ptr.camera_pos.x, spawn_pos.y + screen_ptr.camera_pos.y);
     /*
@@ -226,30 +226,23 @@ void Screen::ParticleSystem::add_particle() {
     particles.push_back(particle);
 };
 
-void Screen::ParticleSystem::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
-    for (const std::shared_ptr<RendrbleObject> particle : particles) {
-        particle->draw(buffer, screen);
-    }
+void Screen::ParticleSystem::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {  
+   for (const std::shared_ptr<RendrbleObject> particle : particles) {  
+       particle->draw(buffer, screen);  
+   }  
 
+   float f = particles.size();  
+   for (int i = 0; f + i < on_screen_particles_count; i++) {  
+       add_particle();  
+   }  
 
-    float f = particles.size();
-    for (int i = 0; f + i < on_screen_particles_count; i++) {
+   for (int i = 0; i < particles.size(); i++) {  
+       if (screen_ptr.is_inside_screen(*particles[i], 11)) {  
 
-        add_particle();
-    }
-
-    // kill ones that are behind the screen
-    for (int i = 0; i < particles.size(); i++) {
-        if (this->particles[i]->x < -screen_ptr.cols / 2 - 15 + screen_ptr.camera_pos.x ||
-            this->particles[i]->x > screen_ptr.cols / 2 + 15 + screen_ptr.camera_pos.x ||
-            this->particles[i]->y < -screen_ptr.rows / 2 - 11 + screen_ptr.camera_pos.y ||
-            this->particles[i]->y > screen_ptr.rows / 2 + 11 + screen_ptr.camera_pos.y) {
-
-            particles.erase(particles.begin() + i);
-        }
-    }
-
-};
+           particles.erase(particles.begin() + i);  
+       }  
+   }  
+}
 
 /*
 void Screen::text_seq_render(std::vector<TextSquere> text_seq) {

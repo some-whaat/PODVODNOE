@@ -1,9 +1,12 @@
 #include "Header.h"
 
-void Position::sum(Position pos) {
+Position Position::sum(Position pos) {
+    Position n_pos;
 
-    x += pos.x;
-    y += pos.y;
+    n_pos.x = x + pos.x;
+    n_pos.y = y + pos.y;
+
+    return n_pos;
 }
 
 Position Position::mins(Position pos) {
@@ -45,7 +48,7 @@ void Position::follow(const Position& to_pos, float speed, float min_dist = 0) {
         between_vec = between_vec.normalise();
         between_vec = between_vec.mult(speed);
 
-        this->sum(between_vec);
+        change_pos(sum(between_vec));
         //return Position(x, y).sum(between_vec);
     }
 
@@ -56,7 +59,7 @@ void Position::move_to(Position to_pos, float min_dist = 0) {
     float len = between_vec.len();
 
     if (len > min_dist) {
-        this->sum(between_vec.mult((len - min_dist) / len));
+        change_pos(sum(between_vec.mult((len - min_dist) / len)));
         //return Position(x, y).sum(between_vec.mult((len - min_dist) / len));
     }
     //return *this;
@@ -72,13 +75,18 @@ void Position::smooth_follow(Position to_pos, float min_dist, float speed, float
 
         // Add deltaTime to make frame-rate independent
         float step = min(speed * distance / max_len * deltaTime, distance);
-        this->sum(between_vec.mult(step));
+        change_pos(sum(between_vec.mult(step)));
     }
 }
 
 
 Position Position::get_pos() {
 	return Position(x, y);
+}
+
+void Position::change_pos(Position pos) {
+    x = pos.x;
+    y = pos.y;
 }
 
 

@@ -52,9 +52,6 @@ static nlohmann::json load_json(const std::string& filename) {
 
 
 class Position {
-private:
-    bool is_moving = false;
-
 public:
     float x;
     float y;
@@ -72,7 +69,7 @@ public:
 
     Position(int x_up, int x_down, int y_up, int y_down) : x(rand_int(x_up, x_down)), y(rand_int(y_up, y_down)) {}
 
-    explicit Position(nlohmann::json data) {
+    explicit Position(const nlohmann::json& data) {
         if (data.contains("Position")) {
 			x = data["Position"]["x"];
 			y = data["Position"]["y"];
@@ -83,7 +80,7 @@ public:
         }
     }
 
-    void sum(Position pos);
+    Position sum(Position pos);
 
     Position mins(Position pos);
 
@@ -105,6 +102,8 @@ public:
 
     Position get_pos();
 
+    void change_pos(Position pos);
+
     Position coords_to_vec_space(Position coord_pos, int cols, int rows);
 
     void round();
@@ -116,7 +115,7 @@ protected:
 
     RendrbleObject() : Position(), is_steak_to_screen(false), is_render(true), add_paralax(0) {}
 
-    explicit RendrbleObject(nlohmann::json data) : Position(data) {
+    explicit RendrbleObject(const nlohmann::json& data) : Position(data) {
 
         if (data.contains("RendrbleObject")) {
             if (data["RendrbleObject"].contains("is_steak_to_screen")) {
@@ -208,7 +207,7 @@ public:
         y = in_y;
     }
 
-    explicit Rektangle(nlohmann::json data) : RendrbleObject(data) {
+    explicit Rektangle(const nlohmann::json& data) : RendrbleObject(data) {
 
 		if (data.contains("Rektangle")) {
 			hight = data["Rektangle"]["hight"];
@@ -332,11 +331,11 @@ public:
 
     explicit Picture(std::string json_file) : Picture(load_json(json_file)) {}
 
-    explicit Picture(nlohmann::json jsonData) : Rektangle(jsonData) {
-        if (jsonData.contains("Picture")) {
+    explicit Picture(const nlohmann::json& data) : Rektangle(data) {
+        if (data.contains("Picture")) {
 
-            if (jsonData["Picture"].contains("sprite_filepame")) {
-                add_pic(jsonData["Picture"]["sprite_filepame"]);
+            if (data["Picture"].contains("sprite_filepame")) {
+                add_pic(data["Picture"]["sprite_filepame"]);
             }
         }
         else {
@@ -392,7 +391,7 @@ public:
 
     explicit AnimatbleObj(std::string json_file) : AnimatbleObj(load_json(json_file)) {}
 
-    explicit AnimatbleObj(nlohmann::json data) : Picture(data) {
+    explicit AnimatbleObj(const nlohmann::json& data) : Picture(data) {
 
 		if (data.contains("AnimatbleObj")) {
 			anim_speed = data["AnimatbleObj"]["anim_speed"];
@@ -455,7 +454,7 @@ public:
 
     explicit MovingObj(std::string json_file) : MovingObj(load_json(json_file)) {}
 
-    explicit MovingObj(nlohmann::json data) : AnimatbleObj(data) {
+    explicit MovingObj(const nlohmann::json& data) : AnimatbleObj(data) {
 
         if (data.contains("MovingObj")) {
 
@@ -607,7 +606,7 @@ public:
 
     explicit NPC(std::string json_file) : NPC(load_json(json_file)) {}
 
-    explicit NPC(nlohmann::json data) : MovingObj(data) {
+    explicit NPC(const nlohmann::json& data) : MovingObj(data) {
 
         text_bubble.add_val = 2;
         text_bubble.follow = true;
@@ -685,7 +684,8 @@ private:
     std::unordered_map<int, std::shared_ptr<AnimatbleObj>> inventory;
 	std::vector<std::shared_ptr<AnimatbleObj>> inventory_vec; // костыль, чтобы можно было отрисовать инвентарь в линеечку
 
-	std::unordered_map<int, std::string> inventory_data_base; // id : json filename
+
+	std::unordered_map<int, nlohmann::json> inventory_data_base; // id : json filename
 
     std::vector<int> mission_vec;
 
@@ -696,7 +696,7 @@ public:
 
     explicit Player(std::string json_file) : Player(load_json(json_file)) {}
 
-    explicit Player(nlohmann::json data) : AnimatbleObj(data) {
+    explicit Player(const nlohmann::json& data) : AnimatbleObj(data) {
 
 		if (data.contains("Player")) {
 			speed = data["Player"]["speed"];
@@ -704,7 +704,7 @@ public:
             for (const auto& item : data["Player"]["items"].items()) {
                 const auto& item_data = item.value();
                 int item_id = std::stoi(item.key());
-                inventory_data_base[item_id] = item_data["sprite_filepame"];
+                inventory_data_base[item_id] = item_data;
             }
 
             for (int item_id : data["Player"]["inventory"]) {
@@ -728,7 +728,7 @@ public:
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
-    void move(float deltaTime);
+    void move(float deltaTime, Screen& screen);
 };
 
 
@@ -750,6 +750,7 @@ public:
 class Screen {
 
 protected:
+
     HANDLE hConsole;
     std::vector<CHAR_INFO> backBuffer;
 
@@ -762,7 +763,6 @@ protected:
     std::vector<std::shared_ptr<RenderLayer>> render_order;
     std::unordered_map<std::string, std::shared_ptr<RenderLayer>> layers;
 
-    
 
     std::string rend_style = "0000000000";
 
@@ -773,7 +773,21 @@ protected:
 
     float MBF = 2; //milliseconds between frames BETTER NOT TO SET TO 0
 
+    /*
+    int border_poses[4][2] = {
+    {-60, 40}, // 0 left up
+    {60, 40},  // 1 right up
+    {60, -40},  // 2 right down
+    { -60, -40 },  // 3 left down 
+    };*/
+
+    int border_poses[2][2] = {
+    {-60, 60}, // 0 по иксу от-до
+    {-40, 40},  // 1 по игрику от-до
+    };
+
 public:
+
     float deltaTime;
 
     //float deltatime;
@@ -816,6 +830,23 @@ public:
     void enshure_cols_rows();
 
     int coord_to_vec_space(float coord, char coord_name);
+
+    bool is_inside_screen(Position pos, float add_val = 0) {
+        return (pos.x < -cols / 2 - add_val + camera_pos.x ||
+            pos.x > cols / 2 + add_val + camera_pos.x ||
+            pos.y < -rows / 2 - add_val + camera_pos.y ||
+            pos.y > rows / 2 + add_val + camera_pos.y);
+    }
+
+    bool is_inside_borders(Position pos, float add_val = 0) {
+
+        return (
+            pos.x > border_poses[0][0] &&
+            pos.x < border_poses[0][1] &&
+            pos.y > border_poses[1][0] &&
+            pos.y < border_poses[1][1]
+            );
+    }
 
     //char pix_calc(int x, int y);
 
@@ -867,7 +898,6 @@ public:
 		Screen& screen_ptr; // возможно нужно поменять на std::shared_ptr<Screen> или std::weak_ptr<Screen>
 
     public:
-
 
         ParticleSystem(nlohmann::json data, Screen& in_screen_ptr) : RendrbleObject(data), screen_ptr(in_screen_ptr) {
 
@@ -989,6 +1019,11 @@ public:
 
         camera_speed = world_json["camera_speed"];
         collision_add_val_to_NPC = world_json["collision_add_val_to_NPC"];
+        border_poses[0][0] = world_json["border_poses"][0][0];
+        border_poses[0][1] = world_json["border_poses"][0][1];
+        border_poses[1][0] = world_json["border_poses"][1][0];
+        border_poses[1][1] = world_json["border_poses"][1][1];
+
 
         auto& layers_data = world_json["layers"];
         render_order.resize(layers_data.size() + render_order.size());
@@ -1073,7 +1108,6 @@ public:
         ui_layer->push_back(ui_down);
         add_layer(ui_layer, -1, "ui_layer");
     }
-
 
     void process() override;
 };

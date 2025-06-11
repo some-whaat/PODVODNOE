@@ -1,8 +1,10 @@
 {
   "camera_speed": 0.7,
-  "camera_settings": {
-    "moving_type": "smooth_follow"
-  },
+
+  "border_poses": [
+    [-99111, 99111],
+    [-99999, 99999]
+  ],
 
   "collision_add_val_to_NPC": 6,
 
@@ -50,7 +52,7 @@
 
           "AnimatbleObj": {
             "animated_sprite_filepame": "big_fish.txt",
-            "anim_speed": 77
+            "anim_speed": 44
           },
 
           "MovingObj": {
@@ -95,7 +97,7 @@
 
                 "does_have_world_func": true,
                 "world_func": "camera_change",
-                "camera_change" : [33, 88]
+                "camera_change": [ 33, 88 ]
               },
 
               "0": {
@@ -144,7 +146,7 @@
     },
 
     "Player": {
-      "layer_ind": 2,
+      "layer_ind": 1,
 
       "Position": {
         "x": 0,
@@ -168,26 +170,61 @@
 
         "items": {
           "100": {
-            "sprite_filepame": "doll.txt",
-            "anim_speed": 0
+
+            "RendrbleObject": {
+              "color": [ 1, 0, 1 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "doll.txt",
+              "anim_speed": 88
+            }
           },
           "101": {
-            "sprite_filepame": "scull.txt",
-            "anim_speed": 0
+            "RendrbleObject": {
+              "color": [ 1, 1, 1 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "scull.txt",
+              "anim_speed": 88
+            }
           },
           "102": {
+            "RendrbleObject": {
+              "color": [ 1, 1, 0 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "fishka2.txt",
+              "anim_speed": 88
+            }
             "spr++ite_filepame": "star.txt",
             "anim_speed": 0
           },
 
           "103": {
-            "sprite_filepame": "worm.txt",
-            "anim_speed": 0
+            "RendrbleObject": {
+              "color": [ 0, 1, 0 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "worm.txt",
+              "anim_speed": 88
+            }
           }
 
         },
 
-        "inventory": [ 101 ]
+        "inventory": [ 102 ]
       }
     },
 
@@ -220,7 +257,7 @@
 
     "fish_bg": {
 
-      "layer_ind": 1,
+      "layer_ind": 2,
 
       "ParticleSystem": {
 
@@ -256,30 +293,6 @@
               }
             },
 
-            "scull": {
-              "RendrbleObject": {
-                "color": [ 0, 0, 1 ],
-                "is_render": true,
-                "add_paralax": 0
-              },
-
-              "AnimatbleObj": {
-                "animated_sprite_filepame": "scull.txt",
-                "anim_speed": 88
-              },
-
-              "MovingObj": {
-                "rand_velocity": [ -5, 5, -5, 5 ],
-
-                "moving_type": "random_wave",
-
-                "random_wave": {
-                  "max_x": 60,
-                  "max_y": 30
-                }
-              }
-            },
-
             "fish_right1": {
               "RendrbleObject": {
                 "color": [ 0, 1, 1 ],
@@ -304,11 +317,44 @@
               }
             }
           }
+        },
+
+        "bubbles": {
+
+          "particles_spawn_type": "left_right",
+          "on_screen_particles_count": 4,
+          "first_spawn_particles_randomly": false,
+
+          "particles_constructors": {
+            "bubble": {
+              "RendrbleObject": {
+                "color": [ 0, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "bubble.txt",
+                "anim_speed": 88
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ -1, 1, 1, 4 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 20,
+                  "max_y": 20
+                }
+              }
+            }
+          }
+          }
         }
-      }
-      }
     }
-
-
   }
+
+
+}
 }
