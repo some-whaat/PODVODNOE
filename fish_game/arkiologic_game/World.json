@@ -2,8 +2,8 @@
   "camera_speed": 0.7,
 
   "border_poses": [
-    [-111, 111],
-    [-99, 99]
+    [-99111, 99111],
+    [-99999, 99999]
   ],
 
   "collision_add_val_to_NPC": 6,
@@ -52,7 +52,7 @@
 
           "AnimatbleObj": {
             "animated_sprite_filepame": "big_fish.txt",
-            "anim_speed": 77
+            "anim_speed": 44
           },
 
           "MovingObj": {
@@ -136,7 +136,7 @@
     },
 
     "Player": {
-      "layer_ind": 2,
+      "layer_ind": 1,
 
       "Position": {
         "x": 0,
@@ -212,7 +212,7 @@
 
         },
 
-        "inventory": [ 101, 102, 103 ]
+        "inventory": [ 102 ]
       }
     },
 
@@ -245,7 +245,7 @@
 
     "fish_bg": {
 
-      "layer_ind": 1,
+      "layer_ind": 2,
 
       "ParticleSystem": {
 
@@ -281,30 +281,6 @@
               }
             },
 
-            "scull": {
-              "RendrbleObject": {
-                "color": [ 0, 0, 1 ],
-                "is_render": true,
-                "add_paralax": 0
-              },
-
-              "AnimatbleObj": {
-                "animated_sprite_filepame": "scull.txt",
-                "anim_speed": 88
-              },
-
-              "MovingObj": {
-                "rand_velocity": [ -5, 5, -5, 5 ],
-
-                "moving_type": "random_wave",
-
-                "random_wave": {
-                  "max_x": 60,
-                  "max_y": 30
-                }
-              }
-            },
-
             "fish_right1": {
               "RendrbleObject": {
                 "color": [ 0, 1, 1 ],
@@ -329,8 +305,41 @@
               }
             }
           }
+        },
+
+        "bubbles": {
+
+          "particles_spawn_type": "left_right",
+          "on_screen_particles_count": 4,
+          "first_spawn_particles_randomly": false,
+
+          "particles_constructors": {
+            "bubble": {
+              "RendrbleObject": {
+                "color": [ 0, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "bubble.txt",
+                "anim_speed": 88
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ -1, 1, 1, 4 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 20,
+                  "max_y": 20
+                }
+              }
+            }
+          }
+          }
         }
-      }
     }
   }
 

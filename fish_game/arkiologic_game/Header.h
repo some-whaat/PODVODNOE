@@ -69,7 +69,7 @@ public:
 
     Position(int x_up, int x_down, int y_up, int y_down) : x(rand_int(x_up, x_down)), y(rand_int(y_up, y_down)) {}
 
-    explicit Position(nlohmann::json data) {
+    explicit Position(const nlohmann::json& data) {
         if (data.contains("Position")) {
 			x = data["Position"]["x"];
 			y = data["Position"]["y"];
@@ -115,7 +115,7 @@ protected:
 
     RendrbleObject() : Position(), is_steak_to_screen(false), is_render(true), add_paralax(0) {}
 
-    explicit RendrbleObject(nlohmann::json data) : Position(data) {
+    explicit RendrbleObject(const nlohmann::json& data) : Position(data) {
 
         if (data.contains("RendrbleObject")) {
             if (data["RendrbleObject"].contains("is_steak_to_screen")) {
@@ -207,7 +207,7 @@ public:
         y = in_y;
     }
 
-    explicit Rektangle(nlohmann::json data) : RendrbleObject(data) {
+    explicit Rektangle(const nlohmann::json& data) : RendrbleObject(data) {
 
 		if (data.contains("Rektangle")) {
 			hight = data["Rektangle"]["hight"];
@@ -331,11 +331,11 @@ public:
 
     explicit Picture(std::string json_file) : Picture(load_json(json_file)) {}
 
-    explicit Picture(nlohmann::json jsonData) : Rektangle(jsonData) {
-        if (jsonData.contains("Picture")) {
+    explicit Picture(const nlohmann::json& data) : Rektangle(data) {
+        if (data.contains("Picture")) {
 
-            if (jsonData["Picture"].contains("sprite_filepame")) {
-                add_pic(jsonData["Picture"]["sprite_filepame"]);
+            if (data["Picture"].contains("sprite_filepame")) {
+                add_pic(data["Picture"]["sprite_filepame"]);
             }
         }
         else {
@@ -391,7 +391,7 @@ public:
 
     explicit AnimatbleObj(std::string json_file) : AnimatbleObj(load_json(json_file)) {}
 
-    explicit AnimatbleObj(nlohmann::json data) : Picture(data) {
+    explicit AnimatbleObj(const nlohmann::json& data) : Picture(data) {
 
 		if (data.contains("AnimatbleObj")) {
 			anim_speed = data["AnimatbleObj"]["anim_speed"];
@@ -454,7 +454,7 @@ public:
 
     explicit MovingObj(std::string json_file) : MovingObj(load_json(json_file)) {}
 
-    explicit MovingObj(nlohmann::json data) : AnimatbleObj(data) {
+    explicit MovingObj(const nlohmann::json& data) : AnimatbleObj(data) {
 
         if (data.contains("MovingObj")) {
 
@@ -591,7 +591,7 @@ public:
 
     explicit NPC(std::string json_file) : NPC(load_json(json_file)) {}
 
-    explicit NPC(nlohmann::json data) : MovingObj(data) {
+    explicit NPC(const nlohmann::json& data) : MovingObj(data) {
 
         text_bubble.add_val = 2;
         text_bubble.follow = true;
@@ -660,7 +660,7 @@ public:
 
     explicit Player(std::string json_file) : Player(load_json(json_file)) {}
 
-    explicit Player(nlohmann::json data) : AnimatbleObj(data) {
+    explicit Player(const nlohmann::json& data) : AnimatbleObj(data) {
 
 		if (data.contains("Player")) {
 			speed = data["Player"]["speed"];
@@ -979,6 +979,8 @@ public:
 
         camera_speed = world_json["camera_speed"];
         collision_add_val_to_NPC = world_json["collision_add_val_to_NPC"];
+        border_poses[0][0] = world_json["border_poses"][0][0];
+        border_poses[0][1] = world_json["border_poses"][0][1];
         border_poses[1][0] = world_json["border_poses"][1][0];
         border_poses[1][1] = world_json["border_poses"][1][1];
 
