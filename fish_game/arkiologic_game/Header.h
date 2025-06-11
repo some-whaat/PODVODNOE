@@ -560,14 +560,28 @@ public:
 
 class NPC : public MovingObj {
 private:
-    struct LogicActions {
+    /*struct LogicActions {
         int needed_item_id;
 		int remove_item_id;
         std::string dialogue;
         int next_state;
         int reward_item_id;
+        bool remove_text_bbl; 
+        bool rep_check;
+        int needed_mission_id;
+        bool is_mission_complete;
+        int else_state;
+        std::string answer;
+        int rep_status;
+        int answ_1;
+        int answ_2;
+        int mission_complete_id;
+    };*/
 
-        bool remove_text_bbl;
+    enum class StateType {
+        logic,
+        dialogue,
+        player_choice
     };
 
     TextSquere text_bubble = TextSquere();
@@ -577,7 +591,7 @@ private:
     bool is_actioning = false; // ÑËÓÆÅÁÍÀß
 
     int state = 0;
-    std::unordered_map<int, LogicActions> data_base;
+    std::unordered_map<int, nlohmann::json> data_base;
 
 public:
 
@@ -587,6 +601,7 @@ public:
 		text_bubble.follow_pos = this;
 		text_bubble.follow_wighth = wighth;
 		text_bubble.follow_hight = hight;
+        current_action = nullptr;
 	}
 
     explicit NPC(std::string json_file) : NPC(load_json(json_file)) {}
@@ -610,14 +625,26 @@ public:
                 const std::string& state_str = state.key();
                 const auto& state_data = state.value();
                 int state_id = std::stoi(state_str);
-                data_base[state_id] = {
-                    state_data["needed_item_id"],
-                    state_data["remove_item_id"],
-                    state_data["dialogue"],
-                    state_data["next_state"],
-                    state_data["reward_item_id"],
-                    state_data["remove_text_bbl"]
-                };
+                data_base[state_id] = state_data;
+                /*{
+                    (int)state_data.contains("needed_item_id") ? int(state_data["needed_item_id"]) : 0,
+                    state_data.contains("remove_item_id") ? int(state_data["remove_item_id"]) : 0,
+                    state_data.contains("dialogue") ? std::string(state_data["dialogue"]) : 0,
+                    state_data.contains("next_status") ? int(state_data["next_state"]) : 0,
+                    state_data.contains("reward_item_id") ? int(state_data["reward_item_id"]) : 0,
+                    state_data.contains("remove_text_bbl") ? bool(state_data["remove_text_bbl"]) : 0,
+                    state_data.contains("met_before") ? bool(state_data["met_before"]) : 0,
+                    state_data.contains("rep_check") ? bool(state_data["rep_check"]) : 0,
+                    state_data.contains("needed_mission_id") ? int(state_data["needed_mission_id"]) : 0,
+                    state_data.contains("is_mission_complete") ? bool(state_data["is_mission_complete"]) : 0,
+                    state_data.contains("else_state") ? int(state_data["else_state"]) : 0,
+                    state_data.contains("else_state_1") ? int(state_data["else_state_1"]) : 0,
+                    state_data.contains("answer") ? std::string(state_data["answer"]) : 0,
+                    state_data.contains("rep_status") ? int(state_data["rep_status"]) : 0,
+                    state_data.contains("answ_1") ? int(state_data["answ_1"]) : 0,
+                    state_data.contains("answ_2") ? int(state_data["answ_2"]) : 0,
+                    state_data.contains("mission_complete_id") ? int(state_data["mission_complete_id"]) : 0,
+                };*/
             }
 
             set_text();
@@ -637,6 +664,14 @@ public:
     void action(std::shared_ptr<Player> player) override;
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+
+    void process_logic(std::shared_ptr<Player> player);
+    void process_dialogue();
+    void process_player_choice(std::shared_ptr<Player> player);
+
+    bool mission_check(std::shared_ptr<Player> player);
+    bool rep_check(std::shared_ptr<Player> player);
+    bool item_check(std::shared_ptr<Player> player);
 };
 
 
@@ -652,6 +687,7 @@ private:
 
 	std::unordered_map<int, nlohmann::json> inventory_data_base; // id : json filename
 
+    std::vector<int> mission_vec;
 
 public:
 
@@ -681,6 +717,10 @@ public:
     }
 
     void add_item_to_inventory(int item_id);
+
+    void add_mission(int mission_id);
+
+    bool does_mission_complete(int mission_id);
 
     void remove_item_from_inventory(int item_id);
 

@@ -42,10 +42,8 @@
 
       "-1": {
         "dialogue": "ehm, hey?",
-        "needed_item_id": -1,
-        "remove_item_id": -1,
-        "next_state": -1,
-        "reward_item_id": -1,
+        "needed_mission": 12, //12-номер миссии в таверне
+        "is_mission_complete": true,
         "remove_text_bbl": true
       },
 
@@ -56,6 +54,12 @@
         "next_state": 1,
         "reward_item_id": -1,
         "remove_text_bbl": false,
+        "answ_1": 5,
+        "(go" "to",
+        "state" "5)",
+        "answ_2": 6,
+        "(go" "to",
+        "state" "6)",
         "sould_answer": true
       },
       "1": {
@@ -72,7 +76,18 @@
         "dialogue": "sdbvnmzdjfvn ,dj",
         "needed_item_id": 101,
         "remove_item_id": -1,
-        "next_state": 1,
+        "next_state": -1,
+        "new_mission": 1, //вы поговорили с нпс, это будет учитываться
+        "reward_item_id": -1,
+        "remove_text_bbl": true
+      },
+      "5": {
+        "dialogue": "Yes, sure!",
+        "needed_item_id": 101,
+        "remove_item_id": -1,
+        ""
+        "next_state": -1,
+        "new_mission": 1, //вы поговорили с нпс, это будет учитываться
         "reward_item_id": -1,
         "remove_text_bbl": true
       }
@@ -80,3 +95,152 @@
   }
 
 }
+//{
+//  "Position": {
+//    "x": 30,
+//    "y": 20
+//  },
+
+//  "RendrbleObject": {
+//    "color": [ 0, 0, 1 ],
+//    "is_render": true,
+//    "add_paralax": 0
+//  },
+
+//  "AnimatbleObj": {
+//    "animated_sprite_filepame": "big_fish.txt",
+//    "anim_speed": 44
+//  },
+
+//  "MovingObj": {
+//    "velocity": [ 5, 3 ],
+
+//    "moving_type": "none",
+
+//    "wave": {
+//      "wave_hight": 20,
+//      "wave_offset": 10,
+//      "wave_lenght": 55,
+//      "wave_sdvig": 10
+//    },
+
+//    "random_wave": {
+//      "max_x": 60,
+//      "max_y": 30
+//    }
+//  },
+
+
+//  "NPC": {
+
+//    "does_has_dialogue_on": false,
+
+//    "states": {
+
+//      "-1": {
+//        "type": "logic",
+
+//        "mission_check": {
+//          "needed_mission_id": 12,
+//          "is_mission_complete": false
+//        },
+
+//        "rep_check": {
+//          "rep_check": false
+//        },
+
+//        "item_check": {
+//          "needed_item_id": 101,
+//          "remove_item_id": -1,
+//          "reward_item_id": -1
+//        },
+
+
+//        "what_to_check": "mission",
+
+//        "else_state": 7,
+//        "next_state": 1
+//      },
+
+//      "44": {
+//        "type": "dialogue",
+//        "dialogue": "День добрый!Я лучший продавец и меняла в здешних водах!",
+//        "next_state": 1
+//      },
+
+
+//      "1": {
+//        "dialogue": "День добрый!Я лучший продавец и меняла в здешних водах!",
+//        "answ_1": 302,
+//        "answ_2": 303,
+//        "remove_text_bbl": true
+//      },
+
+//      "5": {
+//        "dialogue": "Я смотрю, ты побывал в таверне Барни. Много странностей про того купца ракушками рассказывают,а?",
+//        "met_before": false,
+//        "needed_mission_id": 12,
+//        "is_mission_complete": true,
+//        "answer_1": 300,
+//        "answer_2": 301,
+//        "remove_text_bbl": true
+//      },
+//      "300": {
+//        //"type" :  "dialogue"
+//        "answer": "Да не то чтобы. Я вообще мало знаком со здешними обитателями. А что?",
+//        "rep_status": "+2",
+//        "rep_check": true,
+//        "next_state": 6,
+//        "remove_text_bbl": true
+//      },
+//      "301": {
+//        "answer": "Да, много чего говорят. Мне кажется, что всё это лишь сплетни! Как неприлично обсуждать кого-то за спиной!",
+//        "rep_status": "-2",
+//        "rep_check": true,
+//        "remove_text_bbl": true
+//      }
+//    },
+//    "302": {
+//      "answer": "В самом деле? А мне казалось, что продавец ракушек вас обходит по продажам!",
+//      "rep_status": "-1",
+//      "rep_check": true,
+//      "next_state": 7,
+//      "else_state": 6,
+//      "remove_text_bbl": true
+//    },
+//    "303": {
+//      "answer": "Ничего себе!Громкие слова. Раз так, можете показать свой товар?",
+//      "rep_status": "+1",
+//      "rep_check": true,
+//      "next_state": 6,
+//      "else_state": 7, //если низкая репутация
+//      "remove_text_bbl": true
+//    },
+//    "6": {
+//      "dialogue": "Я много чего могу показать и рассказать! Но сначала я хочу убедиться в твоей платежеспособности.",
+//      "next_state": 304,
+//      "remove_text_bbl": true
+//    },
+//    "7": {
+//      "dialogue": "Вот уж дудки! Я лучший без преувеличений! И без доказательств.",
+//      "remove_text_bbl": true
+//    },
+//    "304": {
+//      "answer": "Могу кое-чем похвастаться!",
+//      "rep_status": "+2",
+//      "rep_check": true,
+//      "next_state": 8,
+//      "else_state": 6,
+//      "remove_text_bbl": trueы
+//    },
+//    "8": {
+//      "dialogue": "Вот так вещица!Любо дорого смотреть (ваше сокровище исчезло в кармане продавца,больше вы его не увидите)",
+//      "needed_item_id": 101,
+//      "remove_item_id": -1,
+//      "next_state": -1,
+//      "reward_item_id": -1,
+//      "remove_text_bbl": false,
+//      "mission_complete_id": 12
+//    }
+
+//  }
