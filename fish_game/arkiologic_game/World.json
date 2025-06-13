@@ -2,8 +2,8 @@
   "camera_speed": 0.7,
 
   "border_poses": [
-    [-99111, 99111],
-    [-99999, 99999]
+    [ -99111, 99111 ],
+    [ -99999, 99999 ]
   ],
 
   "collision_add_val_to_NPC": 6,
@@ -16,6 +16,23 @@
       "Picture": {
 
         "beach1": {
+
+          "RendrbleObject": {
+            "color": [ 1, 0, 1 ],
+            "is_render": true,
+            "add_paralax": 0.5
+          },
+
+          "Picture": {
+            "sprite_filepame": "beach.txt"
+          }
+        },
+        "beach2": {
+
+          "Position": {
+            "x": -30,
+            "y": 20
+          },
 
           "RendrbleObject": {
             "color": [ 1, 1, 0 ],
@@ -52,7 +69,7 @@
 
           "AnimatbleObj": {
             "animated_sprite_filepame": "big_fish.txt",
-            "anim_speed": 44
+            "anim_speed": 77
           },
 
           "MovingObj": {
@@ -75,68 +92,98 @@
 
           "NPC": {
 
-            "does_has_dialogue_on": false,
+            "does_has_dialogue_on": true,
+
+            "defult_state": 1,
 
             "states": {
 
+              "-2": {
+                "type": "logic",
+
+                "mission_check": {
+                  "needed_mission_id": 12,
+                  "needed_mission_state": false
+                },
+
+                "rep_check": {
+                  "needed_rep": 5
+                },
+
+                "item_check": {
+                  "needed_item_id": 101,
+                  "needed_item_state": false
+                },
+
+
+                "what_to_check": "mission",
+
+                "else_state": 7,
+                "next_state": 1
+              },
+
               "-1": {
-                "meet_before" : false
-                "dialogue": "ehm, hey?",
-                "needed_item_id": -1,
-                "remove_item_id": -1,
-                "next_state": -1,
-                "reward_item_id": -1,
-                "remove_text_bbl": true,
+                "type": "logic",
 
-                "does_has_choice": true,
+                "item_check": {
+                  "needed_item_id": 101,
+                  "needed_item_state": false
+                },
 
-                "choice": [ "dfgdsgf", "dfsdfsd" ],
-
-                "next_state_if_1": 1,
-                "next_state_if_2": 4,
-
-                "does_have_world_func": true,
-                "world_func": "camera_change",
-                "camera_change": [ 33, 88 ]
+                "else_state": 7,
+                "next_state": 1
               },
 
-              "0": {
-                "dialogue": "Hello, traveler! Can you bring me a golden fish?",
-                "needed_item_id": 101,
-                "remove_item_id": -1,
-                "next_state": 3,
-                "reward_item_id": -1,
-                "remove_text_bbl": false,
-                "sould_answer": true
-              },
               "1": {
-                "dialogue": "Thank you for the golden fish! Here is your reward.",
-                "needed_item_id": 101,
-                "remove_item_id": 101,
-                "next_state": -1,
-                "reward_item_id": 666,
-                "id_minigame": -1,
-                "ubgate": 1,
-                "remove_text_bbl": true
+                "type": "dialogue",
+                "dialogue": "hey there!!",
+                "next_state": 2
               },
+
               "2": {
-                "dialogue": "sdbvnmzdjfvn ,dj",
-                "needed_item_id": 101,
-                "remove_item_id": -1,
-                "next_state": 1,
-                "reward_item_id": -1,
-                "remove_text_bbl": true
+                "type": "dialogue",
+                "dialogue": "I'm sorry, but I *MUST* say.. please, don't get it wrong...",
+                "next_state": 3
               },
 
               "3": {
-                "dialogue": "Well..looks like I forget it somewhere...",
-                "needed_item_id": 101,
-                "remove_item_id": -1,
-                "next_state": 1,
-                "reward_item_id": -1,
-                "remove_text_bbl": true
+                "type": "dialogue",
+                "dialogue": "u have such a beautiful little body :333",
+                "next_state": 4
+              },
+
+              "4": {
+                "type": "dialogue",
+                "dialogue": "u have such a beautiful little body :333",
+                "next_state": 5
+              },
+
+              "5": {
+                "type": "dialogue",
+                "dialogue": "BY THE WAY",
+                "next_state": 6
+              },
+
+              "6": {
+                "type": "dialogue",
+                "dialogue": "I have something just right for a cutie like you~~",
+                "next_state": 7
+              },
+
+              "7": {
+                "type": "dialogue",
+                "dialogue": "u see... I'm a traidor and I think this bEaUtIfUl ribbon is *just perfect* for you ;)",
+                "next_state": 8
+              },
+
+              "8": {
+                "type": "dialogue",
+                "dialogue": "I'll sell it for 99 shells just for you ;) ;)",
+                "next_state": 2
               }
+
             }
+
           }
 
         }
@@ -172,7 +219,7 @@
           "100": {
 
             "RendrbleObject": {
-              "color": [ 1, 0, 1 ],
+              "color": [ 1, 0, 0 ],
               "is_render": true,
               "add_paralax": 0
             },
@@ -205,8 +252,6 @@
               "animated_sprite_filepame": "fishka2.txt",
               "anim_speed": 88
             }
-            "spr++ite_filepame": "star.txt",
-            "anim_speed": 0
           },
 
           "103": {
@@ -224,7 +269,7 @@
 
         },
 
-        "inventory": [ 102 ]
+        "inventory": [ 101 ]
       }
     },
 
@@ -271,7 +316,7 @@
 
             "fishka": {
               "RendrbleObject": {
-                "color": [ 1, 0, 1 ],
+                "color": [ 1, 1, 0 ],
                 "is_render": true,
                 "add_paralax": 0
               },
@@ -339,22 +384,22 @@
               },
 
               "MovingObj": {
-                "rand_velocity": [ -1, 1, 1, 4 ],
+                "rand_velocity": [ 0, 0, 2, 5 ],
 
-                "moving_type": "random_wave",
+                "moving_type": "wave",
 
-                "random_wave": {
-                  "max_x": 20,
-                  "max_y": 20
+                "wave": {
+                  "wave_hight": 5,
+                  "wave_offset": 10,
+                  "wave_lenght": 1,
+                  "wave_sdvig": 10
                 }
               }
             }
           }
-          }
         }
+      }
     }
   }
 
-
-}
 }

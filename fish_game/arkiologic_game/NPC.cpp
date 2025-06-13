@@ -12,14 +12,20 @@ void NPC::action(std::shared_ptr<Player> player) {
 
     nlohmann::json& current_action = data_base[state]; // по ключу достаём значение
 
-    if (current_action["type"] == "logic") {
-        process_logic(player);
-    }
-    else if (current_action["type"] == "dialogue") {
-        process_dialogue();
-    }
-    else if (current_action["type"] == "player_choice") {
-        process_player_choice(player);
+    if (current_action.contains("type")) {
+
+        if (current_action["type"] == "logic") {
+            process_logic(player);
+        }
+        else if (current_action["type"] == "dialogue") {
+            process_dialogue();
+        }
+        else if (current_action["type"] == "player_choice") {
+            process_player_choice(player);
+        }
+        else {
+            throw std::runtime_error("does not have a type!");
+        }
     }
     else {
         throw std::runtime_error("does not have a type!");
@@ -114,19 +120,19 @@ void NPC::process_player_choice(std::shared_ptr<Player> player) {
 }
 
 bool NPC::mission_check(std::shared_ptr<Player> player) {
-    nlohmann::json& state = data_base[state];
+    nlohmann::json& curr_state = data_base[state];
 
-    if (state.contains("mission_check")) {
-        return player->does_mission_complete(state["needed_mission_id"]) == player->does_mission_complete(state["is_mission_complete"]);
+    if (curr_state.contains("mission_check")) {
+        return player->is_mission_complete(curr_state["needed_mission_id"]) == player->is_mission_complete(curr_state["is_mission_complete"]);
     }
 
     return true;
 }
 
 bool NPC::rep_check(std::shared_ptr<Player> player) {
-
+    return true;
 }
 
 bool NPC::item_check(std::shared_ptr<Player> player) {
-
+    return true;
 }

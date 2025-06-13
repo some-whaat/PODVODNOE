@@ -28,6 +28,7 @@ class TextSquere;
 class Picture;
 class Screen;
 class Player;
+class NPC;
 
 extern bool is_working;
 
@@ -559,7 +560,7 @@ public:
 
 
 class NPC : public MovingObj {
-private:
+protected:
     /*struct LogicActions {
         int needed_item_id;
 		int remove_item_id;
@@ -601,7 +602,7 @@ public:
 		text_bubble.follow_pos = this;
 		text_bubble.follow_wighth = wighth;
 		text_bubble.follow_hight = hight;
-        current_action = nullptr;
+        //current_action = nullptr;
 	}
 
     explicit NPC(std::string json_file) : NPC(load_json(json_file)) {}
@@ -618,14 +619,15 @@ public:
 
             nlohmann::json npc_data = data["NPC"];
 
-
+            state = npc_data["defult_state"];
             text_bubble.is_render = npc_data["does_has_dialogue_on"];
 
-            for (const auto& state : npc_data["states"].items()) {
-                const std::string& state_str = state.key();
-                const auto& state_data = state.value();
+            for (const auto& state_ : npc_data["states"].items()) {
+                const std::string& state_str = state_.key();
+                const auto& state_data = state_.value();
                 int state_id = std::stoi(state_str);
                 data_base[state_id] = state_data;
+
                 /*{
                     (int)state_data.contains("needed_item_id") ? int(state_data["needed_item_id"]) : 0,
                     state_data.contains("remove_item_id") ? int(state_data["remove_item_id"]) : 0,
@@ -720,7 +722,7 @@ public:
 
     void add_mission(int mission_id);
 
-    bool does_mission_complete(int mission_id);
+    bool is_mission_complete(int mission_id);
 
     void remove_item_from_inventory(int item_id);
 

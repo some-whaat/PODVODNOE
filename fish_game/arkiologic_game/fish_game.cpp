@@ -39,8 +39,7 @@ int main() {
         return 1;
     }*/
 
-
-
+    //setlocale(LC_ALL, "Russian");
 
     using RenderLayer = std::vector<std::shared_ptr<RendrbleObject>>;
     
