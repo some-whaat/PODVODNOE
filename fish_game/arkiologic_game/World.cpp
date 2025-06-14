@@ -3,7 +3,7 @@
 
 void World::process() {
     std::vector<std::shared_ptr<RendrbleObject>>* npcs = get_layer("NPCs");
-    std::shared_ptr<RendrbleObject> ui_down = (*get_layer("ui_layer"))[0];
+    //std::shared_ptr<RendrbleObject> ui_down = (*get_layer("ui_layer"))[0];
     //std::shared_ptr<RendrbleObject> player = (*get_layer("player"))[0];
 
     auto previousTime = std::chrono::high_resolution_clock::now();
@@ -63,7 +63,7 @@ void World::process() {
                 is_ui_down = true;
             }
         }
-        ui_down->is_render = is_ui_down;
+        //ui_down->is_render = is_ui_down;
         
         
 

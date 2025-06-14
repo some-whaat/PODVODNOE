@@ -755,6 +755,7 @@ public:
     void process_logic(std::shared_ptr<Player> player);
     void process_dialogue();
     void process_player_choice(std::shared_ptr<Player> player);
+    void process_npc_action(std::shared_ptr<Player> player);
 
     bool attributes_check(std::shared_ptr<Player> player);
     bool item_check(std::shared_ptr<Player> player);
@@ -1192,13 +1193,13 @@ public:
         }
 
 
-        // временно?? наверно нет
+        /*
         std::shared_ptr<UI> ui_down = std::make_shared<UI>("press space to interact", 0, 0);
         ui_down->is_render = false;
 
         std::shared_ptr<RenderLayer> ui_layer = std::make_shared<RenderLayer>();
         ui_layer->push_back(ui_down);
-        add_layer(ui_layer, -1, "ui_layer");
+        add_layer(ui_layer, -1, "ui_layer");*/
     }
 
     void process() override;

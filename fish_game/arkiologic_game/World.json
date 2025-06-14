@@ -98,6 +98,12 @@
 
             "states": {
 
+              "333": {
+                "type": "dialogue",
+                "dialogue": "thx for the deal!!!",
+                "next_state": 333
+              },
+
               "0": {
                 "type": "dialogue",
                 "dialogue": ":(",
@@ -174,14 +180,30 @@
 
               "25": {
                 "type": "dialogue",
-                "dialogue": "oh, great! I'll give you 100 shells for it!",
-                "next_state": 0
+                "dialogue": "oh, great! I'll give you some of my stuff for it!",
+                "next_state": 27
               },
 
               "26": {
                 "type": "dialogue",
                 "dialogue": "oh, ok, I understand... but I really wanted it... :(",
                 "next_state": 0
+              },
+
+              "27": {
+                "type": "npc_action",
+                "add_item(s)": [ 100, 102 ],
+                "take_item(s)": [ 101 ],
+
+                "change_atts": {
+                  "missions": [
+                    true,
+                    [ 1 ]
+                  ],
+                  "rep": 5
+                },
+
+                "next_state": 333
               },
 
               "1": {
