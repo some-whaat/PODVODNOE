@@ -6,8 +6,8 @@ void NPC::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
     text_bubble.draw(buffer, screen);
 
-	for (UI& ui : ui_elements) {
-        ui.draw(buffer, screen);
+	for (std::shared_ptr<UI> ui : ui_elements) {
+        ui->draw(buffer, screen);
 	}
 
 }
@@ -46,69 +46,59 @@ void NPC::process_logic(std::shared_ptr<Player> player) {
 }
 
 void NPC::process_dialogue() {
-	static bool is_actioning = false; // служебная переменная, чтобы не было постоянного нажатия на пробел
-	static bool seted_dialogue = false; // служебная переменная, чтобы не было постоянного вывода диалога
 
-    if (!seted_dialogue) {
+    if (!seted_stuff) {
         text_bubble.set_text(data_base[state]["dialogue"], text_wight);
-        seted_dialogue = true;
+        seted_stuff = true;
     }
 
     bool is_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
 
     if (is_pressed && !is_actioning) {
         state = data_base[state]["next_state"]; 
-        seted_dialogue = false;
+        seted_stuff = false;
+        is_actioning = false;
     }
 
     is_actioning = is_pressed;
 }
 
 void NPC::process_player_choice(std::shared_ptr<Player> player) {
-    static bool is_actioning = false; // служебная переменная, чтобы не было постоянного нажатия на пробел
-    static bool seted_choises = false;
-    static int selected_el = 0;
 
-    if (!seted_choises) { // создать и вывести варианты
-        
-        UIContainer choice_cont = UIContainer(data_base[state]["choices"], 0, 5);
+    if (!seted_stuff) {
+        // Clear previous UI elements before creating new ones
+        ui_elements.clear();
+
+        std::shared_ptr<UI> choice_cont = std::make_shared<UI>(
+            data_base[state]["choices"], 20, 5, true, 0
+        );
         ui_elements.push_back(choice_cont);
-
-        seted_choises = true;
+        seted_stuff = true;
+        selected_el = 0;  // Reset selection when creating new UI
+        choice_cont->set_big_el(selected_el);  // Set initial selection
     }
 
+    // Input handling
     bool is_space_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
     bool is_right_pressed = (GetAsyncKeyState(VK_RIGHT) & 0x8000) != 0;
     bool is_left_pressed = (GetAsyncKeyState(VK_LEFT) & 0x8000) != 0;
 
     if (is_left_pressed && !is_actioning) {
-
-        selected_el -= 1;
-
-        if (selected_el < 0) {
-            selected_el = 1;
-        }
-
+        selected_el = (selected_el - 1 + 2) % 2;  // handle wrap-around
+        ui_elements[0]->set_big_el(selected_el);
     }
 
     if (is_right_pressed && !is_actioning) {
-
-        selected_el += 1;
-
-        if (selected_el >= 2) {
-            selected_el = 0;
-        }
+        selected_el = (selected_el + 1) % 2;  // handle wrap-around
+        ui_elements[0]->set_big_el(selected_el);
     }
 
     if (is_space_pressed && !is_actioning) {
-        //state = data_base[state]["next_state"];
-        seted_choises = false;
-    }
+        state = data_base[state]["next_states"][selected_el];
 
-    for (int i = 0; i < 2; i++) {
-        //_text[i].is_big = i == selected_el;
+        ui_elements.clear();
+        seted_stuff = false;
     }
-
 
     is_actioning = is_space_pressed || is_right_pressed || is_left_pressed;
 }

@@ -257,7 +257,16 @@ public:
     TextSquere(std::string in_text, int in_wighth) {
         x, y = 0;
 
+        add_val = 2;
 		set_text(in_text, in_wighth);
+    }
+
+    TextSquere(std::string in_text, int in_wighth, bool _is_steak_to_screen) {
+        x, y = 0;
+        is_steak_to_screen = _is_steak_to_screen;
+
+        add_val = 2;
+        set_text(in_text, in_wighth);
     }
 
     TextSquere(int in_x, int in_y, std::string in_text, float in_wighth) {
@@ -302,7 +311,7 @@ public:
     void action(std::shared_ptr<Player> player) override {}
 };
 
-class UI : public TextSquere {
+class UI : public RendrbleObject {
 protected:
     int poses_arr[5][2] = {
     {0, -1}, // 0 down
@@ -314,20 +323,49 @@ protected:
 
     int screen_pos;
 
+    std::vector<TextSquere> ui_els;
+    bool stuck_type_is_vertical; // true -- vertical, false -- horisontal
+    int el_wighth = 0;
+    int spacing = 5;
+
+    float total_width = 0.0f;
+    float total_height = 0.0f;
+
 public:
 
-    UI() : TextSquere(), screen_pos(4) {}
+    UI() : RendrbleObject(), screen_pos(4) {}
 
-    UI(std::string in_text, float in_wighth, int screen_pos_) : TextSquere(in_text, in_wighth), screen_pos(screen_pos_) {
-        is_steak_to_screen = true;
-        add_val = 2;
+    UI(std::string in_text, float in_wighth, int screen_pos_) : screen_pos(screen_pos_) {
+        ui_els.emplace_back(in_text, in_wighth, true);
+    }
+
+    UI(std::vector<std::string> text_list, int in_el_wighth, int in_spacing, bool stuck_type, int in_screen_pos) : RendrbleObject(), el_wighth(in_el_wighth), spacing(in_spacing), stuck_type_is_vertical(stuck_type) {
+
+        screen_pos = in_screen_pos;
+
+        for (std::string text : text_list) {
+            ui_els.emplace_back(text, el_wighth, true);
+
+            total_width += ui_els.back().wighth;
+            total_height += ui_els.back().hight;
+        }
+
+        total_width += (ui_els.size() - 1) * spacing;
+        total_height += (ui_els.size() - 1) * spacing;
     }
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
 
     void action(std::shared_ptr<Player> player) override {}
+
+    void set_big_el(int el_ind);
+
+    bool is_inside(Position pos, float add_dist) override {
+        return false;
+    }
 };
 
+/*
 class UIContainer : public UI {
     std::vector<UI> ui_els;
     bool stuck_type_is_vertical; // true -- vertical, false -- horisontal
@@ -339,7 +377,9 @@ class UIContainer : public UI {
 
 public:
 
-    UIContainer(std::vector<std::string> text_list, int in_el_wighth, int in_spacing) : UI(), el_wighth(in_el_wighth), spacing(in_spacing) {
+    UIContainer(std::vector<std::string> text_list, int in_el_wighth, int in_spacing, bool stuck_type, int in_screen_pos) : UI(), el_wighth(in_el_wighth), spacing(in_spacing), stuck_type_is_vertical(stuck_type) {
+
+        screen_pos = in_screen_pos;
 
         for (std::string text : text_list) {
             ui_els.emplace_back(text, el_wighth, -1);
@@ -353,10 +393,15 @@ public:
     }
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
-    //void set_els();
 
     void action(std::shared_ptr<Player> player) override {}
-};
+
+    void set_big_el(int el_ind) {
+		for (int i = 0; i < ui_els.size(); i++) {
+			ui_els[i].is_big = (i == el_ind);
+		}
+    }
+};*/
 
 class Picture : public Rektangle {
 protected:
@@ -598,6 +643,12 @@ public:
 
 
 class NPC : public MovingObj {
+
+    bool is_actioning = false; // служебная переменная, чтобы не было постоянного нажатия на пробел
+    bool seted_stuff = false;
+    int selected_el = 0;
+
+
 protected:
     /*struct LogicActions {
         int needed_item_id;
@@ -632,7 +683,7 @@ protected:
     int state = 0;
     std::unordered_map<int, nlohmann::json> data_base;
 
-	std::vector<UI> ui_elements;
+	std::vector<std::shared_ptr<UI>> ui_elements;
 
 public:
 

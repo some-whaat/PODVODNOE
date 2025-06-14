@@ -98,6 +98,12 @@
 
             "states": {
 
+              "0": {
+                "type": "dialogue",
+                "dialogue": ":(",
+                "next_state": 0
+              },
+
               "-2": {
                 "type": "logic",
 
@@ -126,7 +132,10 @@
                 "type": "logic",
 
                 "attributes_check": {
-                  "missions": [ false, [ 101 ] ],
+                  "missions": [
+                    false,
+                    [ 101 ]
+                  ],
                   "rep": [ false, 5 ]
                 },
 
