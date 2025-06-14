@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <chrono>
 #include <vector>
+#include <unordered_set>
 #include <algorithm>
 #include <array>
 #include <cstdlib>
@@ -18,7 +19,7 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <cmath>
-# define M_PIl          3.141592653589793238462643383279502884L
+#define M_PIl 3.141592653589793238462643383279502884L
 
 
 class Position;
@@ -34,6 +35,7 @@ extern bool is_working;
 
 
 int rand_int(int down_bord, int up_bord);
+bool isSubset(const std::vector<int>& subset, const std::vector<int>& superset);
 std::vector<std::vector<std::string>> read_objs_from_file(const std::string& file_str);
 std::vector<std::vector<std::string>> read_objs_from_file(std::ifstream& file);
 
@@ -103,7 +105,9 @@ public:
 
     Position get_pos();
 
-    void change_pos(Position pos);
+    void set_pos(Position pos);
+
+    void set_pos(float x_, float y_);
 
     Position coords_to_vec_space(Position coord_pos, int cols, int rows);
 
@@ -200,7 +204,7 @@ public:
     bool is_frame;
 
 
-    Rektangle() : hight(0), wighth(0), add_val(0), is_whith_frame(false), is_frame(false), fill(' ') {}
+    Rektangle() : RendrbleObject(), hight(0), wighth(0), add_val(0), is_whith_frame(false), is_frame(false), fill(' ') {}
 
     Rektangle(float in_x, float in_y, float in_wighth, float in_hight)
         : hight(in_hight), wighth(in_wighth), add_val(0), is_whith_frame(false), is_frame(false), fill(' ') {
@@ -238,7 +242,7 @@ public:
     void action(std::shared_ptr<Player> player) override {}
 };
 
-class TextSquere : public Rektangle{
+class TextSquere : public Rektangle {
 protected:
     std::vector<std::string> text_vec;
 
@@ -248,7 +252,7 @@ public:
     int follow_wighth = 0;
     int follow_hight = 0;
 
-    TextSquere() : text_vec({}) {}
+    TextSquere() : Rektangle(), text_vec({}) {}
 
     TextSquere(std::string in_text, int in_wighth) {
         x, y = 0;
@@ -299,23 +303,57 @@ public:
 };
 
 class UI : public TextSquere {
-private:
-    int poses_arr[4][2] = {
-{0, -1}, // 0 down
-{0, 1},  // 1 up 
-{1, 1},  // 2 riht up
-{-1, 1}  // 3 left up
+protected:
+    int poses_arr[5][2] = {
+    {0, -1}, // 0 down
+    {0, 1},  // 1 up 
+    {1, 1},  // 2 riht up
+    {-1, 1},  // 3 left up
+    {0, 0} // 4 center
     };
 
     int screen_pos;
 
 public:
+
+    UI() : TextSquere(), screen_pos(4) {}
+
     UI(std::string in_text, float in_wighth, int screen_pos_) : TextSquere(in_text, in_wighth), screen_pos(screen_pos_) {
         is_steak_to_screen = true;
         add_val = 2;
     }
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+
+    void action(std::shared_ptr<Player> player) override {}
+};
+
+class UIContainer : public UI {
+    std::vector<UI> ui_els;
+    bool stuck_type_is_vertical; // true -- vertical, false -- horisontal
+    int el_wighth = 0;
+    int spacing = 5;
+
+    float total_width = 0.0f;
+    float total_height = 0.0f;
+
+public:
+
+    UIContainer(std::vector<std::string> text_list, int in_el_wighth, int in_spacing) : UI(), el_wighth(in_el_wighth), spacing(in_spacing) {
+
+        for (std::string text : text_list) {
+            ui_els.emplace_back(text, el_wighth, -1);
+
+            total_width += ui_els.back().wighth;
+            total_height += ui_els.back().hight;
+        }
+
+        total_width += (ui_els.size() - 1) * spacing;
+        total_height += (ui_els.size() - 1) * spacing;
+    }
+
+    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
+    //void set_els();
 
     void action(std::shared_ptr<Player> player) override {}
 };
@@ -546,7 +584,7 @@ public:
         firt_pos = Position(in_x, in_y);
     }
 
-	void change_pos(int x_, int y_) {
+	void set_pos(int x_, int y_) {
 		x = x_;
 		y = y_;
 
@@ -589,10 +627,12 @@ protected:
 
     int text_wight = 20;
 
-    bool is_actioning = false; // —À”∆≈¡Õ¿ﬂ
+    //bool is_actioning = false; // —À”∆≈¡Õ¿ﬂ
 
     int state = 0;
     std::unordered_map<int, nlohmann::json> data_base;
+
+	std::vector<UI> ui_elements;
 
 public:
 
@@ -648,8 +688,6 @@ public:
                     state_data.contains("mission_complete_id") ? int(state_data["mission_complete_id"]) : 0,
                 };*/
             }
-
-            set_text();
 		}
         else {
             throw std::runtime_error("NPC can't find itself (no definition for the NPC in a JSON)");
@@ -659,10 +697,6 @@ public:
 
     //std::string npc_action(int player_item_id, int& player_reward_item);
 
-    void emply_state(int new_state);
-
-    void set_text();
-
     void action(std::shared_ptr<Player> player) override;
 
     void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
@@ -671,8 +705,7 @@ public:
     void process_dialogue();
     void process_player_choice(std::shared_ptr<Player> player);
 
-    bool mission_check(std::shared_ptr<Player> player);
-    bool rep_check(std::shared_ptr<Player> player);
+    bool attributes_check(std::shared_ptr<Player> player);
     bool item_check(std::shared_ptr<Player> player);
 };
 
@@ -689,19 +722,29 @@ private:
 
 	std::unordered_map<int, nlohmann::json> inventory_data_base; // id : json filename
 
-    std::vector<int> mission_vec;
+
 
 public:
 
+    nlohmann::json attributes = {};
     float speed = 1;
 
 
     explicit Player(std::string json_file) : Player(load_json(json_file)) {}
 
-    explicit Player(const nlohmann::json& data) : AnimatbleObj(data) {
+    explicit Player(const nlohmann::json& data)
+        : AnimatbleObj(data),
+        move_count(0),
+        inventory(),
+        inventory_vec(),
+        inventory_data_base(),
+        attributes(),
+        speed(1) {
 
 		if (data.contains("Player")) {
 			speed = data["Player"]["speed"];
+
+			attributes = data["Player"]["attributes"];
 
             for (const auto& item : data["Player"]["items"].items()) {
                 const auto& item_data = item.value();
@@ -719,10 +762,6 @@ public:
     }
 
     void add_item_to_inventory(int item_id);
-
-    void add_mission(int mission_id);
-
-    bool is_mission_complete(int mission_id);
 
     void remove_item_from_inventory(int item_id);
 
@@ -924,7 +963,7 @@ public:
                     int fasing = rand_int(0, 1) == 0 ? -1 : 1;
                     std::shared_ptr<MovingObj> particle = std::make_shared<MovingObj>(particles_constructors[rand_int(0, particles_constructors.size() - 1)]);
 
-                    particle->change_pos(
+                    particle->set_pos(
                         rand_int(-(screen_ptr.cols / 2) + 10, (screen_ptr.cols / 2) - 10) + screen_ptr.camera_pos.x,
                         rand_int(-(screen_ptr.rows / 2) + 10, (screen_ptr.rows / 2) - 10) + screen_ptr.camera_pos.y
                     );

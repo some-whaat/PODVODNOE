@@ -203,13 +203,13 @@ void Screen::ParticleSystem::add_particle() {
     int add_val = 7; // MAGIC NUMBER
 	Position spawn_pos = vectorToRectanglePoint(particle->velocity.mult(-1).sum(Position(rand_int(-3, 3), rand_int(-3, 3))), screen_ptr.cols + add_val, screen_ptr.rows + add_val); // MAGIC NUMBER (для разброса)
 
-    particle->change_pos(spawn_pos.x + screen_ptr.camera_pos.x, spawn_pos.y + screen_ptr.camera_pos.y);
+    particle->set_pos(spawn_pos.x + screen_ptr.camera_pos.x, spawn_pos.y + screen_ptr.camera_pos.y);
     /*
     switch (particles_spawn_type)
     {
     case Screen::ParticleSystem::ParticlesSpawnType::left_right:
 
-		particle->change_pos(
+		particle->set_pos(
             fasing * -((screen_ptr.cols / 2) + 5) + screen_ptr.camera_pos.x, // MAGIC NUMBER
             rand_int(-(screen_ptr.rows / 2), (screen_ptr.rows / 2)) + screen_ptr.camera_pos.y
         );

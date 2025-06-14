@@ -33,7 +33,7 @@ void Player::move(float deltaTime, Screen& screen) {
         Position new_pos = this->sum(dir);
 
         if (screen.is_inside_borders(new_pos)) {
-            change_pos(new_pos);
+            set_pos(new_pos);
         }
 
 
@@ -78,13 +78,4 @@ void Player::remove_item_from_inventory(int item_id) {
 bool Player::does_has_item(int item_id) {
     
     return (inventory.find(item_id) != inventory.end());
-}
-
-void Player::add_mission(int mission_id) {
-    mission_vec.push_back(mission_id);
-}
-
-bool Player::is_mission_complete(int mission_id) {
-
-    return std::find(mission_vec.begin(), mission_vec.end(), mission_id) != mission_vec.end();
 }

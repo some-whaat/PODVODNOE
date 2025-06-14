@@ -6,6 +6,10 @@ void NPC::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
     text_bubble.draw(buffer, screen);
 
+	for (UI& ui : ui_elements) {
+        ui.draw(buffer, screen);
+	}
+
 }
 
 void NPC::action(std::shared_ptr<Player> player) {
@@ -30,109 +34,121 @@ void NPC::action(std::shared_ptr<Player> player) {
     else {
         throw std::runtime_error("does not have a type!");
     }
-
-
-
-
-    /*
-	text_bubble.is_render = true;
-    bool is_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
-
-    if (is_pressed && !is_actioning) {
-
-
-        if (data_base.find(state) == data_base.end()) {
-            text_bubble.set_text("No dialogue available.", text_wight);
-        }
-        else {
-
-
-            if (player->does_has_item(current_action["needed_item_id"])) {
-
-                if (current_action["remove_item_id"] != -1) {
-                    player->remove_item_from_inventory(current_action["remove_item_id"]);
-				}
-
-
-                state = current_action["next_state"];
-
-                if (data_base.find(state) != data_base.end()) {
-                    text_bubble.is_render = data_base[state]["remove_text_bbl"];
-                    text_bubble.set_text(data_base[state]["dialogue"], text_wight);
-
-                }
-                else {
-                    text_bubble.set_text("No dialogue available.", text_wight);
-                }
-            }
-            else {
-                text_bubble.set_text("I need something else.", text_wight);
-            }
-        }
-    }
-
-    is_actioning = is_pressed;*/
-
 }
 
-void NPC::set_text() {
-    text_bubble.set_text(data_base[state]["dialogue"], text_wight);
-}
-
-void NPC::emply_state(int new_state) {
-    state = new_state;
-
-    if (data_base.find(state) != data_base.end()) {
-        text_bubble.is_render = data_base[state]["remove_text_bbl"];
-        text_bubble.set_text(data_base[state]["dialogue"], text_wight);
-
-    }
-    else {
-        text_bubble.set_text("No dialogue available.", text_wight);
-    }
-}
 
 void NPC::process_logic(std::shared_ptr<Player> player) {
-    // тут вся логика (функции-проверки)
-
     bool result;
 
-    result = mission_check(player) && rep_check(player) && item_check(player);
+    result = attributes_check(player) && item_check(player);
 
-    // например если res -- true -> change state to smth
+    state = result ? data_base[state]["true_state"] : data_base[state]["false_state"];
 }
 
 void NPC::process_dialogue() {
+	static bool is_actioning = false; // служебная переменная, чтобы не было постоянного нажатия на пробел
+	static bool seted_dialogue = false; // служебная переменная, чтобы не было постоянного вывода диалога
 
-    text_bubble.set_text(data_base[state]["dialogue"], text_wight); // выводим текст
+    if (!seted_dialogue) {
+        text_bubble.set_text(data_base[state]["dialogue"], text_wight);
+        seted_dialogue = true;
+    }
 
     bool is_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
 
     if (is_pressed && !is_actioning) {
         state = data_base[state]["next_state"]; 
+        seted_dialogue = false;
     }
 
     is_actioning = is_pressed;
 }
 
 void NPC::process_player_choice(std::shared_ptr<Player> player) {
+    static bool is_actioning = false; // служебная переменная, чтобы не было постоянного нажатия на пробел
+    static bool seted_choises = false;
+    static int selected_el = 0;
 
-}
+    if (!seted_choises) { // создать и вывести варианты
+        
+        UIContainer choice_cont = UIContainer(data_base[state]["choices"], 0, 5);
+        ui_elements.push_back(choice_cont);
 
-bool NPC::mission_check(std::shared_ptr<Player> player) {
-    nlohmann::json& curr_state = data_base[state];
-
-    if (curr_state.contains("mission_check")) {
-        return player->is_mission_complete(curr_state["needed_mission_id"]) == player->is_mission_complete(curr_state["is_mission_complete"]);
+        seted_choises = true;
     }
 
-    return true;
+    bool is_space_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
+    bool is_right_pressed = (GetAsyncKeyState(VK_RIGHT) & 0x8000) != 0;
+    bool is_left_pressed = (GetAsyncKeyState(VK_LEFT) & 0x8000) != 0;
+
+    if (is_left_pressed && !is_actioning) {
+
+        selected_el -= 1;
+
+        if (selected_el < 0) {
+            selected_el = 1;
+        }
+
+    }
+
+    if (is_right_pressed && !is_actioning) {
+
+        selected_el += 1;
+
+        if (selected_el >= 2) {
+            selected_el = 0;
+        }
+    }
+
+    if (is_space_pressed && !is_actioning) {
+        //state = data_base[state]["next_state"];
+        seted_choises = false;
+    }
+
+    for (int i = 0; i < 2; i++) {
+        //_text[i].is_big = i == selected_el;
+    }
+
+
+    is_actioning = is_space_pressed || is_right_pressed || is_left_pressed;
 }
 
-bool NPC::rep_check(std::shared_ptr<Player> player) {
-    return true;
+bool NPC::attributes_check(std::shared_ptr<Player> player) {
+	bool result = true;
+
+    if (data_base[state].contains("attributes_check")) {
+        nlohmann::json& attributes_data = data_base[state]["attributes_check"];
+
+        for (const auto& attr : attributes_data.items()) {
+            std::string attr_name = attr.key();
+            const auto& attr_data = attr.value()[1];
+			const bool needed_attr_state = attr.value()[0];
+
+			if (!player->attributes.contains(attr_name)) {
+                throw std::runtime_error("player does not have this attribute" + attr_name);
+			}
+
+            if (attr_data.is_array()) {
+                result = result && (isSubset(attr_data, player->attributes[attr_name]) == needed_attr_state);
+            }
+            else {
+                result = result && ((player->attributes[attr_name] == attr_data) == needed_attr_state);
+            }
+        }
+
+        return result;
+    }
+
+    return result;
 }
 
 bool NPC::item_check(std::shared_ptr<Player> player) {
+
+    if (data_base[state].contains("mission_check")) {
+        nlohmann::json& item_check_json = data_base[state]["mission_check"];
+
+        return player->does_has_item(item_check_json["needed_item_id"]) == bool(item_check_json["needed_item_state"]);
+    }
+
     return true;
 }
