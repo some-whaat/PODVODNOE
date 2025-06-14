@@ -38,28 +38,22 @@ void Player::move(float deltaTime, Screen& screen) {
 
 
         if (!inventory_vec.empty()) {
-            if (inventory_vec[0] == nullptr) { // ÊÎÑÒÛÛÛÛÛÛËÜ
-                inventory_vec.erase(inventory_vec.begin());
+            // Update first item's position
+            inventory_vec[0]->move_to(
+                this->get_pos(),
+                ((inventory_vec[0]->wighth, inventory_vec[0]->hight) +
+                    (wighth, hight)) / 4
+            );
+
+            // Update positions of subsequent items
+            for (size_t i = 1; i < inventory_vec.size(); i++) {
+                inventory_vec[i]->move_to(
+                    inventory_vec[i - 1]->get_pos(),
+                    (max(inventory_vec[i]->wighth, inventory_vec[i]->hight) +
+                        (inventory_vec[i - 1]->wighth, inventory_vec[i - 1]->hight)) / 4
+                );
             }
         }
-
-        if (!inventory_vec.empty()) {
-            inventory_vec[0]->move_to(this->get_pos(), (max(inventory_vec[0]->wighth, inventory_vec[0]->hight) + max(wighth, hight))/4);
-
-            for (int i = 1; i < inventory_vec.size(); i++) {
-
-                if (inventory_vec[i] == nullptr) { // ÊÎÑÒÛÛÛÛÛÛËÜ
-                    inventory_vec.erase(inventory_vec.begin() + i);
-                }
-                else {
-                    inventory_vec[i]->move_to(
-                        inventory_vec[i - 1]->get_pos(),
-                        (max(inventory_vec[i]->wighth, inventory_vec[i]->hight)
-                            + max(inventory_vec[i - 1]->wighth, inventory_vec[i - 1]->hight)) / 4);
-                }
-            }
-        }
-
         move_count = 0;
     }
 
@@ -71,9 +65,19 @@ void Player::add_item_to_inventory(int item_id) {
 }
 
 void Player::remove_item_from_inventory(int item_id) {
+    auto map_it = inventory.find(item_id);
+    if (map_it != inventory.end()) {
+        // Get the shared_ptr from the map
+        auto& item_ptr = map_it->second;
 
-    if (does_has_item(item_id)) {
-        inventory.erase(item_id);
+        // Remove from vector
+        auto vec_it = std::find(inventory_vec.begin(), inventory_vec.end(), item_ptr);
+        if (vec_it != inventory_vec.end()) {
+            inventory_vec.erase(vec_it);
+        }
+
+        // Remove from map
+        inventory.erase(map_it);
     }
 }
 
