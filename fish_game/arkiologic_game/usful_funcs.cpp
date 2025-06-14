@@ -71,6 +71,17 @@ std::unique_ptr<RendrbleObject> create_object(const std::string& classNameStr, n
         return nullptr;
 }
 
+bool isSubset(const std::vector<int>& subset, const std::vector<int>& superset) {
+    std::unordered_set<int> superset_elements(superset.begin(), superset.end());
+
+    for (int elem : subset) {
+        if (superset_elements.find(elem) == superset_elements.end()) {
+            return false;
+        }
+    }
+    return true;
+}
+
 /*
 std::vector<std::vector<std::string>> read_objs_from_file(std::string& file_str) {
 

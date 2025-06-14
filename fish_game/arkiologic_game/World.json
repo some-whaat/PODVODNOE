@@ -94,9 +94,21 @@
 
             "does_has_dialogue_on": true,
 
-            "defult_state": 1,
+            "defult_state": -1,
 
             "states": {
+
+              "333": {
+                "type": "dialogue",
+                "dialogue": "thx for the deal!!!",
+                "next_state": 333
+              },
+
+              "0": {
+                "type": "dialogue",
+                "dialogue": ":(",
+                "next_state": 0
+              },
 
               "-2": {
                 "type": "logic",
@@ -125,13 +137,73 @@
               "-1": {
                 "type": "logic",
 
-                "item_check": {
-                  "needed_item_id": 101,
-                  "needed_item_state": false
+                "attributes_check": {
+                  "missions": [
+                    false,
+                    [ 101 ]
+                  ],
+                  "rep": [ false, 5 ]
                 },
 
-                "else_state": 7,
-                "next_state": 1
+                "item_check": {
+                  "needed_item_id": 101,
+                  "needed_item_state": true
+                },
+
+                "true_state": 21,
+                "false_state": 1
+              },
+
+              "21": {
+                "type": "dialogue",
+                "dialogue": "ohhhhh.... I see you have something wery *interesting*",
+                "next_state": 22
+              },
+
+              "22": {
+                "type": "dialogue",
+                "dialogue": "a *really* pretty scull....",
+                "next_state": 23
+              },
+
+              "23": {
+                "type": "dialogue",
+                "dialogue": "maby... you would like to sell it???",
+                "next_state": 24
+              },
+
+              "24": {
+                "type": "player_choice",
+                "choices": [ "yes, why no?", "nope, bro, it's mine" ],
+                "next_states": [ 25, 26 ]
+              },
+
+              "25": {
+                "type": "dialogue",
+                "dialogue": "oh, great! I'll give you some of my stuff for it!",
+                "next_state": 27
+              },
+
+              "26": {
+                "type": "dialogue",
+                "dialogue": "oh, ok, I understand... but I really wanted it... :(",
+                "next_state": 0
+              },
+
+              "27": {
+                "type": "npc_action",
+                "add_item(s)": [ 100, 102 ],
+                "take_item(s)": [ 101 ],
+
+                "change_atts": {
+                  "missions": [
+                    true,
+                    [ 1 ]
+                  ],
+                  "rep": 5
+                },
+
+                "next_state": 333
               },
 
               "1": {
@@ -149,14 +221,9 @@
               "3": {
                 "type": "dialogue",
                 "dialogue": "u have such a beautiful little body :333",
-                "next_state": 4
-              },
-
-              "4": {
-                "type": "dialogue",
-                "dialogue": "u have such a beautiful little body :333",
                 "next_state": 5
               },
+
 
               "5": {
                 "type": "dialogue",
@@ -215,6 +282,11 @@
 
         "speed": 1,
 
+        "attributes": {
+          "missions": [],
+          "rep": 0
+        },
+
         "items": {
           "100": {
 
@@ -268,7 +340,6 @@
           }
 
         },
-
         "inventory": [ 101 ]
       }
     },

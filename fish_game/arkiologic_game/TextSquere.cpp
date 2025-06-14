@@ -82,7 +82,7 @@ void TextSquere::set_text(std::string in_text, int in_wighth) {
         text_vec.push_back(in_text);
         hight = 1;
     }
-    else if (in_text.size() < in_wighth) {
+    else if (in_text.size() < abs(in_wighth) && in_wighth < 0) {
         wighth = in_text.size();
         hight = 1;
         text_vec.push_back(in_text);
