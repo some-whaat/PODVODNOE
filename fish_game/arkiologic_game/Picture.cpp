@@ -30,7 +30,7 @@ void Picture::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
                     if (ii >= image_vec[i].size()) {
                         break;
                     }
-                    if (ix >= 0 && image_vec[i][ii] != 'Ú') {
+                    if (ix >= 0 && image_vec[i][ii] != '?') {
                         //(*screen_vec)[iy][ix] = image_vec[i][ii];
 
                         buffer[iy * screen.cols * 2 + ix].Char.AsciiChar = image_vec[i][ii];

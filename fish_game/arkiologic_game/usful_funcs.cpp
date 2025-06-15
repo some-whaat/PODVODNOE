@@ -41,7 +41,7 @@ std::vector<std::vector<std::string>> read_objs_from_file(std::ifstream& file) {
     std::string str;
 
     while (std::getline(file, str)) {
-        if (str == "Þ") {
+        if (str == "7") {
             objs_arr.push_back(image_vec);
             image_vec.clear();
         }

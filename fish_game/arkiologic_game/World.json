@@ -2,11 +2,11 @@
   "camera_speed": 0.7,
 
   "border_poses": [
-    [ -99111, 99111 ],
-    [ -99999, 99999 ]
+    [ -99, 99 ],
+    [ -99, 99 ]
   ],
 
-  "collision_add_val_to_NPC": 6,
+  "collision_add_val_to_NPC": 44,
 
   "layers": {
 
@@ -110,30 +110,6 @@
                 "next_state": 0
               },
 
-              "-2": {
-                "type": "logic",
-
-                "mission_check": {
-                  "needed_mission_id": 12,
-                  "needed_mission_state": false
-                },
-
-                "rep_check": {
-                  "needed_rep": 5
-                },
-
-                "item_check": {
-                  "needed_item_id": 101,
-                  "needed_item_state": false
-                },
-
-
-                "what_to_check": "mission",
-
-                "else_state": 7,
-                "next_state": 1
-              },
-
               "-1": {
                 "type": "logic",
 
@@ -174,7 +150,7 @@
 
               "24": {
                 "type": "player_choice",
-                "choices": [ "yes, why no?", "nope, bro, it's mine", "I'll think about it", "sdcasdcasd", "edwedwedw", "edwEDWEDA" ],
+                "choices": [ "yes, why no?", "nope, bro, it's mine", "I'll think about it" ],
                 "next_states": [ 25, 26, 23 ]
               },
 
@@ -253,8 +229,150 @@
 
           }
 
-        }
+        },
+        "sunduchok": {
 
+          "Position": {
+            "x": -60,
+            "y": 70
+          },
+
+          "RendrbleObject": {
+            "color": [ 1, 1, 0 ],
+            "is_render": true,
+            "add_paralax": 0
+          },
+
+          "AnimatbleObj": {
+            "animated_sprite_filepame": "sunduchok.txt",
+            "anim_speed": 60
+          },
+
+          "MovingObj": {
+            "velocity": [ 5, 3 ],
+
+            "moving_type": "none",
+
+            "wave": {
+              "wave_hight": 20,
+              "wave_offset": 10,
+              "wave_lenght": 55,
+              "wave_sdvig": 10
+            },
+
+            "random_wave": {
+              "max_x": 60,
+              "max_y": 30
+            }
+          },
+
+          "NPC": {
+
+            "does_has_dialogue_on": true,
+
+            "defult_state": 0,
+
+            "states": {
+
+              "0": {
+                "type": "dialogue",
+                "dialogue": "hello!!!dude, I haven't seen you for a long time! Where were you?",
+                "next_state": 1
+              },
+
+              "1": {
+                "type": "player_choice",
+                "choices": [ "huh!i haven't seen you either! what about your life?", "nope, bro, i'm not in mood'", "not now, I'm going to visit tavern?" ],
+                "next_states": [ 2, 3, 4 ]
+              },
+
+              "2": {
+                "type": "npc_action",
+                "change_atts": {
+                  "rep": 5
+                },
+                "next_state": 5
+              },
+              "3": {
+                "type": "npc_action",
+                "change_atts": {
+                  "rep": -1
+                },
+                "next_state": 6
+              },
+              "4": {
+                "type": "npc_action",
+                "change_atts": {
+                  "rep": 2
+                },
+                "next_state": 7
+              },
+              "5": {
+                "type": "dialogue",
+                "dialogue": "actually not bad! wanna drink somethig? my father just gave me an  old pirot bottle. I it's map to treasure or at leasta good rom!",
+                "next_state": 100
+              },
+              "6": {
+                "type": "dialogue",
+                "dialogue": "what a pity!maybe someone here is too proud of themself? anyway, take it easy buddy!"
+              },
+              "7": {
+                "type": "dialogue",
+                "dialogue": "hurry up! i've heard, someone stole a pirat bottle! find it ;)",
+                "next_state": 202
+              },
+              "100": {
+                "type": "dialogue",
+                "dialogue": "one moment: I need stone to open it!",
+                "next_state": 111
+              },
+
+              "101": {
+                "type": "logic",
+
+                "attributes_check": {
+                  "missions": [
+                    false,
+                    [ 101 ]
+                  ],
+                  "rep": [ false, 5 ]
+                },
+
+                "item_check": {
+                  "needed_item_id": 2416,
+                  "needed_item_state": true
+                },
+
+                "true_state": 21,
+                "false_state": 1
+              },
+
+              "202": {
+                "type": "logic",
+
+                "attributes_check": {
+                  "missions": [
+                    false,
+                    [ 101 ]
+                  ],
+                  "rep": [ false, 5 ]
+                },
+
+                "item_check": {
+                  "needed_item_id": 2415,
+                  "needed_item_state": true
+                },
+
+                "true_state": 21,
+                "false_state": 1
+              }
+
+
+            }
+
+          }
+
+        }
       }
 
     },
@@ -340,7 +458,7 @@
           }
 
         },
-        "inventory": [ 101 ]
+        "inventory": []
       }
     },
 
@@ -357,7 +475,7 @@
 
           "RendrbleObject": {
             "color": [ 0, 1, 0 ],
-            "is_render": true,
+            "is_render": false,
             "add_paralax": -0.5
           },
 
@@ -393,7 +511,7 @@
               },
 
               "AnimatbleObj": {
-                "animated_sprite_filepame": "fishka2.txt",
+                "animated_sprite_filepame": "fishka.txt",
                 "anim_speed": 88
               },
 
@@ -405,6 +523,32 @@
                 "random_wave": {
                   "max_x": 60,
                   "max_y": 30
+                }
+              }
+            },
+
+
+
+            "sharky": {
+              "RendrbleObject": {
+                "color": [ 0, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "sharky.txt",
+                "anim_speed": 20
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ 8, 9, -8, 8 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 20,
+                  "max_y": 20
                 }
               }
             },
