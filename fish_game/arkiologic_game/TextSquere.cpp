@@ -74,6 +74,83 @@ void TextSquere::text_follow(int facing) {
 }
 
 void TextSquere::set_text(std::string in_text, int in_wighth) {
+    text_vec.clear();
+
+    // Helper function for word wrapping
+    auto word_wrap = [](const std::string& text, size_t width) -> std::vector<std::string> {
+        std::vector<std::string> lines;
+        if (width == 0) {
+            lines.push_back(text);
+            return lines;
+        }
+
+        std::string remaining = text;
+        while (!remaining.empty()) {
+            if (remaining.length() <= width) {
+                lines.push_back(remaining);
+                break;
+            }
+
+            // Check if there's a space within the current segment
+            std::string segment = remaining.substr(0, width);
+            size_t last_space = segment.find_last_of(' ');
+
+            if (last_space == std::string::npos) {
+                // No space found - break at exact width
+                lines.push_back(segment);
+                remaining = remaining.substr(width);
+            }
+            else {
+                // Break at the last space found
+                lines.push_back(remaining.substr(0, last_space));
+                // Skip the space character
+                remaining = remaining.substr(last_space + 1);
+            }
+        }
+
+        // Pad each line to full width
+        for (auto& line : lines) {
+            if (line.length() < width) {
+                line.append(width - line.length(), ' ');
+            }
+        }
+
+        return lines;
+        };
+
+    // Handle different width modes
+    if (in_wighth == 0) {
+        // Single line, no wrapping
+        wighth = in_text.size();
+        text_vec.push_back(in_text);
+        hight = 1;
+    }
+    else if (in_wighth < 0) {
+        // Negative: treat as maximum width
+        size_t max_width = static_cast<size_t>(-in_wighth);
+        if (in_text.size() <= max_width) {
+            // Text fits in single line
+            wighth = in_text.size();
+            text_vec.push_back(in_text);
+            hight = 1;
+        }
+        else {
+            // Wrap at maximum width
+            wighth = max_width;
+            text_vec = word_wrap(in_text, wighth);
+            hight = text_vec.size();
+        }
+    }
+    else { // in_wighth > 0
+        // Positive: wrap at exact width
+        wighth = in_wighth;
+        text_vec = word_wrap(in_text, wighth);
+        hight = text_vec.size();
+    }
+}
+
+/*
+void TextSquere::set_text(std::string in_text, int in_wighth) {
 
     text_vec.clear();
 
@@ -109,4 +186,4 @@ void TextSquere::set_text(std::string in_text, int in_wighth) {
 
         hight = text_vec.size();
     }
-}
+}*/

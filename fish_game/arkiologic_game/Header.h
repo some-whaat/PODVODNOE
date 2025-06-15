@@ -346,8 +346,13 @@ public:
         for (std::string text : text_list) {
             ui_els.emplace_back(text, el_wighth, true);
 
-            total_width += ui_els.back().wighth;
-            total_height += ui_els.back().hight;
+            if (stuck_type_is_vertical) {
+                total_width += ui_els.back().wighth;
+                total_height += ui_els.back().hight;
+            }
+            else {
+                throw std::runtime_error("не доделано есчо");
+            }
         }
 
         total_width += (ui_els.size() - 1) * spacing;
@@ -647,6 +652,7 @@ class NPC : public MovingObj {
     bool is_actioning = false; // служебная переменная, чтобы не было постоянного нажатия на пробел
     bool seted_stuff = false;
     int selected_el = 0;
+    int choice_count = 0;
 
 
 protected:

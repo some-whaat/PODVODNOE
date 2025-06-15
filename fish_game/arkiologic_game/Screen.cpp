@@ -77,7 +77,6 @@ std::vector<std::shared_ptr<RendrbleObject>>* Screen::get_layer(const std::strin
 }
 
 void Screen::render() {
-    //std::chrono::steady_clock::time_point previous_time = std::chrono::steady_clock::now();
 
     enshure_cols_rows();
 
@@ -87,9 +86,8 @@ void Screen::render() {
         std::fill(backBuffer.begin(), backBuffer.end(), CHAR_INFO{ L' ', 0x07 });
 
 
-        int i = 0; // for debug
         for (const std::shared_ptr<RenderLayer>& layer : render_order) {
-			i++;
+
             if (!layer) {
 				//throw std::runtime_error("Render layer is null!" + i);
 				continue;
@@ -104,50 +102,8 @@ void Screen::render() {
         something_changed = false;
 
 
-/*
-        system("cls");
-
-        enshure_cols_rows();
-
-        screen_vec = {};
-
-
-        for (int i = 0; i < rows; i++) {
-            screen_vec.emplace_back(cols * 2, ' ');
-        }
-
-        for (const auto& layer : render_order) {
-            for (const auto& obj : *layer) {
-                obj->draw(&screen_vec, *this);
-            }
-        }
-
-       
-        for (auto* layer : render_order) {
-            for (const auto& obj : *layer) obj->draw(&screen_vec, *this);
-        }
-
-        
-        for (const std::string name : layer_order) {
-            for (const auto& obj : layers[name]) {
-                obj->draw(&screen_vec, *this);
-            }
-        }
-
-        for (int i = 0; i < rows; i++) {
-
-            if (!(i == rows - 1)) {
-                std::cout << screen_vec[i] << std::endl;
-            }
-            else {
-                std::cout << screen_vec[i];
-            }
-        }
-*/
-
         Sleep(MBF);
 
-        //deltatime = (std::chrono::steady_clock::now() - previous_time).count();
     }
     something_changed = false;
 }

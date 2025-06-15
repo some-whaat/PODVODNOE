@@ -174,8 +174,8 @@
 
               "24": {
                 "type": "player_choice",
-                "choices": [ "yes, why no?", "nope, bro, it's mine" ],
-                "next_states": [ 25, 26 ]
+                "choices": [ "yes, why no?", "nope, bro, it's mine", "I'll think about it", "sdcasdcasd", "edwedwedw", "edwEDWEDA" ],
+                "next_states": [ 25, 26, 23 ]
               },
 
               "25": {
