@@ -68,17 +68,20 @@ void NPC::process_dialogue() {
 
 void NPC::process_player_choice(std::shared_ptr<Player> player) {
 
+    //int choice_count = data_base[state]["choices"].size();
     if (!seted_stuff) {
         // Clear previous UI elements before creating new ones
         ui_elements.clear();
 
         std::shared_ptr<UI> choice_cont = std::make_shared<UI>(
-            data_base[state]["choices"], 20, 5, true, 0
+            data_base[state]["choices"], 20, 2, true, 0
         );
         ui_elements.push_back(choice_cont);
         seted_stuff = true;
         selected_el = 0;  // Reset selection when creating new UI
         choice_cont->set_big_el(selected_el);  // Set initial selection
+
+        choice_count = data_base[state]["choices"].size();
     }
 
     // Input handling
@@ -87,12 +90,12 @@ void NPC::process_player_choice(std::shared_ptr<Player> player) {
     bool is_left_pressed = (GetAsyncKeyState(0x41) & 0x8000) != 0 || (GetAsyncKeyState(0x57) & 0x8000) != 0;
 
     if (is_left_pressed && !is_actioning) {
-        selected_el = (selected_el - 1 + 2) % 2;  // handle wrap-around
+        selected_el = (selected_el - 1 + choice_count) % choice_count;  // handle wrap-around
         ui_elements[0]->set_big_el(selected_el);
     }
 
     if (is_right_pressed && !is_actioning) {
-        selected_el = (selected_el + 1) % 2;  // handle wrap-around
+        selected_el = (selected_el + 1) % choice_count;   // handle wrap-around
         ui_elements[0]->set_big_el(selected_el);
     }
 
