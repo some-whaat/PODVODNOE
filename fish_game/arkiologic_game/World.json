@@ -2,11 +2,11 @@
   "camera_speed": 0.7,
 
   "border_poses": [
-    [ -99, 99 ],
-    [ -99, 99 ]
+    [ -9999, 9999 ],
+    [ -9999, 9999 ]
   ],
 
-  "collision_add_val_to_NPC": 44,
+  "collision_add_val_to_NPC": 6,
 
   "layers": {
 
@@ -49,7 +49,7 @@
     },
 
     "NPCs": {
-      "layer_ind": 4,
+      "layer_ind": 1,
 
       "NPC": {
 
@@ -233,8 +233,8 @@
         "sunduchok": {
 
           "Position": {
-            "x": -60,
-            "y": 70
+            "x": -5,
+            "y": 0
           },
 
           "RendrbleObject": {
@@ -282,7 +282,7 @@
 
               "1": {
                 "type": "player_choice",
-                "choices": [ "huh!i haven't seen you either! what about your life?", "nope, bro, i'm not in mood'", "not now, I'm going to visit tavern?" ],
+                "choices": [ "huh!i haven't seen you either! what about your life?", "nope, bro, i'm not in mood", "not now, I'm going to visit tavern?" ],
                 "next_states": [ 2, 3, 4 ]
               },
 
@@ -314,59 +314,55 @@
               },
               "6": {
                 "type": "dialogue",
-                "dialogue": "what a pity!maybe someone here is too proud of themself? anyway, take it easy buddy!"
+                "dialogue": "what a pity!maybe someone here is too proud of themself? anyway, take it easy buddy!",
+                "next_state": 101
               },
               "7": {
                 "type": "dialogue",
                 "dialogue": "hurry up! i've heard, someone stole a pirat bottle! find it ;)",
-                "next_state": 202
+                "next_state": 101
               },
               "100": {
                 "type": "dialogue",
                 "dialogue": "one moment: I need stone to open it!",
-                "next_state": 111
+                "next_state": 203
               },
 
               "101": {
                 "type": "logic",
-
-                "attributes_check": {
-                  "missions": [
-                    false,
-                    [ 101 ]
-                  ],
-                  "rep": [ false, 5 ]
-                },
-
                 "item_check": {
                   "needed_item_id": 2416,
                   "needed_item_state": true
                 },
 
-                "true_state": 21,
-                "false_state": 1
+                "true_state": 0,
+                "false_state": 202
               },
 
               "202": {
-                "type": "logic",
+                "type": "dialogue",
+                "dialogue": "i'll wait you right here!",
+                "next_state": 101
+              },
 
-                "attributes_check": {
-                  "missions": [
-                    false,
-                    [ 101 ]
-                  ],
-                  "rep": [ false, 5 ]
-                },
+              "203": {
+                "type": "player_choice",
+                "choices": [ "if you give me a bottle i'll help you", "let me find a stone..." ],
+                "next_states": [ 204, 202 ]
+              },
 
-                "item_check": {
-                  "needed_item_id": 2415,
-                  "needed_item_state": true
-                },
+              "204": {
+                "type": "dialogue",
+                "dialogue": "hmmm...okay!",
+                "next_state": 205
+              },
 
-                "true_state": 21,
-                "false_state": 1
+              "205": {
+                "type": "npc_action",
+                "add_item(s)": [ 104 ],
+                "next_state": 202
               }
-
+            }
 
             }
 
@@ -378,7 +374,7 @@
     },
 
     "Player": {
-      "layer_ind": 1,
+      "layer_ind": 2,
 
       "Position": {
         "x": 0,
@@ -455,6 +451,19 @@
               "animated_sprite_filepame": "worm.txt",
               "anim_speed": 88
             }
+          },
+
+          "104": {
+            "RendrbleObject": {
+              "color": [ 0, 1, 0 ],
+              "is_render": true,
+              "add_paralax": 0
+            },
+
+            "AnimatbleObj": {
+              "animated_sprite_filepame": "bottle.txt",
+              "anim_speed": 88
+            }
           }
 
         },
@@ -491,7 +500,7 @@
 
     "fish_bg": {
 
-      "layer_ind": 2,
+      "layer_ind": 4,
 
       "ParticleSystem": {
 
