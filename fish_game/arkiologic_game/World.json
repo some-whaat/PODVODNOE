@@ -142,12 +142,12 @@
               "3": {
                 "type": "player_choice",
                 "choices": [ "What happend?", "How can I get there?" ],
-                "next_state": [ 4, 5 ]
+                "next_states": [ 4, 5 ]
               },
 
               "4": {
                 "type": "dialogue",
-                "dialogue": "Sea knows why - maybe the market got too competitive, or maybe the waves kept washing away his customers.",
+                "dialogue": "Sea knows why - maybe the market got too competitive, or maybe the waves kept washing away his customers. Either way, he decided to move to a quieter spot. Not that Gary went into details about his reasons for relocating beyond the hill, so the truth remains a mystery. Lots has changed since you sailed away.",
                 "next_state": 5
               },
 
@@ -168,6 +168,7 @@
                 "item_check": {
                   "needed_item_id": 104,
                   "needed_item_state": true
+
                 },
 
                 "true_state": 8,
@@ -177,19 +178,16 @@
               "8": {
                 "type": "dialogue",
                 "dialogue": "Get to the tavern. Now!",
-                "next_state": 7
+                "next_state": 0
               }
-
-
-
-
-
 
             }
 
           }
 
         },
+
+
         "sunduchok": {
 
           "Position": {
