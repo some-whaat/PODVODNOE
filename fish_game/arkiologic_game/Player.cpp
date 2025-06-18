@@ -41,16 +41,15 @@ void Player::move(float deltaTime, Screen& screen) {
             // Update first item's position
             inventory_vec[0]->move_to(
                 this->get_pos(),
-                ((inventory_vec[0]->wighth, inventory_vec[0]->hight) +
-                    (wighth, hight)) / 4
+                ((inventory_vec[0]->wighth/2, inventory_vec[0]->hight) + (wighth/2, hight)) / 2
             );
 
             // Update positions of subsequent items
             for (size_t i = 1; i < inventory_vec.size(); i++) {
                 inventory_vec[i]->move_to(
                     inventory_vec[i - 1]->get_pos(),
-                    (max(inventory_vec[i]->wighth, inventory_vec[i]->hight) +
-                        (inventory_vec[i - 1]->wighth, inventory_vec[i - 1]->hight)) / 4
+                    (max(inventory_vec[i]->wighth/2, inventory_vec[i]->hight) +
+                        (inventory_vec[i - 1]->wighth/2, inventory_vec[i - 1]->hight)) / 2
                 );
             }
         }

@@ -18,23 +18,6 @@
         "beach1": {
 
           "RendrbleObject": {
-            "color": [ 1, 0, 1 ],
-            "is_render": true,
-            "add_paralax": 0.5
-          },
-
-          "Picture": {
-            "sprite_filepame": "beach.txt"
-          }
-        },
-        "beach2": {
-
-          "Position": {
-            "x": -30,
-            "y": 20
-          },
-
-          "RendrbleObject": {
             "color": [ 1, 1, 0 ],
             "is_render": true,
             "add_paralax": 0.5
@@ -44,10 +27,8 @@
             "sprite_filepame": "beach.txt"
           }
         }
-
       }
     },
-
     "NPCs": {
       "layer_ind": 1,
 
@@ -100,12 +81,12 @@
 
               "333": {
                 "type": "dialogue",
-                "dialogue": "thx for the deal!!!",
+                "dialogue": [ "thx for the deal!!!" ],
                 "next_state": 333
               },
 
               "0": {
-                "type": "dialogue",
+                "type": [ "dialogue" ],
                 "dialogue": ":(",
                 "next_state": 0
               },
@@ -132,19 +113,7 @@
 
               "21": {
                 "type": "dialogue",
-                "dialogue": "ohhhhh.... I see you have something wery *interesting*",
-                "next_state": 22
-              },
-
-              "22": {
-                "type": "dialogue",
-                "dialogue": "a *really* pretty scull....",
-                "next_state": 23
-              },
-
-              "23": {
-                "type": "dialogue",
-                "dialogue": "maby... you would like to sell it???",
+                "dialogue": [ "ohhhhh.... I see you have something wery *interesting*", "a *really* pretty scull....", "maby... you would like to sell it???" ],
                 "next_state": 24
               },
 
@@ -156,13 +125,13 @@
 
               "25": {
                 "type": "dialogue",
-                "dialogue": "oh, great! I'll give you some of my stuff for it!",
+                "dialogue": [ "oh, great! I'll give you some of my stuff for it!" ],
                 "next_state": 27
               },
 
               "26": {
                 "type": "dialogue",
-                "dialogue": "oh, ok, I understand... but I really wanted it... :(",
+                "dialogue": [ "oh, ok, I understand... but I really wanted it... :(" ],
                 "next_state": 0
               },
 
@@ -184,45 +153,8 @@
 
               "1": {
                 "type": "dialogue",
-                "dialogue": "hey there!!",
-                "next_state": 2
-              },
-
-              "2": {
-                "type": "dialogue",
-                "dialogue": "I'm sorry, but I *MUST* say.. please, don't get it wrong...",
-                "next_state": 3
-              },
-
-              "3": {
-                "type": "dialogue",
-                "dialogue": "u have such a beautiful little body :333",
-                "next_state": 5
-              },
-
-
-              "5": {
-                "type": "dialogue",
-                "dialogue": "BY THE WAY",
-                "next_state": 6
-              },
-
-              "6": {
-                "type": "dialogue",
-                "dialogue": "I have something just right for a cutie like you~~",
-                "next_state": 7
-              },
-
-              "7": {
-                "type": "dialogue",
-                "dialogue": "u see... I'm a traidor and I think this bEaUtIfUl ribbon is *just perfect* for you ;)",
-                "next_state": 8
-              },
-
-              "8": {
-                "type": "dialogue",
-                "dialogue": "I'll sell it for 99 shells just for you ;) ;)",
-                "next_state": 2
+                "dialogue": [ "hey there!!", "I'm sorry, but I *MUST* say.. please, don't get it wrong...", "u have such a beautiful little body :333", "BY THE WAY", "I have something just right for a cutie like you~~", "u see... I'm a traidor and I think this bEaUtIfUl ribbon is *just perfect* for you ;)", "I'll sell it for 99 shells just for you ;) ;)" ],
+                "next_state": 1
               }
 
             }
@@ -233,7 +165,7 @@
         "sunduchok": {
 
           "Position": {
-            "x": -5,
+            "x": -50,
             "y": 0
           },
 
@@ -276,13 +208,13 @@
 
               "0": {
                 "type": "dialogue",
-                "dialogue": "hello!!!dude, I haven't seen you for a long time! Where were you?",
+                "dialogue": [ "hello!!! dude, I haven't seen you for a long time! Where were you?" ],
                 "next_state": 1
               },
 
               "1": {
                 "type": "player_choice",
-                "choices": [ "huh!i haven't seen you either! what about your life?", "nope, bro, i'm not in mood", "not now, I'm going to visit tavern?" ],
+                "choices": [ "huh! I haven't seen you either! how have you been?", "sorry, bro, I'm not in the smalltalk mood rn", "sorry, I'm on my wat to tavern!" ],
                 "next_states": [ 2, 3, 4 ]
               },
 
@@ -309,22 +241,22 @@
               },
               "5": {
                 "type": "dialogue",
-                "dialogue": "actually not bad! wanna drink somethig? my father just gave me an  old pirot bottle. I it's map to treasure or at leasta good rom!",
+                "dialogue": [ "actually not bad! wanna drink somethig? my father just gave me an old pirot bottle...", " I hope there's a treasure map, or at least a good rom!" ],
                 "next_state": 100
               },
               "6": {
                 "type": "dialogue",
-                "dialogue": "what a pity!maybe someone here is too proud of themself? anyway, take it easy buddy!",
+                "dialogue": [ "what a pity! maybe someone here is in their head too much? anyway, take it easy buddy!" ],
                 "next_state": 101
               },
               "7": {
                 "type": "dialogue",
-                "dialogue": "hurry up! i've heard, someone stole a pirat bottle! find it ;)",
+                "dialogue": [ "hurry up! i've heard, someone stole a pirat bottle! find it ;)" ],
                 "next_state": 101
               },
               "100": {
                 "type": "dialogue",
-                "dialogue": "one moment: I need stone to open it!",
+                "dialogue": [ "one moment: I need stone to open it!" ],
                 "next_state": 203
               },
 
@@ -341,7 +273,7 @@
 
               "202": {
                 "type": "dialogue",
-                "dialogue": "i'll wait you right here!",
+                "dialogue": [ "i'll wait you right here!" ],
                 "next_state": 101
               },
 
@@ -353,7 +285,7 @@
 
               "204": {
                 "type": "dialogue",
-                "dialogue": "hmmm...okay!",
+                "dialogue": [ "hmmm...okay!" ],
                 "next_state": 205
               },
 
@@ -403,7 +335,7 @@
           "100": {
 
             "RendrbleObject": {
-              "color": [ 1, 0, 0 ],
+              "color": [ 1, 0, 1 ],
               "is_render": true,
               "add_paralax": 0
             },
@@ -433,7 +365,7 @@
             },
 
             "AnimatbleObj": {
-              "animated_sprite_filepame": "fishka2.txt",
+              "animated_sprite_filepame": "fishka.txt",
               "anim_speed": 88
             }
           },
@@ -465,7 +397,7 @@
           }
 
         },
-        "inventory": []
+        "inventory": [101, 104, 100, 103, 102]
       }
     },
 
@@ -512,7 +444,7 @@
 
             "fishka": {
               "RendrbleObject": {
-                "color": [ 1, 1, 0 ],
+                "color": [ 0, 1, 0 ],
                 "is_render": true,
                 "add_paralax": 0
               },
@@ -580,6 +512,29 @@
                 "random_wave": {
                   "max_x": 60,
                   "max_y": 30
+                }
+              }
+            },
+            "fish_left": {
+              "RendrbleObject": {
+                "color": [ 1, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "fish_left1.txt",
+                "anim_speed": 20
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ -7, -9, -8, 8 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 20,
+                  "max_y": 20
                 }
               }
             }

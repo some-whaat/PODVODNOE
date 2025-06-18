@@ -653,6 +653,7 @@ class NPC : public MovingObj {
     bool seted_stuff = false;
     int selected_el = 0;
     int choice_count = 0;
+	int dialogue_ind = 0;
 
 
 protected:
