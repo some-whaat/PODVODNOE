@@ -51,16 +51,24 @@ void NPC::process_logic(std::shared_ptr<Player> player) {
 void NPC::process_dialogue() {
 
     if (!seted_stuff) {
-        text_bubble.set_text(data_base[state]["dialogue"], text_wight);
+        text_bubble.set_text(data_base[state]["dialogue"][dialogue_ind], text_wight);
         seted_stuff = true;
     }
 
     bool is_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
 
     if (is_pressed && !is_actioning) {
-        state = data_base[state]["next_state"]; 
-        seted_stuff = false;
-        is_actioning = false;
+		dialogue_ind++;
+
+        if (dialogue_ind < data_base[state]["dialogue"].size()) {
+			seted_stuff = false;
+		}
+		else {
+            dialogue_ind = 0;
+            state = data_base[state]["next_state"];
+            seted_stuff = false;
+            is_actioning = false;
+		}
     }
 
     is_actioning = is_pressed;

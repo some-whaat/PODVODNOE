@@ -1,0 +1,26 @@
+{
+  "layer_ind": 1,
+
+  "AnimatbleObj": {
+
+    "seaweed": {
+      "Position": {
+        "x": 0,
+        "y": -10
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": false,
+        "add_paralax": -0.5
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "seaweed.txt",
+        "anim_speed": 88
+      }
+    }
+
+  }
+
+}

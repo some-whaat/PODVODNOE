@@ -1,0 +1,126 @@
+{
+
+      "layer_ind": 2,
+
+      "ParticleSystem": {
+
+        "bg_fish": {
+
+          "particles_spawn_type": "left_right",
+          "on_screen_particles_count": 7,
+          "first_spawn_particles_randomly": true,
+
+          "particles_constructors": {
+
+            "fishka": {
+              "RendrbleObject": {
+                "color": [ 1, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "fishka.txt",
+                "anim_speed": 88
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ -8, -8, -8, 8 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 60,
+                  "max_y": 30
+                }
+              }
+            },
+
+
+
+            "sharky": {
+              "RendrbleObject": {
+                "color": [ 0, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "sharky.txt",
+                "anim_speed": 20
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ 8, 9, -8, 8 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 20,
+                  "max_y": 20
+                }
+              }
+            },
+
+            "fish_right1": {
+              "RendrbleObject": {
+                "color": [ 0, 1, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "fish_right1.txt",
+                "anim_speed": 0
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ 5, 12, -5, 5 ],
+
+                "moving_type": "random_wave",
+
+                "random_wave": {
+                  "max_x": 60,
+                  "max_y": 30
+                }
+              }
+            }
+          }
+        },
+
+        "bubbles": {
+
+          "particles_spawn_type": "left_right",
+          "on_screen_particles_count": 4,
+          "first_spawn_particles_randomly": false,
+
+          "particles_constructors": {
+            "bubble": {
+              "RendrbleObject": {
+                "color": [ 0, 0, 1 ],
+                "is_render": true,
+                "add_paralax": 0
+              },
+
+              "AnimatbleObj": {
+                "animated_sprite_filepame": "bubble.txt",
+                "anim_speed": 88
+              },
+
+              "MovingObj": {
+                "rand_velocity": [ 0, 0, 2, 5 ],
+
+                "moving_type": "wave",
+
+                "wave": {
+                  "wave_hight": 5,
+                  "wave_offset": 10,
+                  "wave_lenght": 1,
+                  "wave_sdvig": 10
+                }
+              }
+            }
+          }
+        }
+      }
+    }

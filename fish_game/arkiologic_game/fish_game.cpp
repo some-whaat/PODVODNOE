@@ -43,7 +43,7 @@ int main() {
 
     using RenderLayer = std::vector<std::shared_ptr<RendrbleObject>>;
     
-    World scr = World("World.json");
+    World scr = World("World_no_layers.json");
 
 
 /*

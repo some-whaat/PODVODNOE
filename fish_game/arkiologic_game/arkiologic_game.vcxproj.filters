@@ -184,6 +184,9 @@
     <Text Include="bubble.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
+    <Text Include="layers.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -195,6 +198,24 @@
       <Filter>Source Files\JSONs</Filter>
     </None>
     <None Include="World.json">
+      <Filter>Source Files\JSONs</Filter>
+    </None>
+    <None Include="World_no_layers.json">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="bacground.json">
+      <Filter>Source Files\JSONs</Filter>
+    </None>
+    <None Include="NPCs.json">
+      <Filter>Source Files\JSONs</Filter>
+    </None>
+    <None Include="Player.json">
+      <Filter>Source Files\JSONs</Filter>
+    </None>
+    <None Include="foreground.json">
+      <Filter>Source Files\JSONs</Filter>
+    </None>
+    <None Include="fish_bg.json">
       <Filter>Source Files\JSONs</Filter>
     </None>
   </ItemGroup>

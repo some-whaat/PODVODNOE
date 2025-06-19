@@ -1,0 +1,97 @@
+{
+  "layer_ind": 4,
+
+  "Position": {
+    "x": 0,
+    "y": 0
+  },
+
+  "RendrbleObject": {
+    "color": [ 1, 0, 0 ],
+    "is_render": true,
+    "add_paralax": 0
+  },
+
+  "AnimatbleObj": {
+    "animated_sprite_filepame": "podvodnoe.txt",
+    "anim_speed": 44
+  },
+
+  "Player": {
+
+    "speed": 1,
+
+    "attributes": {
+      "missions": [],
+      "rep": 0
+    },
+
+    "items": {
+      "100": {
+
+        "RendrbleObject": {
+          "color": [ 1, 0, 0 ],
+          "is_render": true,
+          "add_paralax": 0
+        },
+
+        "AnimatbleObj": {
+          "animated_sprite_filepame": "doll.txt",
+          "anim_speed": 88
+        }
+      },
+      "101": {
+        "RendrbleObject": {
+          "color": [ 1, 1, 1 ],
+          "is_render": true,
+          "add_paralax": 0
+        },
+
+        "AnimatbleObj": {
+          "animated_sprite_filepame": "scull.txt",
+          "anim_speed": 88
+        }
+      },
+      "102": {
+        "RendrbleObject": {
+          "color": [ 1, 1, 0 ],
+          "is_render": true,
+          "add_paralax": 0
+        },
+
+        "AnimatbleObj": {
+          "animated_sprite_filepame": "fishka2.txt",
+          "anim_speed": 88
+        }
+      },
+
+      "103": {
+        "RendrbleObject": {
+          "color": [ 0, 1, 0 ],
+          "is_render": true,
+          "add_paralax": 0
+        },
+
+        "AnimatbleObj": {
+          "animated_sprite_filepame": "worm.txt",
+          "anim_speed": 88
+        }
+      },
+
+      "104": {
+        "RendrbleObject": {
+          "color": [ 0, 1, 0 ],
+          "is_render": true,
+          "add_paralax": 0
+        },
+
+        "AnimatbleObj": {
+          "animated_sprite_filepame": "bottle.txt",
+          "anim_speed": 88
+        }
+      }
+
+    },
+    "inventory": []
+  }
+}
