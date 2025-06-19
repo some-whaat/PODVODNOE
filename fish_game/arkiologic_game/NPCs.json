@@ -5,8 +5,6 @@
 
     "frederic": {
 
-      "dist_to_interact": 7,
-
       "Position": {
         "x": 10,
         "y": 0
@@ -43,6 +41,8 @@
 
       "NPC": {
 
+        "dist_to_interact": 15,
+
         "does_has_dialogue_on": true,
 
         "defult_state": 0,
@@ -76,7 +76,13 @@
 
           "4": {
             "type": "dialogue",
-            "dialogue": [ "Sea knows why - maybe the market got too competitive, or maybe the waves kept washing away his customers.", "Either way, he decided to move to a quieter spot. Not that Gary went into details about his reasons for relocating beyond the hill, so the truth remains a mystery.", "Lots has changed since you sailed away." ],
+
+            "dialogue": [
+              "Sea knows why - maybe the market got too competitive, or maybe the waves kept washing away his customers.",
+              "Either way, he decided to move to a quieter spot. Not that Gary went into details about his reasons for relocating beyond the hill, so the truth remains a mystery.",
+              "Lots has changed since you sailed away."
+            ],
+
             "next_state": 5
           },
 

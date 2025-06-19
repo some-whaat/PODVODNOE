@@ -657,7 +657,7 @@ class NPC : public MovingObj {
 
 
     std::shared_ptr<Player> player;
-    int dist_to_interact = 6;
+    int dist_to_interact = 15;
 
 protected:
     /*struct LogicActions {
