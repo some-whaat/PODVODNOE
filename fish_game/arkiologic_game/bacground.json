@@ -11,7 +11,8 @@
       },
 
       "RendrbleObject": {
-        "color": [ 0, 1, 1 ],
+
+        "color": [ 1, 0, 1 ],
         "is_render": true,
         "add_paralax": 0.5
       },
@@ -28,6 +29,7 @@
       },
 
       "RendrbleObject": {
+
         "color": [ 1, 1, 0 ],
         "is_render": true,
         "add_paralax": 0.5
@@ -54,8 +56,24 @@
       "Picture": {
         "sprite_filepame": "bottom2.txt"
       }
+    },
+
+    "shashalashik": {
+
+      "Position": {
+        "x": 250,
+        "y": -53
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "shashalashik.txt"
+      }
     }
-
   }
-
 }

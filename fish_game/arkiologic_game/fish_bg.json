@@ -1,126 +1,150 @@
 {
 
-      "layer_ind": 2,
+  "layer_ind": 2,
 
-      "ParticleSystem": {
+  "ParticleSystem": {
 
-        "bg_fish": {
+    "bg_fish": {
 
-          "particles_spawn_type": "left_right",
-          "on_screen_particles_count": 7,
-          "first_spawn_particles_randomly": true,
+      "particles_spawn_type": "left_right",
+      "on_screen_particles_count": 3,
+      "first_spawn_particles_randomly": true,
 
-          "particles_constructors": {
+      "particles_constructors": {
 
-            "fishka": {
-              "RendrbleObject": {
-                "color": [ 1, 0, 1 ],
-                "is_render": true,
-                "add_paralax": 0
-              },
+        "fishka": {
+          "RendrbleObject": {
+            "color": [ 1, 1, 1 ],
 
-              "AnimatbleObj": {
-                "animated_sprite_filepame": "fishka.txt",
-                "anim_speed": 88
-              },
+            "is_render": true,
+            "add_paralax": 0
+          },
 
-              "MovingObj": {
-                "rand_velocity": [ -8, -8, -8, 8 ],
+          "AnimatbleObj": {
+            "animated_sprite_filepame": "fishka.txt",
+            "anim_speed": 88
+          },
 
-                "moving_type": "random_wave",
+          "MovingObj": {
+            "rand_velocity": [ -8, -8, -8, 8 ],
 
-                "random_wave": {
-                  "max_x": 60,
-                  "max_y": 30
-                }
-              }
-            },
+            "moving_type": "random_wave",
 
-
-
-            "sharky": {
-              "RendrbleObject": {
-                "color": [ 0, 0, 1 ],
-                "is_render": true,
-                "add_paralax": 0
-              },
-
-              "AnimatbleObj": {
-                "animated_sprite_filepame": "sharky.txt",
-                "anim_speed": 20
-              },
-
-              "MovingObj": {
-                "rand_velocity": [ 8, 9, -8, 8 ],
-
-                "moving_type": "random_wave",
-
-                "random_wave": {
-                  "max_x": 20,
-                  "max_y": 20
-                }
-              }
-            },
-
-            "fish_right1": {
-              "RendrbleObject": {
-                "color": [ 0, 1, 1 ],
-                "is_render": true,
-                "add_paralax": 0
-              },
-
-              "AnimatbleObj": {
-                "animated_sprite_filepame": "fish_right1.txt",
-                "anim_speed": 0
-              },
-
-              "MovingObj": {
-                "rand_velocity": [ 5, 12, -5, 5 ],
-
-                "moving_type": "random_wave",
-
-                "random_wave": {
-                  "max_x": 60,
-                  "max_y": 30
-                }
-              }
+            "random_wave": {
+              "max_x": 60,
+              "max_y": 30
             }
           }
         },
 
-        "bubbles": {
 
-          "particles_spawn_type": "left_right",
-          "on_screen_particles_count": 4,
-          "first_spawn_particles_randomly": false,
 
-          "particles_constructors": {
-            "bubble": {
-              "RendrbleObject": {
-                "color": [ 0, 0, 1 ],
-                "is_render": true,
-                "add_paralax": 0
-              },
+        "sharky": {
+          "RendrbleObject": {
+            "color": [ 0, 0, 1 ],
+            "is_render": true,
+            "add_paralax": 0
+          },
 
-              "AnimatbleObj": {
-                "animated_sprite_filepame": "bubble.txt",
-                "anim_speed": 88
-              },
+          "AnimatbleObj": {
+            "animated_sprite_filepame": "sharky.txt",
+            "anim_speed": 20
+          },
 
-              "MovingObj": {
-                "rand_velocity": [ 0, 0, 2, 5 ],
+          "MovingObj": {
+            "rand_velocity": [ 8, 9, -8, 8 ],
 
-                "moving_type": "wave",
+            "moving_type": "random_wave",
 
-                "wave": {
-                  "wave_hight": 5,
-                  "wave_offset": 10,
-                  "wave_lenght": 1,
-                  "wave_sdvig": 10
-                }
-              }
+            "random_wave": {
+              "max_x": 20,
+              "max_y": 20
+            }
+          }
+        },
+
+        "fish_right1": {
+          "RendrbleObject": {
+            "color": [ 0, 1, 1 ],
+            "is_render": true,
+            "add_paralax": 0
+          },
+
+          "AnimatbleObj": {
+            "animated_sprite_filepame": "fish_right1.txt",
+            "anim_speed": 0
+          },
+
+          "MovingObj": {
+            "rand_velocity": [ 5, 12, -5, 5 ],
+
+            "moving_type": "random_wave",
+
+            "random_wave": {
+              "max_x": 60,
+              "max_y": 30
+            }
+          }
+        },
+        "fish_left": {
+          "RendrbleObject": {
+            "color": [ 1, 0, 1 ],
+            "is_render": true,
+            "add_paralax": 0
+          },
+
+          "AnimatbleObj": {
+            "animated_sprite_filepame": "fish_left1.txt",
+            "anim_speed": 20
+          },
+
+          "MovingObj": {
+            "rand_velocity": [ -7, -9, -8, 8 ],
+
+            "moving_type": "random_wave",
+
+            "random_wave": {
+              "max_x": 20,
+              "max_y": 20
+            }
+          }
+        }
+      }
+    },
+
+    "bubbles": {
+
+      "particles_spawn_type": "left_right",
+      "on_screen_particles_count": 4,
+      "first_spawn_particles_randomly": false,
+
+      "particles_constructors": {
+        "bubble": {
+          "RendrbleObject": {
+            "color": [ 0, 0, 1 ],
+            "is_render": true,
+            "add_paralax": 0
+          },
+
+          "AnimatbleObj": {
+            "animated_sprite_filepame": "bubble.txt",
+            "anim_speed": 88
+          },
+
+          "MovingObj": {
+            "rand_velocity": [ 0, 0, 2, 5 ],
+
+            "moving_type": "wave",
+
+            "wave": {
+              "wave_hight": 5,
+              "wave_offset": 10,
+              "wave_lenght": 1,
+              "wave_sdvig": 10
             }
           }
         }
       }
     }
+  }
+}

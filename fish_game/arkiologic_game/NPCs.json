@@ -1,10 +1,11 @@
 {
-  "do_needs_player" : true,
+  "do_needs_player":  true,
 
   "NPC": {
 
     "frederic": {
 
+      "dist_to_interact": 7,
 
       "Position": {
         "x": 10,
@@ -48,21 +49,22 @@
 
         "states": {
 
+
           "0": {
             "type": "dialogue",
-            "dialogue": "You still with me, or...? You've daydreamed again and lost the thread of the conversation, haven't you?",
+            "dialogue": [ "You still with me, or...? You've daydreamed again and lost the thread of the conversation, haven't you?" ],
             "next_state": 1
           },
 
           "1": {
             "type": "player_choice",
-            "choices": [ "Oh, yes, sorry. So, what were we on about once more?", "???" ],
-            "next_state": [ 2, 5 ]
+            "choices": [ "Oh, yes, sorry. So, what were we on about once more?" ],
+            "next_states": [ 2 ]
           },
 
           "2": {
             "type": "dialogue",
-            "dialogue": "Gary�s packed up here � his little business is over the hill now.",
+            "dialogue": [ "You wanted to find Gary's shop. Well, Gary's packed up here - his little business is over the hill now." ],
             "next_state": 3
           },
 
@@ -74,19 +76,19 @@
 
           "4": {
             "type": "dialogue",
-            "dialogue": "Sea knows why - maybe the market got too competitive, or maybe the waves kept washing away his customers. Either way, he decided to move to a quieter spot. Not that Gary went into details about his reasons for relocating beyond the hill, so the truth remains a mystery. Lots has changed since you sailed away.",
+            "dialogue": [ "Sea knows why - maybe the market got too competitive, or maybe the waves kept washing away his customers.", "Either way, he decided to move to a quieter spot. Not that Gary went into details about his reasons for relocating beyond the hill, so the truth remains a mystery.", "Lots has changed since you sailed away." ],
             "next_state": 5
           },
 
           "5": {
             "type": "dialogue",
-            "dialogue": "How to get there? The Sunduchok�s your guy. Still camped out on that godforsaken island, playing all-knowing oracle of the tides.",
+            "dialogue": [ "How to get there? The Sunduchok is your guy! Still camped out on that godforsaken island, playing all-knowing oracle of the tides." ],
             "next_state": 6
           },
 
           "6": {
             "type": "dialogue",
-            "dialogue": "My wisdom ends here. The Sunduchok holds the rest.",
+            "dialogue": [ "My wisdom ends here. The Sunduchok holds the rest." ],
             "next_state": 7
           },
 
@@ -99,14 +101,36 @@
             },
 
             "true_state": 8,
-            "false_state": 6
+            "false_state": 9
           },
 
           "8": {
             "type": "dialogue",
-            "dialogue": "Get to the tavern. Now!",
-            "next_state": 0
+            "dialogue": [ "Get to the tavern. Now!" ],
+            "next_state": 6
+          },
+
+          "9": {
+            "type": "logic",
+
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 1 ]
+              ],
+              "rep": [ false, 5 ]
+            },
+            "true_state": 6,
+            "false_state": 10
+          },
+
+          "10": {
+            "type": "dialogue",
+            "dialogue": [ "Behold! Your heart desires... a stone or something like this. Truly, my insight knows no bounds. Head to the market. If anyone's got a gadget for stubborn bottles, it's old Mark's workshop!" ],
+            "next_state": 6
+
           }
+
 
         }
 
@@ -118,7 +142,7 @@
     "sunduchok": {
 
       "Position": {
-        "x": -305,
+        "x": -25,
         "y": 94
       },
 
@@ -161,13 +185,13 @@
 
           "0": {
             "type": "dialogue",
-            "dialogue": "hello!!!dude, I haven't seen you for a long time! Where were you?",
+            "dialogue": [ "hello!!! dude, I haven't seen you for a long time! Where were you?" ],
             "next_state": 1
           },
 
           "1": {
             "type": "player_choice",
-            "choices": [ "huh!i haven't seen you either! what about your life?", "nope, bro, i'm not in mood", "not now, I'm going to visit tavern?" ],
+            "choices": [ "huh! I haven't seen you either! how have you been?", "sorry, bro, I'm not in the smalltalk mood rn", "sorry, I'm on my wat to tavern!" ],
             "next_states": [ 2, 3, 4 ]
           },
 
@@ -194,22 +218,22 @@
           },
           "5": {
             "type": "dialogue",
-            "dialogue": "actually not bad! wanna drink somethig? my father just gave me an  old pirot bottle. I it's map to treasure or at leasta good rom!",
+            "dialogue": [ "actually not bad! wanna drink somethig? my father just gave me an old pirot bottle...", " I hope there's a treasure map, or at least a good rom!" ],
             "next_state": 100
           },
           "6": {
             "type": "dialogue",
-            "dialogue": "what a pity!maybe someone here is too proud of themself? anyway, take it easy buddy!",
+            "dialogue": [ "what a pity! maybe someone here is in their head too much? anyway, take it easy buddy!" ],
             "next_state": 101
           },
           "7": {
             "type": "dialogue",
-            "dialogue": "hurry up! i've heard, someone stole a pirat bottle! find it ;)",
+            "dialogue": [ "hurry up! i've heard, someone stole a pirat bottle! find it ;)" ],
             "next_state": 101
           },
           "100": {
             "type": "dialogue",
-            "dialogue": "one moment: I need stone to open it!",
+            "dialogue": [ "one moment: I need stone to open it!" ],
             "next_state": 203
           },
 
@@ -226,19 +250,19 @@
 
           "202": {
             "type": "dialogue",
-            "dialogue": "i'll wait you right here!",
+            "dialogue": [ "i'll wait you right here!" ],
             "next_state": 101
           },
 
           "203": {
             "type": "player_choice",
             "choices": [ "if you give me a bottle i'll help you", "let me find a stone..." ],
-            "next_states": [ 204, 202 ]
+            "next_states": [ 204, 206 ]
           },
 
           "204": {
             "type": "dialogue",
-            "dialogue": "hmmm...okay!",
+            "dialogue": [ "hmmm...okay!" ],
             "next_state": 205
           },
 
@@ -246,9 +270,78 @@
             "type": "npc_action",
             "add_item(s)": [ 104 ],
             "next_state": 202
+          },
+
+          "206": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 1 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 202
           }
         }
 
+      }
+
+    },
+
+    "narval": {
+
+      "Position": {
+        "x": -55,
+        "y": -70
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "milius.txt",
+        "anim_speed": 60
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "hello!!!dude, I haven't seen you for a long time! Where were you?" ],
+            "next_state": 0
+          }
+
+        }
       }
 
     },
@@ -259,7 +352,7 @@
 
       "Position": {
         "x": 15,
-        "y": -103
+        "y": -110
       },
 
       "RendrbleObject": {
@@ -301,7 +394,7 @@
 
           "0": {
             "type": "dialogue",
-            "dialogue": "oh hi PODVODNOE! Another adventure is waiting for u, huh/",
+            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
             "next_state": 1
           },
 
@@ -313,13 +406,13 @@
 
           "2": {
             "type": "dialogue",
-            "dialogue": "hope to see you soon!",
+            "dialogue": [ "hope to see you soon!" ],
             "next_state": 4
           },
 
           "3": {
             "type": "dialogue",
-            "dialogue": "go away rude and maybe even drunk son of a shell!",
+            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
             "next_state": 4
           },
 
@@ -347,8 +440,8 @@
 
 
       "Position": {
-        "x": 160,
-        "y": -103
+        "x": 330,
+        "y": -114
       },
 
       "RendrbleObject": {
@@ -390,7 +483,7 @@
 
           "0": {
             "type": "dialogue",
-            "dialogue": "oh hi PODVODNOE! Another adventure is waiting for u, huh/",
+            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
             "next_state": 1
           },
 
@@ -402,13 +495,99 @@
 
           "2": {
             "type": "dialogue",
-            "dialogue": "hope to see you soon!",
+            "dialogue": [ "hope to see you soon!" ],
             "next_state": 4
           },
 
           "3": {
             "type": "dialogue",
-            "dialogue": "go away rude and maybe even drunk son of a shell!",
+            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 1 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 0
+          }
+        }
+      }
+    },
+
+    "udilshik": {
+
+
+      "Position": {
+        "x": 430,
+        "y": -114
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "main_worm.txt",
+        "anim_speed": 77
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Exactly", "oh come on its none of your businesses" ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "hope to see you soon!" ],
+            "next_state": 4
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
             "next_state": 4
           },
 
@@ -432,4 +611,5 @@
 
     }
   }
+
 }

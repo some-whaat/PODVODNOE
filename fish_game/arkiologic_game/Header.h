@@ -657,7 +657,7 @@ class NPC : public MovingObj {
 
 
     std::shared_ptr<Player> player;
-
+    int dist_to_interact = 6;
 
 protected:
     /*struct LogicActions {
@@ -721,6 +721,10 @@ public:
         if (data.contains("NPC")) {
 
             nlohmann::json npc_data = data["NPC"];
+
+            if (npc_data.contains("dist_to_interact")) {
+                dist_to_interact = npc_data["dist_to_interact"];
+            }
 
             state = npc_data["defult_state"];
             text_bubble.is_render = npc_data["does_has_dialogue_on"];

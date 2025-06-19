@@ -1,5 +1,5 @@
 {
-  "layer_ind": 4,
+  "layer_ind": 3,
 
   "Position": {
     "x": 0,
@@ -30,7 +30,7 @@
       "100": {
 
         "RendrbleObject": {
-          "color": [ 1, 0, 0 ],
+          "color": [ 1, 0, 1 ],
           "is_render": true,
           "add_paralax": 0
         },
@@ -60,7 +60,7 @@
         },
 
         "AnimatbleObj": {
-          "animated_sprite_filepame": "fishka2.txt",
+          "animated_sprite_filepame": "fishka.txt",
           "anim_speed": 88
         }
       },
@@ -87,7 +87,7 @@
 
         "AnimatbleObj": {
           "animated_sprite_filepame": "bottle.txt",
-          "anim_speed": 88
+          "anim_speed": 15
         }
       }
 

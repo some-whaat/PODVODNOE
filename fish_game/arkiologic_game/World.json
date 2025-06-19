@@ -89,6 +89,7 @@
         }
       }
     },
+
     "NPCs": {
       "layer_ind": 4,
 
@@ -427,7 +428,7 @@
 
               "0": {
                 "type": "dialogue",
-                "dialogue": "hello!!!dude, I haven't seen you for a long time! Where were you?",
+                "dialogue": [ "hello!!!dude, I haven't seen you for a long time! Where were you?" ],
                 "next_state": 0
               }
 
@@ -484,7 +485,7 @@
 
               "0": {
                 "type": "dialogue",
-                "dialogue": "oh hi PODVODNOE! Another adventure is waiting for u, huh/",
+                "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
                 "next_state": 1
               },
 
@@ -496,13 +497,13 @@
 
               "2": {
                 "type": "dialogue",
-                "dialogue": "hope to see you soon!",
+                "dialogue": [ "hope to see you soon!" ],
                 "next_state": 4
               },
 
               "3": {
                 "type": "dialogue",
-                "dialogue": "go away rude and maybe even drunk son of a shell!",
+                "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
                 "next_state": 4
               },
 
@@ -573,7 +574,7 @@
 
               "0": {
                 "type": "dialogue",
-                "dialogue": "oh hi PODVODNOE! Another adventure is waiting for u, huh/",
+                "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
                 "next_state": 1
               },
 
@@ -585,13 +586,13 @@
 
               "2": {
                 "type": "dialogue",
-                "dialogue": "hope to see you soon!",
+                "dialogue": [ "hope to see you soon!" ],
                 "next_state": 4
               },
 
               "3": {
                 "type": "dialogue",
-                "dialogue": "go away rude and maybe even drunk son of a shell!",
+                "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
                 "next_state": 4
               },
 
@@ -659,7 +660,7 @@
 
               "0": {
                 "type": "dialogue",
-                "dialogue": "oh hi PODVODNOE! Another adventure is waiting for u, huh/",
+                "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
                 "next_state": 1
               },
 
@@ -671,13 +672,13 @@
 
               "2": {
                 "type": "dialogue",
-                "dialogue": "hope to see you soon!",
+                "dialogue": [ "hope to see you soon!" ],
                 "next_state": 4
               },
 
               "3": {
                 "type": "dialogue",
-                "dialogue": "go away rude and maybe even drunk son of a shell!",
+                "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
                 "next_state": 4
               },
 

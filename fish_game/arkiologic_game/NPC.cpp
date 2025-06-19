@@ -14,28 +14,31 @@ void NPC::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
 void NPC::action(std::shared_ptr<Player> player) {
 
-    nlohmann::json& current_action = data_base[state]; // по ключу достаём значение
+    if (dist(player->get_pos()) < dist_to_interact) {
 
-    if (current_action.contains("type")) {
+        nlohmann::json& current_action = data_base[state]; // по ключу достаём значение
 
-        if (current_action["type"] == "logic") {
-            process_logic(player);
-        }
-        else if (current_action["type"] == "dialogue") {
-            process_dialogue();
-        }
-        else if (current_action["type"] == "player_choice") {
-            process_player_choice(player);
-        }
-        else if (current_action["type"] == "npc_action") {
-            process_npc_action(player);
+        if (current_action.contains("type")) {
+
+            if (current_action["type"] == "logic") {
+                process_logic(player);
+            }
+            else if (current_action["type"] == "dialogue") {
+                process_dialogue();
+            }
+            else if (current_action["type"] == "player_choice") {
+                process_player_choice(player);
+            }
+            else if (current_action["type"] == "npc_action") {
+                process_npc_action(player);
+            }
+            else {
+                throw std::runtime_error("does not have a type!");
+            }
         }
         else {
             throw std::runtime_error("does not have a type!");
         }
-    }
-    else {
-        throw std::runtime_error("does not have a type!");
     }
 }
 
