@@ -656,6 +656,9 @@ class NPC : public MovingObj {
 	int dialogue_ind = 0;
 
 
+    std::shared_ptr<Player> player;
+
+
 protected:
     /*struct LogicActions {
         int needed_item_id;
@@ -691,6 +694,8 @@ protected:
     std::unordered_map<int, nlohmann::json> data_base;
 
 	std::vector<std::shared_ptr<UI>> ui_elements;
+
+
 
 public:
 
@@ -911,7 +916,9 @@ public:
     }
 
 
-    void add_layer(std::shared_ptr<RenderLayer> layer, int position_to_incert_to, std::string name);
+    void add_layer(std::shared_ptr<RenderLayer> layer, int position_to_incert_to, std::string name = "");
+
+    void load_layer_from_json(const nlohmann::json& data);
 
 	void replace_layer(std::shared_ptr<RenderLayer> layer, int ind, const std::string& name = "") {
 		if (ind < 0 || ind >= render_order.size()) {
@@ -1056,6 +1063,8 @@ private:
     std::shared_ptr<Player> player;
     float collision_add_val_to_NPC = 0;
 
+    std::vector<int> actions_layers_indxs;
+
 public:
 
     World() {
@@ -1124,92 +1133,57 @@ public:
         border_poses[1][0] = world_json["border_poses"][1][0];
         border_poses[1][1] = world_json["border_poses"][1][1];
 
-
+		
         auto& layers_data = world_json["layers"];
         render_order.resize(layers_data.size() + render_order.size());
 
-		// перебираем слои
-        for (auto& layer : layers_data.items()) {
-            std::string layer_name = layer.key();
-            nlohmann::json layer_content = layer.value();
+        if (layers_data.contains("layers_order")) {
 
-			int layer_ind = layer_content.contains("layer_ind") ? int(layer_content["layer_ind"]) : -1;
+            std::string layer_names_filename = layers_data["layers_order"];
+            std::ifstream layer_names(layer_names_filename);
+            std::string layer_filename;
 
-            // handle Player layer separately
-            if (layer_name == "Player") {
-                player = std::make_shared<Player>(layer_content);
-
-                auto player_layer = std::make_shared<RenderLayer>();
-                player_layer->push_back(player);
-                replace_layer(player_layer, layer_ind, "player");
-
-                continue;
+            if (!layer_names.is_open()) {
+                throw std::runtime_error("Failed to open file " + layer_names_filename);
             }
 
-            // Create render layer for this group
-            auto render_layer = std::make_shared<RenderLayer>();
+            while (std::getline(layer_names, layer_filename)) {
+                
+                nlohmann::json layer_content = load_json(layer_filename);
 
-			// перебираем типы объектов в слое
-            for (auto& obj_type : layer_content.items()) {
+                
+                if (layer_filename == "Player.json") {
+                    player = std::make_shared<Player>(layer_content);
 
-                std::string type_name = obj_type.key();
-                nlohmann::json objects = obj_type.value();
-
-				if (type_name == "ParticleSystem") {
-
-                    for (auto& obj : objects.items()) {
-
-						std::cout << obj.key() << std::endl;
-
-                        auto particle_system_shared = std::make_shared<Screen::ParticleSystem>(obj.value(), *this);
-                        render_layer->push_back(particle_system_shared);
-
-						std::cout << "ParticleSystem added" << std::endl;
-                    }
-
-                    replace_layer(render_layer, layer_ind, layer_name);
+                    auto player_layer = std::make_shared<RenderLayer>();
+                    player_layer->push_back(player);
+                    add_layer(player_layer, -1, "player");
 
                     continue;
-				}
-
-                if (type_name != "layer_ind") {
-
-					// перебираем объекты данного типа
-                    for (auto& obj : objects.items()) {
-                        //std::string obj_name = obj.key();
-                        nlohmann::json obj_data = obj.value();
-
-                        std::shared_ptr<RendrbleObject> render_obj;
-
-                        render_obj = create_object(type_name, obj_data);
-
-                        if (render_obj) {
-                            render_layer->push_back(render_obj);
-                        }
-                        else {
-                            throw std::runtime_error("unknown object type: " + type_name);
-                        }
-
-                        render_layer->push_back(render_obj);
-                    }
-
-                    replace_layer(render_layer, layer_ind, layer_name);
                 }
+
+                load_layer_from_json(layer_content);
+
+                if (layer_content.contains("do_needs_player")) {
+                    if (layer_content["do_needs_player"]) {
+                        actions_layers_indxs.push_back(render_order.size() - 1); // !! надо по хорошому исправить, чтобы load_layer_from_json возвращал индекс нового слоя и использовать его, ато так не robust
+                    }
+                }
+               
             }
 
+            layer_names.close();
+
+
         }
-
-
-        /*
-        std::shared_ptr<UI> ui_down = std::make_shared<UI>("press space to interact", 0, 0);
-        ui_down->is_render = false;
-
-        std::shared_ptr<RenderLayer> ui_layer = std::make_shared<RenderLayer>();
-        ui_layer->push_back(ui_down);
-        add_layer(ui_layer, -1, "ui_layer");*/
+        else {
+            extract_from_single_json(layers_data);
+        }
     }
 
     void process() override;
+
+    void extract_from_single_json(const nlohmann::json& world_json);
 };
 
 

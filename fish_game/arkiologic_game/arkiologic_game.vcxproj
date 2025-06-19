@@ -162,6 +162,7 @@
     <Text Include="dino.txt" />
     <Text Include="eye.txt" />
     <Text Include="fishka2.txt" />
+    <Text Include="layers.txt" />
     <Text Include="podvodnoe.txt" />
     <Text Include="doll.txt" />
     <Text Include="dude.txt" />
@@ -187,11 +188,17 @@
     <Text Include="worm.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bacground.json" />
     <None Include="ClassDiagram.cd" />
+    <None Include="fish_bg.json" />
+    <None Include="foreground.json" />
+    <None Include="NPCs.json" />
     <None Include="packages.config" />
     <None Include="Picture_draft.json" />
+    <None Include="Player.json" />
     <None Include="Player_draft.json" />
     <None Include="World.json" />
+    <None Include="World_no_layers.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

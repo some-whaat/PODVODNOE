@@ -121,6 +121,63 @@ void Screen::swap_buffers() {
     WriteConsoleOutput(hConsole, backBuffer.data(), bufferSize, bufferCoord, &writeRegion);
 }
 
+void Screen::load_layer_from_json(const nlohmann::json& layer_content) {
+
+    //int layer_ind = layer_content.contains("layer_ind") ? int(layer_content["layer_ind"]) : -1;
+
+
+    // Create render layer for this group
+    auto render_layer = std::make_shared<RenderLayer>();
+
+    // перебираем типы объектов в слое
+    for (auto& obj_type : layer_content.items()) {
+
+        std::string type_name = obj_type.key();
+        nlohmann::json objects = obj_type.value();
+
+        if (type_name == "ParticleSystem") {
+
+            for (auto& obj : objects.items()) {
+
+                std::cout << obj.key() << std::endl;
+
+                auto particle_system_shared = std::make_shared<Screen::ParticleSystem>(obj.value(), *this);
+                render_layer->push_back(particle_system_shared);
+
+                std::cout << "ParticleSystem added" << std::endl;
+            }
+
+            add_layer(render_layer, -1);
+
+            continue;
+        }
+
+        if (type_name != "layer_ind" && type_name != "do_needs_player") {
+
+            // перебираем объекты данного типа
+            for (auto& obj : objects.items()) {
+                //std::string obj_name = obj.key();
+                nlohmann::json obj_data = obj.value();
+
+                std::shared_ptr<RendrbleObject> render_obj;
+
+                render_obj = create_object(type_name, obj_data);
+
+                if (render_obj) {
+                    render_layer->push_back(render_obj);
+                }
+                else {
+                    throw std::runtime_error("unknown object type: " + type_name);
+                }
+
+                render_layer->push_back(render_obj);
+            }
+
+            add_layer(render_layer, -1);
+        }
+    }
+}
+
 
 
 

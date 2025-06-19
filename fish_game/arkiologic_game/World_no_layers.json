@@ -1,0 +1,16 @@
+{
+  "camera_speed": 0.7,
+
+  "border_poses": [
+    [ -9999, 9999 ],
+    [ -100, 100 ]
+  ],
+
+  "collision_add_val_to_NPC": 6,
+
+  "layers": {
+    "layers_order" : "layers.txt"
+  }
+}
+    
+  
