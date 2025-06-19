@@ -97,8 +97,8 @@ void NPC::process_player_choice(std::shared_ptr<Player> player) {
 
     // Input handling
     bool is_space_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
-    bool is_right_pressed = (GetAsyncKeyState(0x44) & 0x8000) != 0 || (GetAsyncKeyState(0x53) & 0x8000) != 0;
-    bool is_left_pressed = (GetAsyncKeyState(0x41) & 0x8000) != 0 || (GetAsyncKeyState(0x57) & 0x8000) != 0;
+    bool is_right_pressed = (GetAsyncKeyState(VK_RIGHT) & 0x8000) != 0 || (GetAsyncKeyState(VK_DOWN) & 0x8000) != 0;
+    bool is_left_pressed = (GetAsyncKeyState(VK_LEFT) & 0x8000) != 0 || (GetAsyncKeyState(VK_UP) & 0x8000) != 0;
 
     if (is_left_pressed && !is_actioning) {
         selected_el = (selected_el - 1 + choice_count) % choice_count;  // handle wrap-around

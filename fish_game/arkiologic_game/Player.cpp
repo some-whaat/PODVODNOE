@@ -20,10 +20,10 @@ void Player::move(float deltaTime, Screen& screen) {
         Position dir;
 
 
-        if (GetAsyncKeyState(VK_LEFT)) dir.x -= 1;
-        if (GetAsyncKeyState(VK_RIGHT)) dir.x += 1;
-        if (GetAsyncKeyState(VK_UP)) dir.y += 1;
-        if (GetAsyncKeyState(VK_DOWN)) dir.y -= 1;
+        if ((GetAsyncKeyState(0x41) & 0x8000) != 0) dir.x -= 1;
+        if ((GetAsyncKeyState(0x44) & 0x8000) != 0) dir.x += 1;
+        if ((GetAsyncKeyState(0x57) & 0x8000) != 0) dir.y += 1;
+        if ((GetAsyncKeyState(0x53) & 0x8000) != 0) dir.y -= 1;
 
         if (dir.x != 0 || dir.y != 0) {
             dir = dir.normalise();
