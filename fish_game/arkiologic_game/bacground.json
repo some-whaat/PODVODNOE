@@ -272,7 +272,7 @@
 
       "Position": {
         "x": 330,
-        "y": -37
+        "y": -43
       },
 
       "RendrbleObject": {
@@ -310,7 +310,7 @@
       },
 
       "RendrbleObject": {
-        "color": [ 1, 1, 0 ],
+        "color": [ 0, 1, 0 ],
         "is_render": true,
         "add_paralax": 0.5
       },

@@ -113,7 +113,7 @@
           "8": {
             "type": "dialogue",
             "dialogue": [ "Get to the tavern. Now!" ],
-            "next_state": 6
+            "next_state": 11
           },
 
           "9": {
@@ -135,7 +135,8 @@
             "dialogue": [ "Behold! Your heart desires... a stone or something like this. Truly, my insight knows no bounds. Head to the market. If anyone's got a gadget for stubborn bottles, it's old Mark's workshop!" ],
             "next_state": 11
           },
-          "“11": {
+
+          "11": {
 
             "type": "logic",
             "attributes_check": {
@@ -151,7 +152,7 @@
 
           "12": {
             "type": "dialogue",
-            "dialogue": [ "Whoa! My gut says you’ve upset our little sea imp near the mountain,he is very sensitive! He knows everything-just wanted a chat. Bring him something pretty. I think the doll is a decision.I have heard you can buy it in market 24.  Flatter him with a grand gesture, and he’ll spill whatever secrets you need!" ],
+            "dialogue": [ "Whoa! My gut says you've upset our little sea imp near the mountain,he is very sensitive! He knows everything-just wanted a chat. Bring him something pretty. I think the doll is a decision.I have heard you can buy it in market 24.  Flatter him with a grand gesture, and he'll spill whatever secrets you need!" ],
             "next_state": 6
           }
 
@@ -212,7 +213,7 @@
               "Oh, we're not acquainted?",
               "My presence on this island is... recent.",
               "Let's just say forces beyond mortal comprehension necessitated my relocation.",
-              "Well, to be frank I'm a literal treasurу - that's why I hid on this deserted island!",
+              "Well, to be frank I'm a literal treasury - that's why I hid on this deserted island!",
               "The world's so-called 'brilliant' minds would kill for my insights.",
               "Ah, I see your burning questions...",
               "But alas!",
@@ -274,6 +275,20 @@
           "202": {
             "type": "dialogue",
             "dialogue": [ "i'll wait you right here!" ],
+            "next_state": 347
+          },
+
+          "347": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 8 ]
+              ],
+              "rep": 5
+            },
+
             "next_state": 101
           },
 
@@ -464,7 +479,7 @@
 
       "Position": {
         "x": 167,
-        "y": -104
+        "y": -109
       },
 
       "RendrbleObject": {
@@ -535,13 +550,13 @@
           "5": {
             "type": "dialogue",
             "dialogue": [ "Won't you even glance at my new inventions?","Ah, what a pity.","Gary's store?","No idea ...","but I did have a stone.","Let me just peek in my pouch" ],
-            "next_state": 6
+            "next_state": 7
           },
 
           "6": {
             "type": "dialogue",
             "dialogue": [ ". . ." ],
-            "next_state": 7
+            "next_state": 6
           },
           "7": {
             "type": "dialogue",
@@ -577,8 +592,8 @@
               ],
               "rep": [ false, 5 ]
             },
-            "true_state": 6,
-            "false_state": 12
+            "true_state": 12,
+            "false_state": 9
           },
 
           "12": {
@@ -596,7 +611,7 @@
 
       "Position": {
         "x": 415,
-        "y": -90
+        "y": -96
       },
 
       "RendrbleObject": {
@@ -685,11 +700,11 @@
 
       "Position": {
         "x": 765,
-        "y": -100
+        "y": -107
       },
 
       "RendrbleObject": {
-        "color": [ 1, 1, 0 ],
+        "color": [ 1, 0, 1 ],
         "is_render": true,
         "add_paralax": 0
       },
@@ -948,8 +963,8 @@
 
 
       "Position": {
-        "x": 20,
-        "y": 50
+        "x": 525,
+        "y": -48
       },
 
       "RendrbleObject": {
@@ -1036,12 +1051,12 @@
 
 
       "Position": {
-        "x": 407,
-        "y": -98
+        "x": 460,
+        "y": -111
       },
 
       "RendrbleObject": {
-        "color": [ 1, 1, 0 ],
+        "color": [ 0, 1, 0 ],
         "is_render": true,
         "add_paralax": 0
       },
@@ -1213,11 +1228,11 @@
 
       "Position": {
         "x": -35,
-        "y": -96
+        "y": -104
       },
 
       "RendrbleObject": {
-        "color": [ 1, 1, 0 ],
+        "color": [ 0, 1, 1 ],
         "is_render": true,
         "add_paralax": 0
       },
@@ -1301,7 +1316,7 @@
 
       "Position": {
         "x": -215,
-        "y": -105
+        "y": -111
       },
 
       "RendrbleObject": {
@@ -1358,15 +1373,15 @@
               "Let me tell a long story short. I'm looking for an Alvin's expedition. Heard any rumors? Any idea where they might've sailed? Maybe they are in danger and need help! Later I will definitely tell you many stories",
               "Do you have a multi-tool stone or know where Gary moved? That'd make my life so much easier! I'm road-weary and wouldn't say no to his famous pie! Then you can interrogate me all you want!"
             ],
-            "next_states": [ 2, 3 ]
+            "next_states": [ 2, 2 ]
           },
 
           "2": {
             "type": "dialogue",
             "dialogue": [
-              "I know nothin’!...Okay, a smidge. But who cares?",
-              "I’m busy drownin’ in my own misery here!",
-              "Am I supposed to weep over every fool with a shovel and a dream who want to earn?"
+              "Let me think! Nope! I don't know anything, la-di-da!...Okay, maybe not. But who cares?",
+              "I'm busy drownin' in my own misery here!",
+              "Am I supposed to weep over every fool with a shovel and a dream who want to earn or your favorite piemaker just disappiar or you need something?"
             ],
             "next_state": 4
           },
@@ -1458,7 +1473,7 @@
               "I AM OFFENDED BY THEE!",
               "Only a gift of friendship shall soften my heart!"
             ],
-            "next_state": 9
+            "next_state": 13
           },
 
           "13": {
@@ -1496,7 +1511,7 @@
             "dialogue": [
               "Correct!",
               "Next!",
-              "What food do I hate?”"
+              "What food do I hate?"
             ],
             "next_state": 17
           },
@@ -1505,7 +1520,7 @@
             "type": "player_choice",
             "choices": [
               "ice-cream",
-              "I don’t know",
+              "I don't know",
               "seaweed"
             ],
             "next_states": [ 18, 18, 19 ]
@@ -1525,16 +1540,16 @@
               "Aha! I knew we were soulmates!!",
               "Friends are meant for sharing secrets, after all.",
               "I'll tell you everything.",
-              "Go ask the farmer - I remember what they discussed when I went to buy sea tomatoes!",
+              "Go ask the farmer - I remember what they (expedition) discussed when I went to buy sea tomatoes!",
               "AND!",
               "While you were gone, some shady figures set up this horrifying office right here!",
               "Yes, I know a thing or two-snuck in like a barnacle on a hull the other day.",
-              "‘A silent wave drowns the loudest ship,as they say-best prepare for the worst!",
+              "A silent wave drowns the loudest ship, as they say-best prepare for the worst!",
               "So watch your back!",
-              "Now listen close, matey: that office reeks worse than a bilge rat’s den!",
+              "Now listen close, matey: that office reeks worse than a bilge rat's den!",
               "They're brewing trouble blacker than a squall at midnight.",
               "And Steve from shop 24?",
-              "‘A smiling shark still has teeth’—that weasel’s getting a cut of their filthy loot, mark my words!",
+              "A smiling shark still has teeth - that weasel's getting a cut of their filthy loot, mark my words!",
               "Trust the wind, but tie your knots, so here's my advice:",
               "Steer clear of Steve - Steve is definitely getting his 'fair share'",
               "Keep a weather eye on that office.",
@@ -1666,7 +1681,7 @@
 
       "Position": {
         "x": -150,
-        "y": -96
+        "y": -114
       },
 
       "RendrbleObject": {
@@ -1842,7 +1857,7 @@
 
       "Position": {
         "x": 430,
-        "y": -94
+        "y": -105
       },
 
       "RendrbleObject": {
@@ -2299,11 +2314,11 @@
 
       "Position": {
         "x": 800,
-        "y": -90
+        "y": -96
       },
 
       "RendrbleObject": {
-        "color": [ 1, 1, 0 ],
+        "color": [ 0, 1, 1 ],
         "is_render": true,
         "add_paralax": 0
       },
