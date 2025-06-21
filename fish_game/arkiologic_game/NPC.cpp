@@ -81,7 +81,7 @@ void NPC::process_player_choice(std::shared_ptr<Player> player) {
 
     //int choice_count = data_base[state]["choices"].size();
     if (!seted_stuff) {
-        // Clear previous UI elements before creating new ones
+       
         ui_elements.clear();
 
         std::shared_ptr<UI> choice_cont = std::make_shared<UI>(
@@ -89,13 +89,12 @@ void NPC::process_player_choice(std::shared_ptr<Player> player) {
         );
         ui_elements.push_back(choice_cont);
         seted_stuff = true;
-        selected_el = 0;  // Reset selection when creating new UI
-        choice_cont->set_big_el(selected_el);  // Set initial selection
+        selected_el = 0;  // reset selection when creating new UI
+        choice_cont->set_big_el(selected_el);  // set initial selection
 
         choice_count = data_base[state]["choices"].size();
     }
 
-    // Input handling
     bool is_space_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
     bool is_right_pressed = (GetAsyncKeyState(VK_RIGHT) & 0x8000) != 0 || (GetAsyncKeyState(VK_DOWN) & 0x8000) != 0;
     bool is_left_pressed = (GetAsyncKeyState(VK_LEFT) & 0x8000) != 0 || (GetAsyncKeyState(VK_UP) & 0x8000) != 0;
