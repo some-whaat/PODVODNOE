@@ -59,8 +59,6 @@ public:
     float x;
     float y;
 
-    //float velosity;
-
     Position() : x(0), y(0) {}
 
     Position(std::vector<float> vec) {
@@ -281,9 +279,6 @@ public:
         else {
             wighth = in_wighth;
 
-            //std::string add_line = std::string(' ', in_text.size() % (int)wighth);
-            //in_text += add_line;
-
             for (int i = 0; i < std::ceil(in_text.size() / wighth) * wighth; i += wighth) {
                 std::string new_line = in_text.substr(i, wighth);
 
@@ -370,43 +365,6 @@ public:
     }
 };
 
-/*
-class UIContainer : public UI {
-    std::vector<UI> ui_els;
-    bool stuck_type_is_vertical; // true -- vertical, false -- horisontal
-    int el_wighth = 0;
-    int spacing = 5;
-
-    float total_width = 0.0f;
-    float total_height = 0.0f;
-
-public:
-
-    UIContainer(std::vector<std::string> text_list, int in_el_wighth, int in_spacing, bool stuck_type, int in_screen_pos) : UI(), el_wighth(in_el_wighth), spacing(in_spacing), stuck_type_is_vertical(stuck_type) {
-
-        screen_pos = in_screen_pos;
-
-        for (std::string text : text_list) {
-            ui_els.emplace_back(text, el_wighth, -1);
-
-            total_width += ui_els.back().wighth;
-            total_height += ui_els.back().hight;
-        }
-
-        total_width += (ui_els.size() - 1) * spacing;
-        total_height += (ui_els.size() - 1) * spacing;
-    }
-
-    void draw(std::vector<CHAR_INFO>& buffer, Screen& screen) override;
-
-    void action(std::shared_ptr<Player> player) override {}
-
-    void set_big_el(int el_ind) {
-		for (int i = 0; i < ui_els.size(); i++) {
-			ui_els[i].is_big = (i == el_ind);
-		}
-    }
-};*/
 
 class Picture : public Rektangle {
 protected:
@@ -534,8 +492,6 @@ public:
 
     MovingType moving_type = MovingType::wave;
 
-    int fasing; // немного не нужна€ переменна
-
     Position velocity;
 
     MovingObj() {}
@@ -563,10 +519,8 @@ public:
                     velocity = Position();
                 }
             }
-            //ang_coef = tan(std::atan2(velocity.x, velocity.y));
-            ang_coef = velocity.x == 0 ? 0 : velocity.y / velocity.x;
 
-            fasing = velocity.x == 0 ? 1 : sgn(velocity.x);
+            ang_coef = velocity.x == 0 ? 0 : velocity.y / velocity.x;
 
 			std::map<std::string, MovingType> moving_type_data = {
                 {"none", MovingType::none},
@@ -583,7 +537,6 @@ public:
             {
 			case MovingType::none:
 				velocity = Position(0, 0);
-				fasing = 1;
 				wave_hight = 0;
 				wave_offset = 0;
 				wave_lenght = 0;
@@ -614,7 +567,6 @@ public:
         }
         else {
             velocity = Position(0, 0);
-            fasing = 1;
         }
 
         firt_pos = Position(x, y);
@@ -622,8 +574,7 @@ public:
 
     MovingObj(std::string file_name, int in_x, int in_y, int in_fasing, Position in_velocity, int max_x, int max_y, float in_anim_speed = 1, float in_add_paralax = 0)
         : AnimatbleObj(file_name, in_anim_speed, in_x, in_y),
-        velocity(in_velocity),
-        fasing(in_fasing) {
+        velocity(in_velocity) {
 
 		add_paralax = in_add_paralax;
         wave_hight = rand_int(-max_y + wave_hight_bound, max_y - wave_hight_bound);
@@ -660,23 +611,6 @@ class NPC : public MovingObj {
     int dist_to_interact = 15;
 
 protected:
-    /*struct LogicActions {
-        int needed_item_id;
-		int remove_item_id;
-        std::string dialogue;
-        int next_state;
-        int reward_item_id;
-        bool remove_text_bbl; 
-        bool rep_check;
-        int needed_mission_id;
-        bool is_mission_complete;
-        int else_state;
-        std::string answer;
-        int rep_status;
-        int answ_1;
-        int answ_2;
-        int mission_complete_id;
-    };*/
 
     enum class StateType {
         logic,
@@ -687,8 +621,6 @@ protected:
     TextSquere text_bubble = TextSquere();
 
     int text_wight = 20;
-
-    //bool is_actioning = false; // —Ћ”∆≈ЅЌјя
 
     int state = 0;
     std::unordered_map<int, nlohmann::json> data_base;
@@ -705,7 +637,6 @@ public:
 		text_bubble.follow_pos = this;
 		text_bubble.follow_wighth = wighth;
 		text_bubble.follow_hight = hight;
-        //current_action = nullptr;
 	}
 
     explicit NPC(std::string json_file) : NPC(load_json(json_file)) {}
@@ -734,35 +665,12 @@ public:
                 const auto& state_data = state_.value();
                 int state_id = std::stoi(state_str);
                 data_base[state_id] = state_data;
-
-                /*{
-                    (int)state_data.contains("needed_item_id") ? int(state_data["needed_item_id"]) : 0,
-                    state_data.contains("remove_item_id") ? int(state_data["remove_item_id"]) : 0,
-                    state_data.contains("dialogue") ? std::string(state_data["dialogue"]) : 0,
-                    state_data.contains("next_status") ? int(state_data["next_state"]) : 0,
-                    state_data.contains("reward_item_id") ? int(state_data["reward_item_id"]) : 0,
-                    state_data.contains("remove_text_bbl") ? bool(state_data["remove_text_bbl"]) : 0,
-                    state_data.contains("met_before") ? bool(state_data["met_before"]) : 0,
-                    state_data.contains("rep_check") ? bool(state_data["rep_check"]) : 0,
-                    state_data.contains("needed_mission_id") ? int(state_data["needed_mission_id"]) : 0,
-                    state_data.contains("is_mission_complete") ? bool(state_data["is_mission_complete"]) : 0,
-                    state_data.contains("else_state") ? int(state_data["else_state"]) : 0,
-                    state_data.contains("else_state_1") ? int(state_data["else_state_1"]) : 0,
-                    state_data.contains("answer") ? std::string(state_data["answer"]) : 0,
-                    state_data.contains("rep_status") ? int(state_data["rep_status"]) : 0,
-                    state_data.contains("answ_1") ? int(state_data["answ_1"]) : 0,
-                    state_data.contains("answ_2") ? int(state_data["answ_2"]) : 0,
-                    state_data.contains("mission_complete_id") ? int(state_data["mission_complete_id"]) : 0,
-                };*/
             }
 		}
         else {
             throw std::runtime_error("NPC can't find itself (no definition for the NPC in a JSON)");
         }
     }
-
-
-    //std::string npc_action(int player_item_id, int& player_reward_item);
 
     void action(std::shared_ptr<Player> player) override;
 
@@ -841,21 +749,6 @@ public:
 };
 
 
-/*
-class DataBase {
-private:
-    using RenderLayer = std::vector<std::shared_ptr<RendrbleObject>>;
-
-public:
-	std::unordered_map<int, std::vector<std::string>> data_base;
-	DataBase() {
-		//data_base = {};
-	}
-	void add_data(std::string name, std::vector<std::string> data);
-	void add_data(std::string name, std::string data);
-	std::vector<std::string> get_data(std::string name);
-};*/
-
 class Screen {
 
 protected:
@@ -882,13 +775,6 @@ protected:
 
     float MBF = 2; //milliseconds between frames BETTER NOT TO SET TO 0
 
-    /*
-    int border_poses[4][2] = {
-    {-60, 40}, // 0 left up
-    {60, 40},  // 1 right up
-    {60, -40},  // 2 right down
-    { -60, -40 },  // 3 left down 
-    };*/
 
     int border_poses[2][2] = {
     {-60, 60}, // 0 по иксу от-до
@@ -899,24 +785,14 @@ public:
 
     float deltaTime;
 
-    //float deltatime;
-
-
     
     int cols, rows;
 
     Screen() {
 
-        //_ren_objs = {};
         enshure_cols_rows();
 
         std::fill(backBuffer.begin(), backBuffer.end(), CHAR_INFO{ L' ', 0x07 });
-
-        /*
-        for (int i = 0; i < cols; i++) {
-            screen_vec.push_back(std::string(rows, ' '));
-        }
-        */
     }
 
 
@@ -1189,350 +1065,3 @@ public:
 
     void extract_from_single_json(const nlohmann::json& world_json);
 };
-
-
-/*class loot : public Picture {
-public:
-    std::string name;
-    int cost;
-
-    loot() : name("") {}
-
-    loot(std::ifstream& file, std::string in_name, int in_cost, int in_x, int in_y) : name(in_name), cost(in_cost) {
-        x = in_x;
-        y = in_y;
-
-        std::string str;
-        while (std::getline(file, str))
-        {
-            image_vec.push_back(str);
-        }
-
-        hight = image_vec.size();
-        wighth = image_vec[0].size();
-    }
-};
-
-class equipment : public loot {
-public:
-    int for_what_mission;
-
-    equipment() {}
-
-    equipment(std::ifstream& file, std::string in_name, int in_cost, int in_for_what_mission, int in_x, int in_y) : for_what_mission(in_for_what_mission) {
-        
-        name = in_name;
-        cost = in_cost;
-        
-        x = in_x;
-        y = in_y;
-
-        std::string str;
-        while (std::getline(file, str))
-        {
-            image_vec.push_back(str);
-        }
-
-        hight = image_vec.size();
-        wighth = image_vec[0].size();
-    }
-};*/
-
-
-
-/*
-class fishing_game : public Screen {
-private:
-    int got_fish = 0;
-    int how_much_fish_you_need = 12;
-
-    float rod_speed = 3;
-    float fish_speed = 1.;
-
-    unsigned int onscreen_fish_am = 5;
-
-    Player* player;
-
-public:
-
-    class fish : public Picture {
-    public:
-        float wave_hight;
-        float wave_offset;
-        float wave_lenght;
-        float wave_sdvig;
-
-        int fasing;
-
-        float speed = 0.85;
-
-        // Updated constructor to initialize Picture with the file stream and coordinates
-        fish(int max_x, int max_y, int in_x, int in_y, std::ifstream& file, int in_fasing, float in_speed)
-            : Picture(file, in_x, in_y), // Call Picture constructor with file and coordinates
-            speed(in_speed),
-            fasing(in_fasing)
-        {
-            // Initialize wave parameters
-            wave_hight = rand_int(-max_y + 33, max_y - 33);
-            wave_offset = rand_int(-max_x, max_x);
-            wave_lenght = (float)rand_int(-4, 4) / 10;
-            wave_sdvig = y;
-        }
-
-        void move() {
-            float result_x = x + (speed * fasing);
-            x = result_x;
-            y = wave_hight * std::sin(wave_lenght * result_x + wave_offset);
-        }
-    };
-
-    std::vector<fish> fish_vec;
-
-    fishing_game(Player* in_player) {
-        player = in_player;
-
-
-        for (int i = 0; i < onscreen_fish_am; i++) {
-
-            int fasing = rand_int(0, 1) == 0 ? -1 : 1;
-
-            std::ifstream fish_f;
-            if (fasing == 1) {
-                fish_f.open("fish_right1.txt");
-            }
-            else {
-                fish_f.open("fish_left1.txt");
-            }
-
-            fish_vec.emplace_back(cols, rows, rand_int(-(cols / 2) + 10, (cols / 2) - 10), rand_int(-(rows / 2) + 10, (rows / 2) - 10), fish_f, fasing, fish_speed);
-        }
-
-        //MBF = 22;
-    }
-
-    void action();
-
-    void procces_collisions();
-};
-
-
-class Mission : public Screen {
-public:
-    std::vector<TextSquere> aftertroduction_text_;
-    std::vector<TextSquere> introduction_text_;
-    std::vector<TextSquere> end_text_;
-    loot result_loot;
-
-    TextSquere food_text;
-    float food_spending = 0.2f;
-    float food_spend = 0;
-
-    Player* player;
-
-    std::chrono::steady_clock::time_point begin_time;
-
-    int this_mission_type;
-    int difficulty_lewel;
-
-    Mission() {
-        begin_time = std::chrono::steady_clock::now();
-        food_text = TextSquere("", 0);
-        _text.push_back(food_text);
-    }
-
-    virtual void action() = 0;
-    virtual void get_possible_loot() = 0;
-    virtual void change_dificulty() = 0;
-
-    void take_the_food();
-
-    void sorry_you_died();
-
-    void intro();
-    void outtro();
-
-};
-
-class fishing_game : public Screen {
-private:
-    int got_fish = 0;
-    int how_much_fish_you_need = 12;
-
-    float rod_speed = 3;
-    float fish_speed = 1.;
-
-    unsigned int onscreen_fish_am = 5;
-
-    Player* player;
-
-public:
-
-    class fish : public Picture {
-    public:
-        float wave_hight;
-        float wave_offset;
-        float wave_lenght;
-        float wave_sdvig;
-
-        int fasing;
-
-        float speed = 0.85;
-
-        // Updated constructor to initialize Picture with the file stream and coordinates
-        fish(int max_x, int max_y, int in_x, int in_y, std::ifstream& file, int in_fasing, float in_speed)
-            : Picture(file, in_x, in_y), // Call Picture constructor with file and coordinates
-            speed(in_speed),
-            fasing(in_fasing)
-        {
-            // Initialize wave parameters
-            wave_hight = rand_int(-max_y + 33, max_y - 33);
-            wave_offset = rand_int(-max_x, max_x);
-            wave_lenght = (float)rand_int(-4, 4) / 10;
-            wave_sdvig = y;
-        }
-
-        void move() {
-            float result_x = x + (speed * fasing);
-            x = result_x;
-            y = wave_hight * std::sin(wave_lenght * result_x + wave_offset);
-        }
-    };
-
-    std::vector<fish> fish_vec;
-
-    fishing_game(Player* in_player) {
-        player = in_player;
-
-
-        for (int i = 0; i < onscreen_fish_am; i++) {
-
-            int fasing = rand_int(0, 1) == 0 ? -1 : 1;
-
-            std::ifstream fish_f;
-            if (fasing == 1) {
-                fish_f.open("fish_right1.txt");
-            }
-            else {
-                fish_f.open("fish_left1.txt");
-            }
-            
-            fish_vec.emplace_back(cols, rows, rand_int(-(cols / 2) + 10, (cols / 2) - 10), rand_int(-(rows / 2) + 10, (rows / 2) - 10), fish_f, fasing, fish_speed);
-        }
-
-        //MBF = 22;
-    }
-
-    void action();
-
-    void procces_collisions();
-};*/
-
-/*
-class Selecters : public Screen {
-protected:
-    int dist_bet_frames = 3;
-    bool is_quit = false;
-
-    Player* player;
-    int grid_side = 3;
-    int selected_el = 0;
-public:
-
-    Selecters() {
-        MBF = 111;
-    }
-
-    
-    template <class T>
-    void add_grid_els(std::vector<T> el_vector);
-
-    void add_srats();
-
-    void action();
-
-    void selecting();
-
-    virtual void select_actions() = 0;
-};*/
-
-/*
-class Menu : public Selecters {
-private:
-    std::vector<std::string> select_options = { "go to a mission", "go to the shop", "buy 1 food for 3 money", "sell the loot you found", "look at the tools you have", "go to the musium", "quit"};
-
-    //std::vector<TextSquere> select_texts;
-    int selected_el = 0;
-
-    int text_whith = 36;
-
-public:
-    Menu(Player* in_player) {
-        player = in_player;
-
-        int i = 0;
-
-        add_vert_text(select_options, 5, text_whith);
-
-        for (int i = 0; i < select_options.size(); i++) {
-            _text[i].is_big = i == selected_el;
-        }
-    }
-
-    void action();
-
-    void buy_food(int how_much);
-
-    void select_actions();
-};
-
-
-class Inventory_sell : public Selecters {
-public:
-    Inventory_sell(Player* in_player) {
-        player = in_player;
-
-        add_invent_items();
-    }
-
-    void sell();
-
-    void add_invent_items();
-
-    void select_actions();
-
-    void congrats_you_won();
-};
-
-class Inventory_tools : public Selecters {
-public:
-    Inventory_tools(Player* in_player) {
-        player = in_player;
-
-        add_invent_items();
-    }
-
-    void add_invent_items();
-
-    void select_actions();
-};
-
-class Inventory_return : public Selecters {
-private:
-    int to_return = 0;
-
-public:
-
-    Inventory_return(Player* in_player) {
-        player = in_player;
-
-        add_invent_items();
-    }
-
-    void add_invent_items();
-
-    void select_actions();
-
-    int get_to_return();
-};
-
-*/
