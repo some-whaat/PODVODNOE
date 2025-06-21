@@ -1,9 +1,9 @@
 {
-  "camera_speed": 0.7,
+  "camera_speed": 1,
 
   "border_poses": [
     [ -9999, 9999 ],
-    [ -115, 100 ]
+    [ -200, 200 ]
   ],
 
   "collision_add_val_to_NPC": 6,
@@ -70,6 +70,24 @@
           }
         },
 
+        "bottom2": {
+
+          "Position": {
+            "x": 390,
+            "y": -53
+          },
+
+          "RendrbleObject": {
+            "color": [ 1, 1, 0 ],
+            "is_render": true,
+            "add_paralax": 0.5
+          },
+
+          "Picture": {
+            "sprite_filepame": "bottom3.txt"
+          }
+        },
+
         "shashalashik": {
 
           "Position": {
@@ -85,6 +103,24 @@
 
           "Picture": {
             "sprite_filepame": "shashalashik.txt"
+          }
+        },
+
+        "shashalashik2": {
+
+          "Position": {
+            "x": 0,
+            "y": 0
+          },
+
+          "RendrbleObject": {
+            "color": [ 1, 0, 0 ],
+            "is_render": true,
+            "add_paralax": 0.5
+          },
+
+          "Picture": {
+            "sprite_filepame": "shashalashik2.txt"
           }
         }
       }
@@ -217,7 +253,11 @@
 
               "10": {
                 "type": "dialogue",
-                "dialogue": ["Behold! Your heart desires... a stone or something like this. Truly, my insight knows no bounds. Head to the market. If anyone's got a gadget for stubborn bottles, it's old Mark's workshop!"],
+                "dialogue": [
+                  "Behold! Your heart desires... a stone or something like this.",
+                  "Truly, my insight knows no bounds. Head to the market.",
+                  "If anyone's got a gadget for stubborn bottles, it's old Mark's workshop!"
+                ],
                 "next_state": 6
 
               }
