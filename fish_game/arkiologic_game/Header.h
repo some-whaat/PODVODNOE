@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include <iostream>
 #include <windows.h>
@@ -63,7 +64,7 @@ public:
 
     Position(std::vector<float> vec) {
         x = vec[0];
-        y = vec[y];
+        y = vec[1];
     }
 
     Position(float in_x, float in_y) : x(in_x), y(in_y) {}
@@ -253,14 +254,16 @@ public:
     TextSquere() : Rektangle(), text_vec({}) {}
 
     TextSquere(std::string in_text, int in_wighth) {
-        x, y = 0;
+        x = 0;
+        y = 0;
 
         add_val = 2;
 		set_text(in_text, in_wighth);
     }
 
     TextSquere(std::string in_text, int in_wighth, bool _is_steak_to_screen) {
-        x, y = 0;
+        x = 0;
+        y = 0;
         is_steak_to_screen = _is_steak_to_screen;
 
         add_val = 2;
@@ -690,8 +693,6 @@ class Player : public AnimatbleObj {
 private:
     float move_count = 0;
 
-	//std::vector<AnimatbleObj> inventory;
-    //std::vector<int> inventory_ids;
     std::unordered_map<int, std::shared_ptr<AnimatbleObj>> inventory;
 	std::vector<std::shared_ptr<AnimatbleObj>> inventory_vec; // костыль, чтобы можно было отрисовать инвентарь в линеечку
 
@@ -835,8 +836,6 @@ public:
             );
     }
 
-    //char pix_calc(int x, int y);
-
 	Position get_camera_pos() {
         return camera_pos;
         //return Position(round(camera_pos.x), round(camera_pos.y));
@@ -851,22 +850,10 @@ public:
     void swap_buffers();
 
     virtual void process() = 0;
-    /*
-    void text_seq_render(std::vector<TextSquere> text_seq);
-
-    void add_vert_text(std::vector<std::string> texts, int step, int text_whith);
-
-    void show_vert_text(std::vector<std::string> texts, int step, int text_whith);
-
-    void show_text_and_pic(std::string text, Picture pic);
-
-    bool yes_no_choice(std::string text);
-*/
 
 
 
     class ParticleSystem : public RendrbleObject {
-        //using image_vec = std::vector<std::string>;
 
 		RenderLayer particles;
 
@@ -875,8 +862,7 @@ public:
 			up_down // not finished yet
 		};
 
-        // ParticlesSpawnType particles_spawn_type;
-        //std::map<int, std::vector<nlohmann::json>> particles_constructors; // direction : set of MovingObj JSONs for this direction
+
         std::vector<nlohmann::json> particles_constructors; // direction :  MovingObj JSON for this direction
         int constructors_amount; // amount of constructors (to not check it every time)
 
@@ -1065,3 +1051,5 @@ public:
 
     void extract_from_single_json(const nlohmann::json& world_json);
 };
+
+#endif
