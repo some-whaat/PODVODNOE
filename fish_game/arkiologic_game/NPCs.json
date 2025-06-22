@@ -142,7 +142,7 @@
           "12": {
             "type": "dialogue",
             "dialogue": [ "Whoa! My gut says you've upset our little sea imp near the mountain","He is very sensitive!","He knows everything-just wanted a chat.","Bring him something pretty.","I think the doll is a decision.","I have heard you can buy it in market 24.","Flatter him with a grand gesture","And he'll spill whatever secrets you need!" ],
-            "next_state": 67847777777777777777777777777777777777777
+            "next_state": 6784
           }
 
         }
@@ -1152,22 +1152,13 @@
           "2": {
             "type": "player_choice",
             "choices": [ "Head to office!If I'm not back in an hour, assume the office ate me.", "I'll go interview the residents of the area, walk around the places where the expedition was seen." ],
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            "next_states": [ 4, 3 ]
-=======
             "next_states": [ 3, 3 ]
->>>>>>> Stashed changes
-=======
-            "next_states": [ 3, 3 ]
->>>>>>> Stashed changes
           },
           "3": {
             "type": "dialogue",
             "dialogue": [ "Fair winds and foul tempests be damned—may the tides favor you, matey!" ],
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
             "next_state": 5
+
           },
           "4": {
             "type": "dialogue",
@@ -1179,8 +1170,7 @@
             "type": "npc_action",
 
             "change_atts": {
-              "missions": [
-                true,
+              "missions": [true,
                 [ 12 ]
               ],
               "rep": 5
@@ -1201,12 +1191,6 @@
             },
 
             "next_state": 4
-=======
-            "next_state": 3
->>>>>>> Stashed changes
-=======
-            "next_state": 3
->>>>>>> Stashed changes
           }
         }
 
@@ -1461,23 +1445,9 @@
 
         "does_has_dialogue_on": true,
 
-        "defult_state": -1,
+        "defult_state": 0,
 
         "states": {
-
-          "-1": {
-            "type": "logic",
-
-            "attributes_check": {
-              "missions": [
-                false,
-                [ 77 ]
-              ]
-            },
-            "true_state": -1,
-            "false_state": 0
-          },
-
 
           "0": {
             "type": "dialogue",
@@ -1955,23 +1925,9 @@
           },
 
           "4": {
-<<<<<<< Updated upstream
             "type": "dialogue",
             "dialogue": [ "Good luck! Whatever you're up to over there!" ],
             "next_state": 4
-=======
-            "type": "npc_action",
-
-            "change_atts": {
-              "missions": [
-                true,
-                [ 1011 ]
-              ],
-              "rep": 5
-            },
-
-            "next_state": 0
->>>>>>> Stashed changes
           }
 
         }
@@ -2254,45 +2210,17 @@
 
           "0": {
             "type": "dialogue",
-<<<<<<< Updated upstream
             "dialogue": [ "What do you want?!","Get lost, you trespasser—this is private property!" ],
-=======
-            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
-            "next_state": 1
+            "next_state": 0
           },
 
           "1": {
             "type": "player_choice",
             "choices": [ "Exactly", "oh come on its none of your businesses" ],
             "next_states": [ 2, 3 ]
-          },
-
-          "2": {
-            "type": "dialogue",
-            "dialogue": [ "hope to see you soon!" ],
-            "next_state": 4
-          },
-
-          "3": {
-            "type": "dialogue",
-            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
-            "next_state": 4
-          },
-
-          "4": {
-            "type": "npc_action",
-
-            "change_atts": {
-              "missions": [
-                true,
-                [ 999 ]
-              ],
-              "rep": 5
-            },
-
->>>>>>> Stashed changes
-            "next_state": 0
           }
+
+          
 
        
 
