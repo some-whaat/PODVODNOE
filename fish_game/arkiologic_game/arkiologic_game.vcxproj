@@ -159,10 +159,16 @@
     <Text Include="bubble.txt" />
     <Text Include="cake.txt" />
     <Text Include="chest.txt" />
+    <Text Include="ckrok.txt" />
+    <Text Include="cool_thing.txt" />
     <Text Include="dino.txt" />
+    <Text Include="doggie.txt" />
     <Text Include="eye.txt" />
     <Text Include="fishka2.txt" />
+    <Text Include="gipnophrog.txt" />
+    <Text Include="hegehog.txt" />
     <Text Include="layers.txt" />
+    <Text Include="pig.txt" />
     <Text Include="podvodnoe.txt" />
     <Text Include="doll.txt" />
     <Text Include="dude.txt" />
@@ -182,6 +188,7 @@
     <Text Include="scull.txt" />
     <Text Include="seaweed.txt" />
     <Text Include="shovel.txt" />
+    <Text Include="shreck.txt" />
     <Text Include="star.txt" />
     <Text Include="sword.txt" />
     <Text Include="vase.txt" />

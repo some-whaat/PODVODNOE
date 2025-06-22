@@ -181,10 +181,31 @@
     <Text Include="bubble.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
+    <Text Include="bear.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="pig.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="shreck.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="cool_thing.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="hegehog.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
     <Text Include="layers.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="bear.txt">
+    <Text Include="doggie.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="ckrok.txt">
+      <Filter>Source Files\pics</Filter>
+    </Text>
+    <Text Include="gipnophrog.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
   </ItemGroup>

@@ -94,6 +94,25 @@
       "Picture": {
         "sprite_filepame": "shashalashik.txt"
       }
+    },
+
+
+    "shreck": {
+
+      "Position": {
+        "x": 0,
+        "y": 50
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "shreck.txt"
+      }
     }
   }
 }

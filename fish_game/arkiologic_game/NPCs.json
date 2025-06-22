@@ -59,7 +59,7 @@
 
           "0": {
             "type": "dialogue",
-            "dialogue": [ "You still with me, or...? You've daydreamed again and lost the thread of the conversation, haven't you?", "7496" ],
+            "dialogue": [ "You still with me, or...? You've daydreamed again and lost the thread of the conversation, haven't you?" ],
             "next_state": 1
           },
 
@@ -126,13 +126,7 @@
           "9": {
             "type": "logic",
 
-            "attributes_check": {
-              "missions": [
-                false,
-                [ 1 ]
-              ],
-              "rep": [ false, 5 ]
-            },
+            "item_check": 104,
             "true_state": 6,
             "false_state": 10
           },
@@ -234,6 +228,89 @@
 
     },
 
+    "gipnotoad": {
+
+      "Position": {
+        "x": 50,
+        "y": 50
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "gipnophrog.txt",
+        "anim_speed": 77
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 15,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Do you even praise the sun?!" ],
+            "next_state": 0
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "absolutely! he is the best hip hop artist in the world", "nope, sorry :/" ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "respectfully, u suck, man" ],
+            "next_state": -1
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "then you know what?! he just dropped a new album called Wild Ural ;)" ],
+            "next_state": 2
+          }
+        }
+
+      }
+
+    },
+
     "bear": {
 
       "Position": {
@@ -291,6 +368,462 @@
           "0": {
             "type": "dialogue",
             "dialogue": [ "what are you doing here?!?", "go and learn shaders!!!!!!!!!!!!" ],
+            "next_state": 0
+          }
+        }
+
+      }
+
+    },
+
+    "jellyfish": {
+
+      "Position": {
+        "x": -10,
+        "y": 13
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 0, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "jellyfish.txt",
+        "anim_speed": 77
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 15,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ " Fineli " ],
+            "text_width": 15,
+            "next_state": 0
+          }
+        }
+
+      }
+
+    },
+
+    "fiiish": {
+
+      "Position": {
+        "x": -29,
+        "y": -27
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "fish.txt",
+        "anim_speed": 77
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 15,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "blin....", "hochy v itmo....." ],
+            "text_width": 15,
+            "next_state": 0
+          }
+        }
+
+      }
+
+    },
+
+    "doggie": {
+
+      "Position": {
+        "x": 50,
+        "y": -55
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "doggie.txt",
+        "anim_speed": 99
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 15,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "frfrfrfrfrfr", " dcadc" ],
+            "next_state": 0
+          }
+        }
+
+      }
+
+    },
+
+    "dude": {
+
+      "Position": {
+        "x": 20,
+        "y": -15
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "dude.txt",
+        "anim_speed": 99
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 15,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "frfrfrfrfrfr", " dcadc" ],
+            "next_state": 0
+          }
+        }
+
+      }
+
+    },
+    "hegehog": {
+
+      "Position": {
+        "x": 30,
+        "y": 30
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "hegehog.txt",
+        "anim_speed": 99
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 15,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "frfrfrfrfrfr" ],
+            "next_state": 0
+          }
+        }
+
+      }
+
+    },
+
+    "pig": {
+
+      "Position": {
+        "x": 0,
+        "y": -44
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "pig.txt",
+        "anim_speed": 77
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 27,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Fed'ya verni kartoshku!!!!!!'" ],
+            "next_state": 0
+          }
+        }
+
+      }
+
+    },
+
+    "bill": {
+
+      "Position": {
+        "x": 55,
+        "y": 0
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "cool_thing.txt",
+        "anim_speed": 77
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 27,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "one more light" ],
             "next_state": 0
           }
         }
