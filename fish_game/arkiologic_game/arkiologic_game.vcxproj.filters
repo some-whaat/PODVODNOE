@@ -163,9 +163,6 @@
     <Text Include="podvodnoe.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
-    <Text Include="beach.txt">
-      <Filter>Source Files\pics</Filter>
-    </Text>
     <Text Include="big_fish.txt">
       <Filter>Source Files\pics</Filter>
     </Text>
@@ -186,6 +183,9 @@
     </Text>
     <Text Include="layers.txt">
       <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="bear.txt">
+      <Filter>Source Files\pics</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

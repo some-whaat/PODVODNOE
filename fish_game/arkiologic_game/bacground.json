@@ -21,6 +21,26 @@
         "sprite_filepame": "beach_s.txt"
       }
     },
+
+    "dino": {
+
+      "Position": {
+        "x": -22,
+        "y": -20
+      },
+
+      "RendrbleObject": {
+
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0.8
+      },
+
+      "Picture": {
+        "sprite_filepame": "dino.txt"
+      }
+    },
+
     "bottom": {
 
       "Position": {

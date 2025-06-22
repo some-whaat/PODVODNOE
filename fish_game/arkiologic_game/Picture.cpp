@@ -18,7 +18,7 @@ void Picture::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
         //int x_coord = static_cast<int>(std::round((x + (screen.cols / 2.0f) - camera_pos.x + camera_pos.x * add_paralax) * 2.0f)); //screen.coord_to_vec_space(renderY, 'y') - camOffsetY;
         //int y_coord = static_cast<int>(std::round((screen.rows / 2.0f) - (y - camera_pos.y + camera_pos.y * add_paralax)));//screen.coord_to_vec_space(renderX, 'x') + camOffsetX;
 
-        int y_coord = screen.coord_to_vec_space(renderY, 'y') - camOffsetY;
+        int y_coord = screen.coord_to_vec_space(renderY, 'y') - camOffsetY/2;
         int x_coord = screen.coord_to_vec_space(renderX, 'x') + camOffsetX;
 
         for (int iy = y_coord - (hight / 2); iy < y_coord + (hight / 2) && iy < screen.rows; iy++) {
