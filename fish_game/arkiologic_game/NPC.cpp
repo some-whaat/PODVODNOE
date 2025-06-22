@@ -4,6 +4,7 @@
 void NPC::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 	AnimatbleObj::draw(buffer, screen);
 
+
     text_bubble.draw(buffer, screen);
 
     if (render_ui) {
@@ -35,6 +36,9 @@ void NPC::action(std::shared_ptr<Player> player) {
             else if (current_action["type"] == "npc_action") {
                 process_npc_action(player);
             }
+            else if (current_action["type"] == "dummy") {
+                process_dummy();
+            }
             else {
                 throw std::runtime_error("does not have a valid type!");
             }
@@ -49,6 +53,38 @@ void NPC::action(std::shared_ptr<Player> player) {
     }
 }
 
+void NPC::process_dummy() {
+    text_bubble.is_render = false;
+
+
+    if (!seted_stuff) {
+
+        ui_elements.clear(); // ну на всякий
+
+        std::shared_ptr<UI> press_space = std::make_shared<UI>(
+            "press space", 0, 0
+        );
+        ui_elements.push_back(press_space);
+    }
+
+
+    bool is_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
+
+    if (is_pressed && !is_actioning) {
+
+        state = data_base[state]["next_state"];
+
+        // stuff for the next states
+        dialogue_ind = 0;
+        seted_stuff = false;
+        is_actioning = false;
+        ui_elements.clear();
+        text_bubble.is_render = true;
+    }
+
+    is_actioning = is_pressed;
+}
+
 
 void NPC::process_logic(std::shared_ptr<Player> player) {
     bool result;  
@@ -60,23 +96,21 @@ void NPC::process_logic(std::shared_ptr<Player> player) {
 
 void NPC::process_dialogue() {
 
-    ui_elements.clear(); // ну на всякий
-
-    // sets every frame that is no good (?)
-    std::shared_ptr<UI> press_space = std::make_shared<UI>(
-        "press space", 0, 0
-    );
-    ui_elements.push_back(press_space);
-
 
     if (!seted_stuff) {
-
-
 
         text_width = data_base[state].contains("text_width") ? (int)data_base[state]["text_width"] : default_text_width; // checks every time what is noot good?
 
         text_bubble.set_text(data_base[state]["dialogue"][dialogue_ind], text_width);
         seted_stuff = true;
+
+
+        ui_elements.clear(); // ну на всякий
+        // sets every time that is no good (?)
+        std::shared_ptr<UI> press_space = std::make_shared<UI>(
+            "press space", 0, 0
+        );
+        ui_elements.push_back(press_space);
     }
 
     bool is_pressed = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;

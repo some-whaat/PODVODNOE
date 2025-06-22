@@ -46,12 +46,16 @@
 
         "dist_to_interact": 15,
 
-        "always_dialogue_on": true,
+        "always_dialogue_on": false,
 
         "defult_state": 0,
 
         "states": {
 
+          "-1": {
+            "type": "dummy",
+            "next_state": 7
+          },
 
           "0": {
             "type": "dialogue",
@@ -99,7 +103,7 @@
           "6": {
             "type": "dialogue",
             "dialogue": [ "My wisdom ends here. The Sunduchok holds the rest." ],
-            "next_state": 7
+            "next_state": -1
           },
 
           "7": {

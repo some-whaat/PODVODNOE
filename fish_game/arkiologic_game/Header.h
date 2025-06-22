@@ -667,7 +667,6 @@ class NPC : public MovingObj {
     int dist_to_interact = 15;
 
     bool always_dialogue_on = false;
-    bool dialogue_stopped = false;
 
 protected:
 
@@ -738,6 +737,7 @@ public:
     void process_dialogue();
     void process_player_choice(std::shared_ptr<Player> player);
     void process_npc_action(std::shared_ptr<Player> player);
+    void process_dummy();
 
     bool attributes_check(std::shared_ptr<Player> player);
     bool item_check(std::shared_ptr<Player> player);
