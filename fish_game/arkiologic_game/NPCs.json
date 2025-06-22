@@ -142,12 +142,7 @@
           "12": {
             "type": "dialogue",
             "dialogue": [ "Whoa! My gut says you've upset our little sea imp near the mountain","He is very sensitive!","He knows everything-just wanted a chat.","Bring him something pretty.","I think the doll is a decision.","I have heard you can buy it in market 24.","Flatter him with a grand gesture","And he'll spill whatever secrets you need!" ],
-<<<<<<< Updated upstream
             "next_state": 6784
-=======
-            "next_state": 67847777777777777777777777777777777777777
->>>>>>> Stashed changes
-          }
 
         }
 
@@ -1161,7 +1156,6 @@
           "3": {
             "type": "dialogue",
             "dialogue": [ "Fair winds and foul tempests be damned—may the tides favor you, matey!" ],
-<<<<<<< Updated upstream
             "next_state": 5
 
           },
@@ -1196,10 +1190,6 @@
             },
 
             "next_state": 4
-=======
-            "next_state": 3
->>>>>>> Stashed changes
-          }
         }
 
       }
@@ -1947,23 +1937,9 @@
           },
 
           "4": {
-<<<<<<< Updated upstream
             "type": "dialogue",
             "dialogue": [ "Good luck! Whatever you're up to over there!" ],
             "next_state": 4
-=======
-            "type": "npc_action",
-
-            "change_atts": {
-              "missions": [
-                true,
-                [ 1011 ]
-              ],
-              "rep": 5
-            },
-
-            "next_state": 0
->>>>>>> Stashed changes
           }
 
         }
@@ -2254,8 +2230,6 @@
             "type": "player_choice",
             "choices": [ "Exactly", "oh come on its none of your businesses" ],
             "next_states": [ 2, 3 ]
-<<<<<<< Updated upstream
-=======
           },
 
           "2": {
@@ -2282,7 +2256,6 @@
             },
 
             "next_state": 0
->>>>>>> Stashed changes
           }
 
           
