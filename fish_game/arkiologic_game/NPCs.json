@@ -1152,11 +1152,16 @@
           "2": {
             "type": "player_choice",
             "choices": [ "Head to office!If I'm not back in an hour, assume the office ate me.", "I'll go interview the residents of the area, walk around the places where the expedition was seen." ],
+<<<<<<< Updated upstream
             "next_states": [ 4, 3 ]
+=======
+            "next_states": [ 3, 3 ]
+>>>>>>> Stashed changes
           },
           "3": {
             "type": "dialogue",
             "dialogue": [ "Fair winds and foul tempests be damned—may the tides favor you, matey!" ],
+<<<<<<< Updated upstream
             "next_state": 5
           },
           "4": {
@@ -1191,8 +1196,10 @@
             },
 
             "next_state": 4
+=======
+            "next_state": 3
+>>>>>>> Stashed changes
           }
-
         }
 
       }
@@ -1940,9 +1947,23 @@
           },
 
           "4": {
+<<<<<<< Updated upstream
             "type": "dialogue",
             "dialogue": [ "Good luck! Whatever you're up to over there!" ],
             "next_state": 4
+=======
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 1011 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 0
+>>>>>>> Stashed changes
           }
 
         }
@@ -2133,7 +2154,43 @@
 
           "0": {
             "type": "dialogue",
+<<<<<<< Updated upstream
             "dialogue": [ "Wow! Look who's here!","Underwater-friend!","And I thought you'd never drop by again!","The wife and I are thrilled to see you!" ],
+=======
+            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Exactly", "oh come on its none of your businesses" ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "hope to see you soon!" ],
+            "next_state": 4
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 18777 ]
+              ],
+              "rep": 5
+            },
+
+>>>>>>> Stashed changes
             "next_state": 0
           }
 
@@ -2189,7 +2246,43 @@
 
           "0": {
             "type": "dialogue",
+<<<<<<< Updated upstream
             "dialogue": [ "What do you want?!","Get lost, you trespasser—this is private property!" ],
+=======
+            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Exactly", "oh come on its none of your businesses" ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "hope to see you soon!" ],
+            "next_state": 4
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 999 ]
+              ],
+              "rep": 5
+            },
+
+>>>>>>> Stashed changes
             "next_state": 0
           }
 
