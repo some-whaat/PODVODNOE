@@ -41,9 +41,12 @@
 
       "NPC": {
 
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
         "dist_to_interact": 15,
 
-        "does_has_dialogue_on": true,
+        "always_dialogue_on": true,
 
         "defult_state": 0,
 
@@ -53,6 +56,7 @@
           "0": {
             "type": "dialogue",
             "dialogue": [ "You still with me, or...? You've daydreamed again and lost the thread of the conversation, haven't you?" ],
+            "text_width": 111,
             "next_state": 1
           },
 
@@ -183,7 +187,7 @@
 
       "NPC": {
 
-        "does_has_dialogue_on": true,
+        "always_dialogue_on": false,
 
         "defult_state": 0,
 

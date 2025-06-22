@@ -649,44 +649,29 @@ public:
 
 class NPC : public MovingObj {
 
+    // I FOR SURE need to make separet class for all that
+    bool render_ui = false;
+
     bool is_actioning = false; // служебна€ переменна€, чтобы не было посто€нного нажати€ на пробел
     bool seted_stuff = false;
     int selected_el = 0;
     int choice_count = 0;
 	int dialogue_ind = 0;
 
+    int default_text_width = 20;
+    int text_width;
+
+    int player_answers_text_width = 44;
 
     std::shared_ptr<Player> player;
     int dist_to_interact = 15;
 
-protected:
-    /*struct LogicActions {
-        int needed_item_id;
-		int remove_item_id;
-        std::string dialogue;
-        int next_state;
-        int reward_item_id;
-        bool remove_text_bbl; 
-        bool rep_check;
-        int needed_mission_id;
-        bool is_mission_complete;
-        int else_state;
-        std::string answer;
-        int rep_status;
-        int answ_1;
-        int answ_2;
-        int mission_complete_id;
-    };*/
+    bool always_dialogue_on = false;
+    bool dialogue_stopped = false;
 
-    enum class StateType {
-        logic,
-        dialogue,
-        player_choice
-    };
+protected:
 
     TextSquere text_bubble = TextSquere();
-
-    int text_wight = 20;
 
     //bool is_actioning = false; // —Ћ”∆≈ЅЌјя
 
@@ -722,38 +707,19 @@ public:
 
             nlohmann::json npc_data = data["NPC"];
 
-            if (npc_data.contains("dist_to_interact")) {
-                dist_to_interact = npc_data["dist_to_interact"];
-            }
-
+           
             state = npc_data["defult_state"];
-            text_bubble.is_render = npc_data["does_has_dialogue_on"];
+            if (npc_data.contains("always_dialogue_on")) always_dialogue_on = npc_data["always_dialogue_on"];
+            text_bubble.is_render = always_dialogue_on;
+            if (npc_data.contains("dist_to_interact")) dist_to_interact = npc_data["dist_to_interact"];
+            if (npc_data.contains("default_text_width")) default_text_width = npc_data["default_text_width"];
+            if (npc_data.contains("player_answers_text_width")) player_answers_text_width = npc_data["player_answers_text_width"];
 
             for (const auto& state_ : npc_data["states"].items()) {
                 const std::string& state_str = state_.key();
                 const auto& state_data = state_.value();
                 int state_id = std::stoi(state_str);
                 data_base[state_id] = state_data;
-
-                /*{
-                    (int)state_data.contains("needed_item_id") ? int(state_data["needed_item_id"]) : 0,
-                    state_data.contains("remove_item_id") ? int(state_data["remove_item_id"]) : 0,
-                    state_data.contains("dialogue") ? std::string(state_data["dialogue"]) : 0,
-                    state_data.contains("next_status") ? int(state_data["next_state"]) : 0,
-                    state_data.contains("reward_item_id") ? int(state_data["reward_item_id"]) : 0,
-                    state_data.contains("remove_text_bbl") ? bool(state_data["remove_text_bbl"]) : 0,
-                    state_data.contains("met_before") ? bool(state_data["met_before"]) : 0,
-                    state_data.contains("rep_check") ? bool(state_data["rep_check"]) : 0,
-                    state_data.contains("needed_mission_id") ? int(state_data["needed_mission_id"]) : 0,
-                    state_data.contains("is_mission_complete") ? bool(state_data["is_mission_complete"]) : 0,
-                    state_data.contains("else_state") ? int(state_data["else_state"]) : 0,
-                    state_data.contains("else_state_1") ? int(state_data["else_state_1"]) : 0,
-                    state_data.contains("answer") ? std::string(state_data["answer"]) : 0,
-                    state_data.contains("rep_status") ? int(state_data["rep_status"]) : 0,
-                    state_data.contains("answ_1") ? int(state_data["answ_1"]) : 0,
-                    state_data.contains("answ_2") ? int(state_data["answ_2"]) : 0,
-                    state_data.contains("mission_complete_id") ? int(state_data["mission_complete_id"]) : 0,
-                };*/
             }
 		}
         else {

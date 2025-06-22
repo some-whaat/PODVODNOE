@@ -6,15 +6,18 @@ void NPC::draw(std::vector<CHAR_INFO>& buffer, Screen& screen) {
 
     text_bubble.draw(buffer, screen);
 
-	for (std::shared_ptr<UI> ui : ui_elements) {
-        ui->draw(buffer, screen);
-	}
-
+    if (render_ui) {
+        for (std::shared_ptr<UI> ui : ui_elements) {
+            ui->draw(buffer, screen);
+        }
+    }
 }
 
 void NPC::action(std::shared_ptr<Player> player) {
 
     if (dist(player->get_pos()) < dist_to_interact) {
+        render_ui = true;
+        text_bubble.is_render = true;
 
         nlohmann::json& current_action = data_base[state]; // по ключу достаём значение
 
@@ -33,18 +36,22 @@ void NPC::action(std::shared_ptr<Player> player) {
                 process_npc_action(player);
             }
             else {
-                throw std::runtime_error("does not have a type!");
+                throw std::runtime_error("does not have a valid type!");
             }
         }
         else {
             throw std::runtime_error("does not have a type!");
         }
     }
+    else {
+        render_ui = false;
+        text_bubble.is_render = always_dialogue_on;
+    }
 }
 
 
 void NPC::process_logic(std::shared_ptr<Player> player) {
-    bool result;
+    bool result;  
 
     result = attributes_check(player) && item_check(player);
 
@@ -53,8 +60,22 @@ void NPC::process_logic(std::shared_ptr<Player> player) {
 
 void NPC::process_dialogue() {
 
+    ui_elements.clear(); // ну на всякий
+
+    // sets every frame that is no good (?)
+    std::shared_ptr<UI> press_space = std::make_shared<UI>(
+        "press space", 0, 0
+    );
+    ui_elements.push_back(press_space);
+
+
     if (!seted_stuff) {
-        text_bubble.set_text(data_base[state]["dialogue"][dialogue_ind], text_wight);
+
+
+
+        text_width = data_base[state].contains("text_width") ? (int)data_base[state]["text_width"] : default_text_width; // checks every time what is noot good?
+
+        text_bubble.set_text(data_base[state]["dialogue"][dialogue_ind], text_width);
         seted_stuff = true;
     }
 
@@ -67,10 +88,13 @@ void NPC::process_dialogue() {
 			seted_stuff = false;
 		}
 		else {
-            dialogue_ind = 0;
             state = data_base[state]["next_state"];
+
+            // stuff for the next states
+            dialogue_ind = 0;
             seted_stuff = false;
             is_actioning = false;
+            ui_elements.clear();
 		}
     }
 
@@ -85,7 +109,7 @@ void NPC::process_player_choice(std::shared_ptr<Player> player) {
         ui_elements.clear();
 
         std::shared_ptr<UI> choice_cont = std::make_shared<UI>(
-            data_base[state]["choices"], 20, 2, true, 0
+            data_base[state]["choices"], player_answers_text_width, 2, true, 0     // MAGIC NUMBERS
         );
         ui_elements.push_back(choice_cont);
         seted_stuff = true;
