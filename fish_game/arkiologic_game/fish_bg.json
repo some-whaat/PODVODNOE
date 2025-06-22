@@ -7,7 +7,7 @@
     "bg_fish": {
 
       "particles_spawn_type": "left_right",
-      "on_screen_particles_count": 3,
+      "on_screen_particles_count": 5,
       "first_spawn_particles_randomly": true,
 
       "particles_constructors": {

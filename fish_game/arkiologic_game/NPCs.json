@@ -59,8 +59,7 @@
 
           "0": {
             "type": "dialogue",
-            "dialogue": [ "You still with me, or...? You've daydreamed again and lost the thread of the conversation, haven't you?" ],
-            "text_width": 111,
+            "dialogue": [ "You still with me, or...? You've daydreamed again and lost the thread of the conversation, haven't you?", "7496" ],
             "next_state": 1
           },
 
@@ -152,6 +151,153 @@
 
     },
 
+    "petya": {
+
+      "Position": {
+        "x": 17,
+        "y": 14
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "worm.txt",
+        "anim_speed": 77
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 15,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Recently I were listening to an album by DIEALONE", "do you like him for a chance?" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "absolutely! he is the best hip hop artist in the world", "nope, sorry :/" ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "respectfully, u suck, man" ],
+            "next_state": -1
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "then you know what?! he just dropped a new album called Wild Ural ;)" ],
+            "next_state": 2
+          }
+        }
+
+      }
+
+    },
+
+    "bear": {
+
+      "Position": {
+        "x": -30,
+        "y": 14
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "bear.txt",
+        "anim_speed": 77
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "default_text_width": 40,
+        "player_answers_text_width": 40,
+
+        "dist_to_interact": 15,
+
+        "always_dialogue_on": false,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "-1": {
+            "type": "dummy",
+            "next_state": 3
+          },
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "what are you doing here?!?", "go and learn shaders!!!!!!!!!!!!" ],
+            "next_state": 0
+          }
+        }
+
+      }
+
+    },
 
     "sunduchok": {
 
