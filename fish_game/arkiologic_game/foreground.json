@@ -1,26 +1,115 @@
 {
-  "layer_ind": 1,
+  "layer_ind": 0,
 
   "AnimatbleObj": {
 
-    "seaweed": {
+    "DARK_ofice": {
+
       "Position": {
-        "x": 0,
-        "y": -10
+        "x": -457,
+        "y": -5
       },
 
       "RendrbleObject": {
         "color": [ 0, 1, 0 ],
-        "is_render": false,
-        "add_paralax": -0.5
+        "is_render": true,
+        "add_paralax": 0.5
       },
 
       "AnimatbleObj": {
-        "animated_sprite_filepame": "seaweed.txt",
-        "anim_speed": 88
+        "animated_sprite_filepame": "TXT.txt",
+        "anim_speed": 0
+      }
+    },
+    "tavern": {
+
+      "Position": {
+        "x": 330,
+        "y": -43
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "Tavern.txt",
+        "anim_speed": 0
+      }
+    },
+    "cave": {
+
+      "Position": {
+        "x": -174,
+        "y": -57
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "Cave.txt",
+        "anim_speed": 0
+      }
+    },
+    "larek": {
+
+      "Position": {
+        "x": 860,
+        "y": -14
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "Larekk.txt",
+        "anim_speed": 0
+      }
+    },
+    "house2": {
+
+      "Position": {
+        "x": 10,
+        "y": -42
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "home2.txt",
+        "anim_speed": 0
+      }
+    },
+    "waves1": {
+
+      "Position": {
+        "x": 200,
+        "y": 45
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 1 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "waves.txt",
+        "anim_speed": 0
       }
     }
-
   }
-
 }

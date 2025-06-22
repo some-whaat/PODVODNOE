@@ -6,7 +6,7 @@
     "beach1": {
 
       "Position": {
-        "x": 0,
+        "x": 50,
         "y": 50
       },
 
@@ -43,8 +43,8 @@
     "bottom1": {
 
       "Position": {
-        "x": 195,
-        "y": -53
+        "x": 220,
+        "y": -49
       },
 
       "RendrbleObject": {
@@ -74,6 +74,199 @@
       "Picture": {
         "sprite_filepame": "shashalashik.txt"
       }
+<<<<<<< Updated upstream
+=======
+    },
+    "shashalashik2": {
+
+      "Position": {
+        "x": 170,
+        "y": -53
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 1 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "shashalashik2.txt"
+      }
+    },
+    "bottom3": {
+
+      "Position": {
+        "x": 445,
+        "y": -42
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "bottom03.txt"
+      }
+    },
+
+    "bottom4": {
+
+      "Position": {
+        "x": -297,
+        "y": -58
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "bottom04.txt"
+      }
+    },
+
+    "house1": {
+
+      "Position": {
+        "x": -30,
+        "y": -42
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "home.txt"
+      }
+    },
+
+    "larek": {
+
+      "Position": {
+        "x": 860,
+        "y": -14
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "Larekk.txt"
+      }
+    },
+    "bottom2Re": {
+
+      "Position": {
+        "x": -590,
+        "y": -48
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "bottom02.txt"
+      }
+    },
+    "bottom3Re": {
+
+      "Position": {
+        "x": 630,
+        "y": -46
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "bottom03.txt"
+      }
+    },
+    "campfire": {
+
+      "Position": {
+        "x": -690,
+        "y": -51
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "Campfire.txt"
+      }
+    },
+    "bottom2ReRe": {
+
+      "Position": {
+        "x": 830,
+        "y": -48
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "bottom02.txt"
+      }
+    },
+    "ferma": {
+
+      "Position": {
+        "x": 500,
+        "y": -53
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "fermaf.txt"
+      }
+    },
+    "seaweed": {
+
+      "Position": {
+        "x": -150,
+        "y": -110
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0.5
+      },
+
+      "Picture": {
+        "sprite_filepame": "seaweed.txt"
+      }
+>>>>>>> Stashed changes
     }
   }
 }

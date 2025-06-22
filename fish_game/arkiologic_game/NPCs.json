@@ -1,5 +1,5 @@
 {
-  "do_needs_player":  true,
+  "do_needs_player": true,
 
   "NPC": {
 
@@ -41,26 +41,18 @@
 
       "NPC": {
 
-        "default_text_width": 40,
-        "player_answers_text_width": 40,
-
         "dist_to_interact": 15,
 
-        "always_dialogue_on": false,
+        "does_has_dialogue_on": true,
 
         "defult_state": 0,
 
         "states": {
 
-          "-1": {
-            "type": "dummy",
-            "next_state": 7
-          },
 
           "0": {
             "type": "dialogue",
             "dialogue": [ "You still with me, or...? You've daydreamed again and lost the thread of the conversation, haven't you?" ],
-            "text_width": 111,
             "next_state": 1
           },
 
@@ -72,7 +64,7 @@
 
           "2": {
             "type": "dialogue",
-            "dialogue": [ "You wanted to find Gary's shop. Well, Gary's packed up here - his little business is over the hill now." ],
+            "dialogue": [ "You wanted to find Gary's shop. Well, Gary's packed up here - his little business is upstream now." ],
             "next_state": 3
           },
 
@@ -87,7 +79,7 @@
 
             "dialogue": [
               "Sea knows why - maybe the market got too competitive, or maybe the waves kept washing away his customers.",
-              "Either way, he decided to move to a quieter spot. Not that Gary went into details about his reasons for relocating beyond the hill, so the truth remains a mystery.",
+              "Either way, he decided to move to a quieter spot.","Not that Gary went into details about his reasons for relocating beyond the hill, so the truth remains a mystery.",
               "Lots has changed since you sailed away."
             ],
 
@@ -103,25 +95,14 @@
           "6": {
             "type": "dialogue",
             "dialogue": [ "My wisdom ends here. The Sunduchok holds the rest." ],
-            "next_state": -1
+            "next_state": 9
           },
 
-          "7": {
-            "type": "logic",
-            "item_check": {
-              "needed_item_id": 104,
-              "needed_item_state": true
-
-            },
-
-            "true_state": 8,
-            "false_state": 9
-          },
 
           "8": {
             "type": "dialogue",
             "dialogue": [ "Get to the tavern. Now!" ],
-            "next_state": 6
+            "next_state": 11
           },
 
           "9": {
@@ -130,7 +111,7 @@
             "attributes_check": {
               "missions": [
                 false,
-                [ 1 ]
+                [ 77 ]
               ],
               "rep": [ false, 5 ]
             },
@@ -141,10 +122,28 @@
           "10": {
             "type": "dialogue",
             "dialogue": [ "Behold! Your heart desires... a stone or something like this. Truly, my insight knows no bounds. Head to the market. If anyone's got a gadget for stubborn bottles, it's old Mark's workshop!" ],
-            "next_state": 6
+            "next_state": 11
+          },
 
+          "11": {
+
+            "type": "logic",
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 4 ]
+              ],
+              "rep": [ false, 5 ]
+            },
+            "true_state": 6,
+            "false_state": 12
+          },
+
+          "12": {
+            "type": "dialogue",
+            "dialogue": [ "Whoa! My gut says you've upset our little sea imp near the mountain","He is very sensitive!","He knows everything-just wanted a chat.","Bring him something pretty.","I think the doll is a decision.","I have heard you can buy it in market 24.","Flatter him with a grand gesture","And he'll spill whatever secrets you need!" ],
+            "next_state": 67847777777777777777777777777777777777777
           }
-
 
         }
 
@@ -152,12 +151,11 @@
 
     },
 
-
     "sunduchok": {
 
       "Position": {
-        "x": -25,
-        "y": 94
+        "x": -35,
+        "y": 96
       },
 
       "RendrbleObject": {
@@ -191,7 +189,7 @@
 
       "NPC": {
 
-        "always_dialogue_on": false,
+        "does_has_dialogue_on": true,
 
         "defult_state": 0,
 
@@ -199,14 +197,24 @@
 
           "0": {
             "type": "dialogue",
-            "dialogue": [ "hello!!! dude, I haven't seen you for a long time! Where were you?" ],
+            "dialogue": [
+              "Oh, we're not acquainted?",
+              "My presence on this island is... recent.",
+              "Let's just say forces beyond mortal comprehension necessitated my relocation.",
+              "Well, to be frank I'm a literal treasury",
+              "That's why I hid on this deserted island!",
+              "The world's so-called 'brilliant' minds would kill for my insights.",
+              "Ah, I see your burning questions...",
+              "But alas!",
+              "Questions require... compensation."
+            ],
             "next_state": 1
           },
 
           "1": {
             "type": "player_choice",
-            "choices": [ "huh! I haven't seen you either! how have you been?", "sorry, bro, I'm not in the smalltalk mood rn", "sorry, I'm on my wat to tavern!" ],
-            "next_states": [ 2, 3, 4 ]
+            "choices": [ "How can I help?", "Care to share your wisdom... purely out of the goodness of your heart?" ],
+            "next_states": [ 2, 6 ]
           },
 
           "2": {
@@ -216,34 +224,20 @@
             },
             "next_state": 5
           },
-          "3": {
-            "type": "npc_action",
-            "change_atts": {
-              "rep": -1
-            },
-            "next_state": 6
-          },
-          "4": {
-            "type": "npc_action",
-            "change_atts": {
-              "rep": 2
-            },
-            "next_state": 7
-          },
+
           "5": {
             "type": "dialogue",
-            "dialogue": [ "actually not bad! wanna drink somethig? my father just gave me an old pirot bottle...", " I hope there's a treasure map, or at least a good rom!" ],
+            "dialogue": [ "My father just gave me an old pirot bottle...", " I hope there's a treasure map, or at least a good rum!" ],
             "next_state": 100
           },
           "6": {
             "type": "dialogue",
-            "dialogue": [ "what a pity! maybe someone here is in their head too much? anyway, take it easy buddy!" ],
-            "next_state": 101
-          },
-          "7": {
-            "type": "dialogue",
-            "dialogue": [ "hurry up! i've heard, someone stole a pirat bottle! find it ;)" ],
-            "next_state": 101
+            "dialogue": [
+              "Free answers?",
+              "I'd adore to oblige-if only I weren't drowning in my own urgent needs!",
+              "Help me first, and let's call it... mutual charity."
+            ],
+            "next_state": 5
           },
           "100": {
             "type": "dialogue",
@@ -265,26 +259,35 @@
           "202": {
             "type": "dialogue",
             "dialogue": [ "i'll wait you right here!" ],
+            "next_state": 347
+          },
+
+          "347": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 8 ]
+              ],
+              "rep": 5
+            },
+
             "next_state": 101
           },
 
           "203": {
             "type": "player_choice",
-            "choices": [ "if you give me a bottle i'll help you", "let me find a stone..." ],
-            "next_states": [ 204, 206 ]
+            "choices": [ "let me find a stone..." ],
+            "next_states": [204 ]
           },
 
           "204": {
             "type": "dialogue",
             "dialogue": [ "hmmm...okay!" ],
-            "next_state": 205
-          },
-
-          "205": {
-            "type": "npc_action",
-            "add_item(s)": [ 104 ],
             "next_state": 202
           },
+
 
           "206": {
             "type": "npc_action",
@@ -292,7 +295,7 @@
             "change_atts": {
               "missions": [
                 true,
-                [ 1 ]
+                [ 77 ]
               ],
               "rep": 5
             },
@@ -305,11 +308,11 @@
 
     },
 
-    "narval": {
+    "milius": {
 
       "Position": {
-        "x": -55,
-        "y": -70
+        "x": -930,
+        "y": -101
       },
 
       "RendrbleObject": {
@@ -351,17 +354,46 @@
 
           "0": {
             "type": "dialogue",
-            "dialogue": [ "hello!!!dude, I haven't seen you for a long time! Where were you?" ],
-            "next_state": 0
+            "dialogue": [ "And how did we even manage to get into such a mess?" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "logic",
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 2 ]
+              ],
+              "rep": [ false, 5 ]
+            },
+            "true_state": 0,
+            "false_state": 2
+
+          },
+
+          "2": {
+            "type": "player_choice",
+            "choices": [
+              "Care to explain yourselves? I've spoken with the inventor, and I've got a couple of questions for you.",
+              "What is going on here, esteemed expedition members?!"
+            ],
+            "next_states": [ 3, 3 ]
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "Why are you here, Podvodnoe?" ],
+            "next_state": 1
           }
+
 
         }
       }
 
     },
 
-
-    "BARRI": {
+    "snail": {
 
 
       "Position": {
@@ -370,14 +402,14 @@
       },
 
       "RendrbleObject": {
-        "color": [ 0, 1, 0 ],
+        "color": [ 1, 1, 0 ],
         "is_render": true,
         "add_paralax": 0
       },
 
       "AnimatbleObj": {
-        "animated_sprite_filepame": "BARRI.txt",
-        "anim_speed": 40
+        "animated_sprite_filepame": "snail.txt",
+        "anim_speed": 77
       },
 
       "MovingObj": {
@@ -402,60 +434,109 @@
 
         "does_has_dialogue_on": true,
 
-        "defult_state": 0,
+          "defult_state": -1,
 
         "states": {
 
-          "0": {
+          "-1": {
             "type": "dialogue",
-            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
-            "next_state": 1
+            "dialogue": [ "The wanderer returns! Tell me about distant lands! As for my tale? A humble abode... and a very un-humble interest rate." ],
+            "next_state": -2
           },
 
+          "-2": {
+            "type": "logic",
+
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 77 ]
+              ],
+              "rep": [ false, 5 ]
+            },
+            "true_state": 1,
+            "false_state": 6
+          },
+
+
           "1": {
-            "type": "player_choice",
-            "choices": [ "Exactly", "oh come on its none of your businesses" ],
-            "next_states": [ 2, 3 ]
+            "type": "dialogue",
+            "dialogue": [ "Sooo... mermaid cave, huh?", "Worth the risk of getting siren-hypnotized, or what?" ],
+            "next_state": 2
           },
 
           "2": {
-            "type": "dialogue",
-            "dialogue": [ "hope to see you soon!" ],
-            "next_state": 4
+            "type": "player_choice",
+            "choices": [
+              "Ah, my reputation precedes me! They are lovely creatures, yes - but with terrible tempers. Probably didn't get enough sweets as they were kids, and now they're all salty villains!",
+              "Ah, I've read plenty of nasty tales about them - lie! They're the sweetest creatures you'll ever meet! Moreover they're exceptionally skilled in linear algebra - that's the secret behind their enchanting power!"
+            ],
+            "next_states": [ 3, 3 ]
           },
 
           "3": {
             "type": "dialogue",
-            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
+            "dialogue": [ "By the way! New player in town: a chest that whispers secrets. Get on it's good side - if it has one!Honestly? It kinda creeps me out - so how about you go scout it out first?" ],
             "next_state": 4
           },
 
           "4": {
-            "type": "npc_action",
+            "type": "logic",
 
-            "change_atts": {
+            "attributes_check": {
               "missions": [
-                true,
-                [ 1 ]
+                false,
+                [ 8 ]
               ],
-              "rep": 5
+              "rep": [ false, 5 ]
             },
+            "true_state": 5,
+            "false_state": 6
+          },
 
-            "next_state": 0
+          "5": {
+            "type": "dialogue",
+            "dialogue": [ "I'm telling you, the chest scares me - even if I AM  curious... Do me a favour - go investigate!" ],
+            "next_state": 4
+          },
+
+          "6": {
+            "type": "dialogue",
+            "dialogue": [ "Oh-ho! Wow, someone's been talking with that chest! It's written all over your face. So... how's our new neighbor?" ],
+            "next_state": 7
+          },
+          "7": {
+            "type": "player_choice",
+            "choices": [
+              "A top-notch guy, a bit of a drama lover (no surprise there!). I couldn't refuse him. He framed it as 'mutual charity'!",
+              "A strange guy, but funny, and very talkative."
+            ],
+            "next_states": [ 8, 9 ]
+          },
+
+          "8": {
+            "type": "player_choice",
+            "choices": [
+              "I'm trying to open an antique pirate bottle. The pirates took quality seriously - this thing is sealed, as impregnable as Fort Knox. Do you have any ideas?",
+              "I'm looking for a rock to pick up the bottle cap."
+            ],
+            "next_states": [ 8, 9 ]
+          },
+          "9": {
+            "type": "dialogue",
+            "dialogue": [ "I've heard that you can buy a clever bottle opener at the inventor's shop. It seems to be just what you need." ],
+            "next_state": 4
           }
-
         }
-
       }
-
     },
 
-    "flyfish": {
+    "inventor": {
 
 
       "Position": {
-        "x": 330,
-        "y": -114
+        "x": 167,
+        "y": -109
       },
 
       "RendrbleObject": {
@@ -490,6 +571,167 @@
       "NPC": {
 
         "does_has_dialogue_on": true,
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Welcome back, explorer!", "Need another endless-capacity bag or trying something different for your next adventure?" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Hi, Alvin!I'm planning to stay here for a couple of days, get some sleep and gather my strength." ],
+            "next_states": [ -2 ]
+          },
+
+          "-2": {
+            "type": "logic",
+
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 77 ]
+              ],
+              "rep": [ false, 5 ]
+            },
+            "true_state": 0,
+            "false_state": 2
+          },
+
+          "2": {
+            "type": "player_choice",
+            "choices": [ "I dropped by to see how you're doing and to sort out a small matter", "Ask about stone and Gary's shop.As quick as possible" ],
+            "next_states": [ 3, 4 ]
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "Oh, just casually revolution - Bubbulinator 3000, water in, A+ essays out.", "No big deal.", "Thanks for asking!", "I'd grill you about your travels too, but I'm swamped!", "What kind of help do you need to sort out your...", "misunderstandings?" ],
+            "next_state": 10
+          },
+          "4": {
+            "type": "dialogue",
+            "dialogue": [ "Sorry, I can't talk right now!", "After a long journey, I really want to try something sweet,", "but some difficulties have arisen.", "Do you have a stone?", "Or information on how to get to Gary' shop?" ],
+            "next_state": 5
+          },
+
+
+          "5": {
+            "type": "dialogue",
+            "dialogue": [ "Won't you even glance at my new inventions?", "Ah, what a pity.", "Gary's store?", "No idea ...", "but I did have a stone.", "Let me just peek in my pouch" ],
+            "next_state": 7
+          },
+
+          "6": {
+            "type": "dialogue",
+            "dialogue": [ ". . ." ],
+            "next_state": 6
+          },
+          "7": {
+            "type": "dialogue",
+            "dialogue": [ "Can't recall exactly, but I think I gave my last multi-tool stone to that expedition.", "I sent the anglerfish and the narwhal.", "Quite the celebrity adventurers in these waters, aren’t they?", "As you know, I'm a hunter of rare curios - my research demands much!", "Now then...", "Recently, whispers reached my fins about a secret artifact with wondrous energy near the trench at the gorge's edge!", "I couldn't resist - quickly rounded up some adventurers willing to search for it.", "Three months have passed...", "and they've vanished without a trace!", "Could you look for them?", "Never thought it'd come to this!", "Swamped with work, no time to investigate.", "So glad you're back!", "If you find them, tell them I said to give you the multi-tool.", "In exchange, you can give them...", "this." ],
+            "next_state": -11
+          },
+
+          "-11": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 9 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 202
+          },
+
+        "8": {
+          "type": "npc_action",
+          "add_item(s)": [ 101 ],
+          "next_state": 9
+        },
+
+        "9": {
+          "type": "dialogue",
+          "dialogue": [ "Good luck!" ],
+          "next_state": 11
+        },
+
+        "10": {
+          "type": "player_choice",
+          "choices": [ "I need a stone to open a bottle pirate info about Gary's shop. Fredrik, seahorse, said, that you can help to solve at least one problem" ],
+          "next_states": [ 7 ]
+        },
+
+        "11": {
+          "type": "logic",
+
+          "attributes_check": {
+            "missions": [
+              false,
+              [ 3 ]
+            ],
+            "rep": [ false, 5 ]
+          },
+          "true_state": 12,
+          "false_state": 9
+        },
+
+        "12": {
+          "type": "dialogue",
+          "dialogue": [ "Nice to see you again! Any thrilling updates from the expedition?" ],
+          "next_state": 6
+        }
+
+      }
+      }
+    },
+
+    "BARRI": {
+
+
+      "Position": {
+        "x": 410,
+        "y": -93
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "BARRI.txt",
+        "anim_speed": 40
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
 
         "defult_state": 0,
 
@@ -497,25 +739,27 @@
 
           "0": {
             "type": "dialogue",
-            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
+            "dialogue": [ "Well, well, look who washed ashore!","If it isn’t Podvodnoe in the flesh!","So, tell me - does the best beer foam up here","Or do foreign brews steal the crown?" ],
             "next_state": 1
           },
 
           "1": {
             "type": "player_choice",
-            "choices": [ "Exactly", "oh come on its none of your businesses" ],
+            "choices": [ "You've brewed since time immemorial-few can match you, I'll grant that. But where I've been? Their beer stands shoulder-to-shoulder with yours.", "Oh, your ego's overflowing like a bad pint! Admit it-Mudsburg's mega-pubs brew circles around you." ],
             "next_states": [ 2, 3 ]
           },
 
           "2": {
             "type": "dialogue",
-            "dialogue": [ "hope to see you soon!" ],
+            "dialogue": [ "You’re joking?!","Who could possibly rival me?!","Tell me their secret, and I’ll give you a legendary rainworm!","Trust me, it's a fair trade—these little guys are the ultimate sidekicks!","Even the 24/7 shop vendor would sell his soul for one!",
+
+"Speaking of which...","Gwinn retired and moved to the United Kingdom of Seaweed.","Heard anything about that?" ],
             "next_state": 4
           },
 
           "3": {
             "type": "dialogue",
-            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
+            "dialogue": [ "You're still got the tongue of a sea-witch!", "Gotta admit,","I've missed that sharp wit of yours." ],
             "next_state": 4
           },
 
@@ -525,34 +769,37 @@
             "change_atts": {
               "missions": [
                 true,
-                [ 1 ]
+                [ 6 ]
               ],
               "rep": 5
             },
 
-            "next_state": 0
+            "next_state": 4
           }
+
         }
+
       }
+
     },
 
-    "udilshik": {
+    "devil2": {
 
 
       "Position": {
-        "x": 430,
-        "y": -114
+        "x": 765,
+        "y": -107
       },
 
       "RendrbleObject": {
-        "color": [ 0, 1, 1 ],
+        "color": [ 1, 0, 1 ],
         "is_render": true,
         "add_paralax": 0
       },
 
       "AnimatbleObj": {
-        "animated_sprite_filepame": "main_worm.txt",
-        "anim_speed": 77
+        "animated_sprite_filepame": "devil2.txt",
+        "anim_speed": 80
       },
 
       "MovingObj": {
@@ -623,7 +870,1619 @@
 
       }
 
-    }
-  }
+    },
 
+    "Karas": {
+
+
+      "Position": {
+        "x": -740,
+        "y": -45
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "pricorm.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Need to work","Or it's all end up..." ],
+            "next_state": 0
+          }
+
+         
+
+        }
+
+      }
+
+    }, 
+    "jelly": {
+
+
+      "Position": {
+        "x": 1113,
+        "y": -105
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "jelly.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh/" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Exactly", "oh come on its none of your businesses" ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "hope to see you soon!" ],
+            "next_state": 4
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "go away rude and maybe even drunk son of a shell!" ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 1111 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 0
+          }
+
+        }
+
+      }
+
+    },
+    "tree": {
+
+
+      "Position": {
+        "x": 653,
+        "y": -103
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "treenpc.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "oh hi PODVODNOE! Another adventure is waiting for u, huh" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Exactly" ],
+            "next_states": [ 2 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "hope to see you soon!" ],
+            "next_state": 2
+          
+          }
+
+        }
+
+      }
+
+    },
+    "star": {
+
+
+      "Position": {
+        "x": 460,
+        "y": -111
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "itmostar.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": -1,
+
+        "states": {
+
+          "-1": {
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 10 ]
+              ]
+            },
+            "true_state": -1,
+            "false_state": 1
+          },
+
+          "1": {
+            "type": "dialogue",
+            "dialogue": [ "Two options:", "either we storm that office and demand answers,", "or we ask around quietly and see what leaks. " ],
+            "next_state": 2
+          },
+
+          "2": {
+            "type": "player_choice",
+            "choices": [ "Head to office!If I'm not back in an hour, assume the office ate me.", "I'll go interview the residents of the area, walk around the places where the expedition was seen." ],
+            "next_states": [ 4, 3 ]
+          },
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "Fair winds and foul tempests be damned—may the tides favor you, matey!" ],
+            "next_state": 5
+          },
+          "4": {
+            "type": "dialogue",
+            "dialogue": [ "Be careful,my little fellow!" ],
+            "next_state": 6
+          },
+
+          "5": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 12 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 3
+          },
+
+          "6": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 13 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 4
+          }
+
+        }
+
+      }
+
+    },
+    "main_worm": {
+
+
+      "Position": {
+        "x": 237,
+        "y": -113
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "main_worm.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Hey there! Don’t believe we’ve crossed paths before." ],
+            "next_state": 2
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Oh hi! Tell me your story!", "Really? What you can offer?" ],
+            "next_states": [ 3, 4 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "None can outsell me in these parts! My goods shine brighter than Spanish gold, ye hear?" ],
+            "next_state": 1
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "I'm new around here!","Had to move because my daughter needed to attend school,","and yours is the best in the district!","Just started my own business here too." ],
+            "next_state": 5
+          },
+
+          "4": {
+            "type": "dialogue",
+            "dialogue": [ "Literally everything!" ],
+            "next_state": 4
+          },
+          "5": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 1 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 0
+          }
+
+        }
+
+      }
+
+    },
+    "cat": {
+
+
+      "Position": {
+        "x": -35,
+        "y": -104
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "cat.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Welcome back, you oceanic vagabond.", "Let me guess:", "Poseidon totally didn't try to drown you this time.", "Right?" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "No disasters for once! Feels like a miracle. And you? Any troubles or quiet life?", "So many stories! Just when I was about to swim out - get this - shrimps made me solve a triple integral to avoid bus luggage fees! So, what's new on your life?" ],
+            "next_states": [ 2, 2 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "Picture this:", "I'm a model citizen, paying my algae taxes", "when BAM!", "Scammed by Poseidon's estranged cousin!", "His sob story?", "Oscar-worthy.", "I'm being a royal fool:", "the King of Atlantis himself calls me and whines that he urgently needs money to finalize his inheritance.", "And so it goes:", "a tearful story, a  'black day',", "' an ancient family on the brink of collapse'", "... And out of the goodness of my heart,", "I transfer him the last shells.", "(Well, he promised a share in the fortune:", "three crabbsburgers and 50 unmarked shells per paw).", "Oh, I was wrong...", "Yesterday: 'Hi, I'm a Nigerian prince - underwater edition.'", "Today: 'Your kelp farm won a fake lottery!'", "TOMORROW: WHO EVEN KNOW!" ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 8 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 5
+          },
+
+          "5": {
+            "type": "logic",
+
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 9 ]
+              ]
+            },
+            "true_state": 5,
+            "false_state": 6
+          },
+
+          "6": {
+            "type": "player_choice",
+            "choices": [ "Dreadful business! Hope they crack down soon. Speaking of disasters...The inventor sent an expedition after some relics, and now? Gone without a trace. Not a single bubble left." ],
+            "next_states": [ 7 ]
+          },
+
+          "7": {
+            "type": "dialogue",
+            "dialogue": [ "They seemed to be going to the farm to buy vegetables.", "I wished them a pleasant journey and our paths parted on this" ],
+            "next_state": 8
+          },
+
+          "8": {
+            "type": "player_choice",
+            "choices": [ "Well, thanks, I'll keep it in mind" ],
+            "next_states": [ 7 ]
+          }
+
+
+        }
+
+      }
+
+    },
+    "devil1": {
+
+
+      "Position": {
+        "x": -215,
+        "y": -111
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "devil1.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": -1,
+
+        "states": {
+
+          "-1": {
+            "type": "logic",
+
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 77 ]
+              ]
+            },
+            "true_state": -1,
+            "false_state": 0
+          },
+
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [
+              "Hey, hey!",
+              "Long time no see!",
+              "How are you? How's the sailing?",
+              "What waters have you traveled?",
+              "Did you bring souvenirs?",
+              "Please don't say seaweed - I can't stand it!",
+              "So gross!",
+              "Ugh, just imagining you in some seaweed - filled dungeon...",
+              "Terrifying!",
+              "Can you picture it?",
+              "I sure can!",
+              "Sorry for rambling - I've got no one else to talk to!",
+              "If I did, I wouldn't be bugging you!",
+              "Now c'mon, pilgrim - spill your story!"
+            ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [
+              "Let me tell a long story short. I'm looking for an Alvin's expedition. Heard any rumors? Any idea where they might've sailed? Maybe they are in danger and need help! Later I will definitely tell you many stories",
+              "Do you have a multi-tool stone or know where Gary moved? That'd make my life so much easier! I'm road-weary and wouldn't say no to his famous pie! Then you can interrogate me all you want!"
+            ],
+            "next_states": [ 2, 2 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [
+              "Let me think! Nope! I don't know anything, la-di-da!...Okay, maybe not. But who cares?",
+              "I'm busy drownin' in my own misery here!",
+              "Am I supposed to weep over every fool with a shovel and a dream who want to earn or your favorite piemaker just disappiar or you need something?"
+            ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "player_choice",
+            "choices": [
+              "Worth as much as a waterlogged map. I'll find a talkative tavernkeep instead!!",
+              "Oh! This is a true catastrophe! I must aid the inventor! I cannot simply walk away!"
+            ],
+            "next_states": [ 5, 6 ]
+          },
+
+          "5": {
+            "type": "dialogue",
+            "dialogue": [
+              "No, please, don't leave. I'm so lonely here!",
+              "Can we talk about the weather instead?",
+              "Or books?",
+              "And then...",
+              "maybe I'll trust you with my secret!",
+              "Let's play a friendship test? I've never had friends-what if you're the first?!",
+              "I can't miss this chance!!! Can we at least try?"
+            ],
+            "next_state": 7
+          },
+
+          "6": {
+            "type": "dialogue",
+            "dialogue": [
+              "NOPE-NOPE-NOPE!",
+              "I can't just tell you everything about the grim office!",
+              "No details!",
+              "Are you really ready for this?",
+              "What if I tell you, and then you suffer from nightmares?",
+              "I don't want that.",
+              "Nobody would!"
+            ],
+            "next_state": 8
+          },
+
+
+          "7": {
+            "type": "player_choice",
+            "choices": [
+              "Let's try then!",
+              "Enough! Stop wasting my time!"
+            ],
+            "next_states": [ 9, 10 ]
+          },
+
+          "8": {
+            "type": "player_choice",
+            "choices": [ "Office? What do you mean?" ],
+            "next_states": [ 11 ]
+          },
+          "11": {
+            "type": "dialogue",
+            "dialogue": [ "Not so fast! First, you'll need to pass the Friendship Test - then maybe I'll consider trusting you!" ],
+            "next_state": 9
+          },
+
+          "9": {
+            "type": "dialogue",
+            "dialogue": [
+              "Let's start with something simple!",
+              "Guess my favorite color!"
+            ],
+            "next_state": 14
+          },
+
+          "10": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 4 ]
+              ],
+              "rep": 0
+            },
+
+            "next_state": 12
+          },
+
+          "12": {
+            "type": "dialogue",
+            "dialogue": [
+              "I AM OFFENDED BY THEE!",
+              "Only a gift of friendship shall soften my heart!"
+            ],
+            "next_state": 13
+          },
+
+          "13": {
+            "type": "logic",
+            "item_check": {
+              "needed_item_id": 100,
+              "needed_item_state": true
+            },
+
+            "true_state": 9,
+            "false_state": 12
+          },
+
+
+
+          "14": {
+            "type": "player_choice",
+            "choices": [
+              "Yellow",
+              "Red",
+              "Green",
+              "Blue",
+              "Purple"
+            ],
+            "next_states": [ 15, 16, 15, 15, 15 ]
+          },
+
+          "15": {
+            "type": "dialogue",
+            "dialogue": [ "Wrong answer!Let's try again. What food do I hate?" ],
+            "next_state": 17
+          },
+          "16": {
+            "type": "dialogue",
+            "dialogue": [
+              "Correct!",
+              "Next!",
+              "What food do I hate?"
+            ],
+            "next_state": 17
+          },
+
+          "17": {
+            "type": "player_choice",
+            "choices": [
+              "ice-cream",
+              "I don't know",
+              "seaweed"
+            ],
+            "next_states": [ 18, 18, 19 ]
+          },
+
+
+          "18": {
+            "type": "dialogue",
+            "dialogue": [ "Come on it was as easy as pie and you didn't answer!" ],
+            "next_state": 20
+          },
+
+
+          "19": {
+            "type": "dialogue",
+            "dialogue": [
+              "Aha! I knew we were soulmates!!",
+              "Friends are meant for sharing secrets, after all.",
+              "I'll tell you everything.",
+              "Go ask the farmer - I remember what they (expedition) discussed when I went to buy sea tomatoes!",
+              "AND!",
+              "While you were gone, some shady figures set up this horrifying office right here!",
+              "Yes, I know a thing or two-snuck in like a barnacle on a hull the other day.",
+              "A silent wave drowns the loudest ship, as they say-best prepare for the worst!",
+              "So watch your back!",
+              "Now listen close, matey: that office reeks worse than a bilge rat's den!",
+              "They're brewing trouble blacker than a squall at midnight.",
+              "And Steve from shop 24?",
+              "A smiling shark still has teeth - that weasel's getting a cut of their filthy loot, mark my words!",
+              "Trust the wind, but tie your knots, so here's my advice:",
+              "Steer clear of Steve - Steve is definitely getting his 'fair share'",
+              "Keep a weather eye on that office.",
+              "Calm seas hide sinking sands.",
+              "Glad you're back, shipmate.",
+              "These waters need more sharp-eyed guys like you!"
+            ],
+            "next_state": 21
+          },
+
+          "20": {
+            "type": "dialogue",
+            "dialogue": [
+              "Okay,I guess you're just not meant to be friends with me!",
+              "Consolation prize!",
+              "Ask my cousin about everything!",
+              "He lives in a spacesuit.",
+              "Go right and you'll find him!"
+            ],
+            "next_state": 21
+          },
+
+          "21": {
+            "type": "dialogue",
+            "dialogue": [
+              "I've said all there is to say.",
+              "What comes next... is on you"
+            ],
+            "next_state": -11
+          },
+
+          "-11": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 7 ]
+              ]
+
+            },
+            "next_state": 21
+
+          }
+
+        }
+      }
+
+    },
+
+    "udilshik": {
+
+
+      "Position": {
+        "x": -889,
+        "y": -100
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "udilshilk.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Oh no, it's all gone." ],
+            "next_state": 4
+          },
+
+         
+
+          "4": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 1110 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 0
+          }
+
+        }
+
+      }
+
+    },
+    "seaweed": {
+
+
+      "Position": {
+        "x": -150,
+        "y": -110
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "seagrass.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Oh, yet another local wonder... I remember..." ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "A tragic loss...", "A shared secret..." ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "Look: the water cemetery of my keys!","The tragedy is so deep that","it echoes through the waves.","Surely you've ever experienced this special taste of despair?" ],
+            "next_state": 4
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "I'll share a secret with you,","on the other side of the screen.","My friend lives here,","it's too shy to talk,","let's go somewhere else.","One day,","if the stars allow,","I'll reveal him to you." ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "dialogue",
+            "dialogue": [ "..." ],
+            "next_state": 4
+          }
+
+        }
+
+      }
+
+    },
+    "fermer": {
+
+
+      "Position": {
+        "x": 672,
+        "y": -96
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "fermerf.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "The saltwater is killing my flowers! Catastrophe!" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Oh,I'msorry", "Cheer up! Your saltwater-grown tomatoes are legendary around here!" ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "Ah, it's fine!", "I'll try to survive this!" ],
+            "next_state": 4
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "Glad to hear it!", "Alright, time to go dig the garden beds. No time for chit-chat!" ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "dialogue",
+            "dialogue": [ "Good luck! Whatever you're up to over there!" ],
+            "next_state": 4
+          }
+
+        }
+
+      }
+
+    },
+    "devil1.5": {
+
+
+      "Position": {
+        "x": 430,
+        "y": -107
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "devil1.5.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": -1,
+
+        "states": {
+
+          "-1": {
+            "type": "logic",
+
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 6 ]
+              ],
+              "rep": [ false, 5 ]
+            },
+            "true_state": -1,
+            "false_state": 0
+          },
+
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Okay, between us?", "About changes in our little underwater town...", "That 'office' near the mountain...", "No permits, no signs-just suddenly there.", "Smells like corporate nonsense." ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "logic",
+
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 7 ]
+              ]
+            },
+            "true_state": 2,
+            "false_state": 3
+          },
+
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "Remember that little sea imp who lives in the small cave", "if you go hard right from the residential area?", "Go pay him a visit", "bet he's noticed some interesting details!", "That shady office is practically in his backyard" ],
+            "next_state": 1
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "Heard what that little cave gremlin's been saying about him?", "The shop owner's definitely shady,", "but damn if his goods aren't irresistible!", "Suspiciously irresistible!!!" ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "logic",
+
+            "attributes_check": {
+              "missions": [
+                false,
+                [ 2 ]
+              ]
+            },
+
+            "next_state": 5
+          },
+          "5": {
+            "type": "dialogue",
+            "dialogue": [ "You've got that I-know-something look. Tell!" ],
+            "next_state": 6
+          },
+          "6": {
+            "type": "player_choice",
+            "choices": [ "Seacat just told me he's getting scam calls.", "I think the disappearance of the expedition, the office, the calls are somehow connected." ],
+            "next_states": [ 7, 7 ]
+          },
+          "7": {
+            "type": "dialogue",
+            "dialogue": [ "Coincidence?", "Doubt it.", "That creepy office, the scam calls—it's all threads in one net.", "Thank Poseidon for real friends...", "and emergency messenger-crabs." ],
+            "next_state": 8
+          },
+
+          "8": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "missions": [
+                true,
+                [ 10 ]
+              ],
+              "rep": 5
+            },
+
+            "next_state": 7
+          }
+        }
+      }
+    },
+    "jellygf": {
+
+
+      "Position": {
+        "x": 1142,
+        "y": -107
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 0, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "jellygf.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Wow! Look who's here!","Underwater-friend!","And I thought you'd never drop by again!","The wife and I are thrilled to see you!" ],
+            "next_state": 0
+          }
+
+        }
+
+      }
+
+    },
+    "Oficce_worker": {
+
+
+      "Position": {
+        "x": -610,
+        "y": -104
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "office_worker.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "What do you want?!","Get lost, you trespasser—this is private property!" ],
+            "next_state": 0
+          }
+
+       
+
+        }
+
+      }
+
+    },
+    "Gora": {
+
+
+      "Position": {
+        "x": -500,
+        "y": -95
+      },
+
+      "RendrbleObject": {
+        "color": [ 1, 1, 0 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "gorniy.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Well, first mountain-conquered...", "And to think...", "That was just the start of this wild ride." ],
+            "next_state": 1
+          },
+
+          "2": {
+            "type": "player_choice",
+            "choices": [ "You know, i have a funny story related to this mountain", " I'm scared of the idea to approach this place again" ],
+            "next_states": [ 3, 4 ]
+          },
+
+          "1": {
+            "type": "dialogue",
+            "dialogue": [ "This place is like an old mysterious storyteller" ],
+            "next_state": 2
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [
+              "It was a sunny summer day, just like today!",
+              "The world holds so much wonder.",
+              " Funny what treasures you find when you're not looking...",
+              "On the mountain, I found a gift coupon for a 24-hour store.",
+              "Definitely worth the effort!",
+              "Sometimes I imagine how wonderful it would be if a wizard - a lord of the mountain - lived up there,",
+              "watching over our world.",
+              "And of course helping Sam with his chores!",
+              "(His farm's chaos deserves magical intervention)"
+            ],
+            "next_state": 5
+          },
+
+          "4": {
+            "type": "dialogue",
+            "dialogue": [ "This place always frightened me, it's gloomy enough here...", "Father forbade me to come here, saying it was dangerous.", "Then I grew older-now I'm no longer a fish egg and I decide my own fate.", "I'm a hardened traveler, it's true.", "But there are places that give me goosebumps." ],
+            "next_state": 6
+          },
+
+          "6": {
+            "type": "dialogue",
+            "dialogue": [ ". . ." ],
+            "next_state": 6
+          },
+
+          "5": {
+            "type": "dialogue",
+            "dialogue": [ "How many horizons still call!", "Enjoy opportunities that life gives to you!", "Never give up!" ],
+            "next_state": 5
+          }
+
+
+        }
+
+      }
+
+    },
+
+    "sponchehouse": {
+
+
+      "Position": {
+        "x": -80,
+        "y": -98
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 0, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "home3.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "none",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "This was my home once. The life I chose demanded sacrifices - this beloved house among them. The reason? Well..." ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Home maintenance trouble", "Circumstances" ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "Truth is, the roof was leaking like a sieve, and I'd just scraped together enough for a new place.","A sad little domestic tragedy - nothing extraordinary.","At first I tried patching things up, literally stuffing the gaps with stones.","Then one day - boom!","The great flood arrived.","Game over.","Bail the water!","My dreams of saving that house floated away right along with the roof."],
+            "next_state": 4
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "I chose to travel, so I sold it.","First, I couldn't bear to let it decay - better it brings joy to new owners.","Anything beats rotting away in some lonely, purposeless existence.","Second reason is practical, as you might have guessed" ],
+            "next_state": 4
+          },
+
+          "5": {
+            "type": "dialogue",
+            "dialogue": [ "See you later, old friend! Really glad I got to visit." ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "rep": 3
+            },
+
+            "next_state": 5
+          }
+
+        }
+
+      }
+
+    },
+    "school": {
+
+
+      "Position": {
+        "x": 963,
+        "y": -96
+      },
+
+      "RendrbleObject": {
+        "color": [ 0, 1, 1 ],
+        "is_render": true,
+        "add_paralax": 0
+      },
+
+      "AnimatbleObj": {
+        "animated_sprite_filepame": "SCHOOLa.txt",
+        "anim_speed": 80
+      },
+
+      "MovingObj": {
+        "velocity": [ 5, 3 ],
+
+        "moving_type": "right-left",
+
+        "wave": {
+          "wave_hight": 20,
+          "wave_offset": 10,
+          "wave_lenght": 55,
+          "wave_sdvig": 10
+        },
+
+        "random_wave": {
+          "max_x": 60,
+          "max_y": 30
+        }
+      },
+
+      "NPC": {
+
+        "does_has_dialogue_on": true,
+
+        "defult_state": 0,
+
+        "states": {
+
+          "0": {
+            "type": "dialogue",
+            "dialogue": [ "Well, looks like school is closed for summer holidays - no sneaking into today!" ],
+            "next_state": 1
+          },
+
+          "1": {
+            "type": "player_choice",
+            "choices": [ "Unlike most kids nowadays, I used to love going to school", "School and I? We didn't get along." ],
+            "next_states": [ 2, 3 ]
+          },
+
+          "2": {
+            "type": "dialogue",
+            "dialogue": [ "Remember when we whispered through lessons and built castles out of school projects...", "Our dreams were too big for the classroom.", "Fate has since scattered us across the world's oceans.", "I hope my friends have found their place in life." ],
+            "next_state": 4
+          },
+
+          "3": {
+            "type": "dialogue",
+            "dialogue": [ "I never quite melted into the collective - meaningful friendships eluded me.", "But science - ah, that passion burned bright, though school did little to feed it.", "I'd ditch classes to scavenge for experiment materials,", "wandering the city streets while dreaming of distant shores.", "I'm still searching for myself,", "wandering around the world,", "trying to find my place.", "No success so far, but I'm in no hurry to despair.", "Who knows what surprises life has in store for me?" ],
+            "next_state": 4
+          },
+
+          "4": {
+            "type": "npc_action",
+
+            "change_atts": {
+              "rep": 5
+            },
+
+            "next_state": 5
+          },
+
+          "5": {
+            "type": "dialogue",
+            "dialogue": [ "It's summer outside, remember?", "  I can't get into." ],
+            "next_state": 5
+          }
+
+        }
+
+      }
+
+    }
+
+  }
 }

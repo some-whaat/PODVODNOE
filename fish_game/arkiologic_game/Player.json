@@ -86,7 +86,7 @@
         },
 
         "AnimatbleObj": {
-          "animated_sprite_filepame": "bottle.txt",
+          "animated_sprite_filepame": "stone.txt",
           "anim_speed": 15
         }
       }
