@@ -1153,7 +1153,11 @@
             "type": "player_choice",
             "choices": [ "Head to office!If I'm not back in an hour, assume the office ate me.", "I'll go interview the residents of the area, walk around the places where the expedition was seen." ],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             "next_states": [ 4, 3 ]
+=======
+            "next_states": [ 3, 3 ]
+>>>>>>> Stashed changes
 =======
             "next_states": [ 3, 3 ]
 >>>>>>> Stashed changes
@@ -1161,6 +1165,7 @@
           "3": {
             "type": "dialogue",
             "dialogue": [ "Fair winds and foul tempests be damned—may the tides favor you, matey!" ],
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
             "next_state": 5
           },
@@ -1196,6 +1201,9 @@
             },
 
             "next_state": 4
+=======
+            "next_state": 3
+>>>>>>> Stashed changes
 =======
             "next_state": 3
 >>>>>>> Stashed changes
